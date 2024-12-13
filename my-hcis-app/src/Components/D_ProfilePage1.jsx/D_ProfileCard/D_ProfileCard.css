@@ -1,0 +1,70 @@
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #444; /* Slightly lighter dark background */
+  padding: 20px;
+  border-radius: 10px;
+  color: #fff;
+  max-width: 200px; /* Set a maximum width */
+  min-height: 100px;
+  max-height: 365px; /* Set a maximum height */
+}
+
+.profile-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  object-fit: cover; /* Ensures the image is cropped to fit the container */
+}
+
+h3 {
+  margin: 10px 0 5px 0; /* Reduce margin between name and specialty */
+}
+
+p {
+  margin: 0;
+  opacity: 0.7; /* Add some transparency to the specialty text */
+}
+
+.edit-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin: 10px 0;
+  cursor: pointer;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s, box-shadow 0.2s; /* Smooth transition for hover effect */
+}
+
+.edit-button i {
+  margin-right: 5px;
+}
+
+.edit-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px); /* Slightly lift the button on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+}
+
+.ratings, .trust {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.trust-bar {
+  width: 100%;
+  background-color: #555;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 5px;
+}
+
+.trust-bar-fill {
+  height: 10px;
+  background-color: #58d626;
+}
