@@ -29,7 +29,7 @@ p {
 }
 
 .edit-button {
-  background-color: #007bff;
+  background-color: #646cff;
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -46,7 +46,7 @@ p {
 }
 
 .edit-button:hover {
-  background-color: #0056b3;
+  background-color: #646cff;
   transform: translateY(-2px); /* Slightly lift the button on hover */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
 }

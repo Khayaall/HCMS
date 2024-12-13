@@ -1,8 +1,21 @@
-import React from 'react';
-import './D_ProfileCard.css';
+import React, { useState } from "react";
+import EditProfileModal from "../EditProfileModal/EditProfileModal";
+import "./D_ProfileCard.css";
 
 const D_ProfileCard = (props) => {
-  // Function to generate stars based on rating
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [profile, setProfile] = useState({
+    name: props.name,
+    img: props.img,
+    specialty: props.specialty,
+    ratings: props.ratings,
+    trust: props.trust,
+  });
+
+  const handleSave = (updatedProfile) => {
+    setProfile(updatedProfile);
+  };
+
   const generateStars = (rating) => {
     const fullStars = Math.floor(rating);
     const halfStar = rating % 1 !== 0;
@@ -19,22 +32,28 @@ const D_ProfileCard = (props) => {
 
   return (
     <div className="profile-card">
-      <img src={props.img} alt="Profile" className="profile-img" />
-      <h3>{props.name}</h3>
-      <p>{props.specialty}</p>
-      <button className="edit-button">
+      <img src={profile.img} alt="Profile" className="profile-img" />
+      <h3>{profile.name}</h3>
+      <p>{profile.specialty}</p>
+      <button className="edit-button" onClick={() => setIsModalOpen(true)}>
         <i className="fas fa-pen"></i> Edit Profile
       </button>
       <div className="ratings">
-        <p>Ratings: {props.ratings}</p>
-        <div className="stars">{generateStars(props.ratings)}</div>
+        <p>Ratings: {profile.ratings}</p>
+        <div className="stars">{generateStars(profile.ratings)}</div>
       </div>
       <div className="trust">
-        <p>Trust: {props.trust}%</p>
+        <p>Trust: {profile.trust}%</p>
         <div className="trust-bar">
-          <div className="trust-bar-fill" style={{ width: `${props.trust}%` }}></div>
+          <div className="trust-bar-fill" style={{ width: `${profile.trust}%` }}></div>
         </div>
       </div>
+      <EditProfileModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        profile={profile}
+        onSave={handleSave}
+      />
     </div>
   );
 };
