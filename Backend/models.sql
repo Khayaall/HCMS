@@ -31,7 +31,8 @@ create table doctor
     address        text,
     specialty      varchar(100),
     about_me       text,
-    opening_hours  varchar(20),
+    starting_hour  time not null,
+    finishing_hour time not null,
     account_status varchar(50)
 );
 
