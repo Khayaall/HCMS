@@ -66,27 +66,6 @@ public_users.post('/signup', async (req, res) => {
                     return res.json("receptionist added waiting for admin approval");
                 }
             }
-            if(role == 'receptionist')
-            {   
-                const { email, password, role, f_name, l_name, r_id } = req.body;
-                if (r_id.startsWith('re') == false || r_id.length < 5) {
-                    return res.status(400).send("Please enter a vaild doctor id");
-                }
-                const ids = await pool.query("SELECT * FROM receptionist WHERE receptionist_id = $1", [r_id]);
-                if (ids.rows.length > 0) {
-                    return res.status(400).send("receptionist id already exists");
-                }
-                const user = await pool.query("SELECT * FROM receptionist WHERE email = $1", [email]);
-                if (user.rows.length > 0) 
-                {
-                    return res.status(400).send("receptionist already exists");
-                }
-                else
-                {
-                    const newUser = await pool.query("INSERT INTO receptionist (f_name, l_name, email, password, account_status, receptionist_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *", [f_name, l_name, email, password, 'pending', r_id]);
-                    return res.json("receptionist added waiting for admin approval");
-                }
-            }
         
     } catch (err) {
         console.error(err.message);
