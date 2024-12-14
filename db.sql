@@ -1,164 +1,101 @@
-create table admin
-(
-    admin_id serial
-        primary key,
-    f_name   varchar(50)  not null,
-    l_name   varchar(50)  not null,
-    email    varchar(150) not null
-        unique,
-    password varchar(100) not null,
-    phone    varchar(15),
-    dob      date,
-    gender   char,
-    address  text
+CREATE TABLE Admin (
+    Admin_ID SERIAL PRIMARY KEY,
+    F_Name VARCHAR(50) NOT NULL,
+    L_Name VARCHAR(50) NOT NULL,
+    Email VARCHAR(150) UNIQUE NOT NULL,
+    Password VARCHAR(100) NOT NULL,
+    Phone VARCHAR(15),
+    DOB DATE,
+    Gender CHAR(10),
+    Address TEXT
 );
-
-
-create table doctor
-(
-    doctor_id      serial
-        primary key,
-    f_name         varchar(50)  not null,
-    l_name         varchar(50)  not null,
-    email          varchar(150) not null
-        unique,
-    password       varchar(100) not null,
-    dob            date,
-    phone          varchar(15),
-    gender         char(10),
-    experience     text,
-    address        text,
-    specialty      varchar(100),
-    about_me       text,
-    opening_hours  varchar(20),
-    account_status varchar(50)
+CREATE TABLE Doctor (
+    Doctor_ID SERIAL PRIMARY KEY,
+    F_Name VARCHAR(50) NOT NULL,
+    L_Name VARCHAR(50) NOT NULL,
+    Email VARCHAR(150) UNIQUE NOT NULL,
+    Password varchar(100) NOT NULL,
+    DOB DATE,
+    Phone VARCHAR(15),
+    Gender CHAR(10),
+    Experience INT,
+    Address TEXT,
+    Specialty VARCHAR(100)
 );
-
-
-create table patient
-(
-    patient_id   serial
-        primary key,
-    patient_type varchar(50)  not null,
-    f_name       varchar(50)  not null,
-    l_name       varchar(50)  not null,
-    email        varchar(150) not null
-        unique,
-    password     varchar(100) not null,
-    phone        varchar(15),
-    dob          date,
-    gender       char(10),
-    address      text
+CREATE TABLE Patient (
+    Patient_ID SERIAL PRIMARY KEY,
+    Patient_Type varchar(50) NOT NULL,
+    F_Name VARCHAR(50) NOT NULL,
+    L_Name VARCHAR(50) NOT NULL,
+    Email VARCHAR(150) UNIQUE NOT NULL,
+    Password VARCHAR(100) NOT NULL,
+    Phone VARCHAR(15),
+    DOB DATE,
+    Gender CHAR(10),
+    Address TEXT
 );
-
-
-create table receptionist
-(
-    receptionist_id serial
-        primary key,
-    f_name          varchar(50)  not null,
-    l_name          varchar(50)  not null,
-    email           varchar(100) not null
-        unique,
-    password        varchar(100) not null,
-    phone           varchar(15),
-    dob             date,
-    gender          char,
-    address         text
+CREATE TABLE Receptionist (
+    Receptionist_ID SERIAL PRIMARY KEY,
+    F_Name VARCHAR(50) NOT NULL,
+    L_Name VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) UNIQUE NOT NULL,
+    Password VARCHAR(100) NOT NULL,
+    Phone VARCHAR(15),
+    DOB DATE,
+    Gender CHAR(1),
+    Address TEXT
 );
-
-
-create table appointment
-(
-    appointment_id serial
-        primary key,
-    patient_id     integer
-        references patient
-            on delete cascade,
-    doctor_id      integer
-                        references doctor
-                            on delete set null,
-    date           date not null,
-    time           time not null,
-    diagnosis      text,
-    treatment      text
+CREATE TABLE Appointment (
+    Appointment_ID SERIAL PRIMARY KEY,
+    Patient_ID INT REFERENCES Patient(Patient_ID) ON DELETE CASCADE,
+    Doctor_ID INT REFERENCES Doctor(Doctor_ID) ON DELETE SET NULL,
+    Date DATE NOT NULL,
+    Time TIME NOT NULL
 );
-
-
-create table prescription
-(
-    prescription_id serial
-        primary key,
-    appointment_id  integer
-        references appointment
-            on delete cascade,
-    doctor_id       integer
-        references doctor
-            on delete cascade,
-    patient_id      integer
-        references patient
-            on delete cascade,
-    date_issue      date not null,
-    medication      text not null,
-    note            text
+CREATE TABLE Prescription (
+    Prescription_ID SERIAL PRIMARY KEY,
+    Appointment_ID INT REFERENCES Appointment(Appointment_ID) ON DELETE CASCADE,
+    Doctor_ID INT REFERENCES Doctor(Doctor_ID) ON DELETE CASCADE,
+    Patient_ID INT REFERENCES Patient(Patient_ID) ON DELETE CASCADE,
+    Date_Issue DATE NOT NULL,
+    Medication TEXT NOT NULL,
+    Note TEXT
 );
-
-
-create table rating_review
-(
-    review_id  serial
-        primary key,
-    patient_id integer
-        references patient
-            on delete cascade,
-    doctor_id  integer
-        references doctor
-            on delete cascade,
-    date_issue date,
-    rating     double precision
-        constraint rating_review_rating_check
-            check ((rating >= (1)::double precision) AND (rating <= (5)::double precision)),
-    comment    text
+CREATE TABLE Rating_Review (
+    Review_ID SERIAL PRIMARY KEY,
+    Patient_ID INT REFERENCES Patient(Patient_ID) ON DELETE CASCADE,
+    Doctor_ID INT REFERENCES Doctor(Doctor_ID) ON DELETE CASCADE,
+    Date_Issue DATE,
+    Rating FLOAT CHECK (Rating BETWEEN 1 AND 5),
+    Comment TEXT
 );
-
-
-create table infant_medical_record
-(
-    record_id           serial
-        primary key,
-    patient_id          integer
-        references patient
-            on delete cascade,
-    diagnosis           text,
-    notes               text,
-    treatment           text,
-    patient_history     text,
-    allergies           text,
-    vaccination_history text,
-    birth_weight        varchar(50),
-    juandice            varchar(50),
-    feeding_method      varchar(50)
+CREATE TABLE Infant_Medical_Record (
+    Record_ID SERIAL PRIMARY KEY,
+    Patient_ID INT REFERENCES Patient(Patient_ID) ON DELETE CASCADE,
+    Diagnosis TEXT,
+    Notes TEXT,
+    Treatment TEXT,
+    Patient_History TEXT,
+    Allergies TEXT,
+    Vaccination_History TEXT,
+    Birth_Weight VARCHAR(50),
+    Juandice VARCHAR(50),
+    Feeding_method VARCHAR(50)
 );
-
-
-create table obstetrics_medical_record
-(
-    record_id               serial
-        primary key,
-    patient_id              integer
-        references patient
-            on delete cascade,
-    patient_type            varchar(50),
-    diagnosis               text,
-    notes                   text,
-    treatment               text,
-    patient_history         text,
-    ultra_image             bytea,
-    pregnancy_stage         varchar(50),
-    labor_method            varchar(50),
-    menstrual_cycle_details text,
-    no_of_births            varchar(2),
-    cancer_stage            varchar(2),
-    cancer_type             varchar(50),
-    c_treatment_period      varchar(2)
+CREATE TABLE Obstetrics_Medical_Record (
+    Record_ID SERIAL PRIMARY KEY,
+    Patient_ID INT REFERENCES Patient(Patient_ID) ON DELETE CASCADE,
+    Patient_Type VARCHAR(50),
+    Diagnosis TEXT,
+    Notes TEXT,
+    Treatment TEXT,
+    Patient_History TEXT,
+    Ultra_Image BYTEA,
+    Pregnancy_Stage VARCHAR(50),
+    Labor_Method VARCHAR(50),
+    Menstrual_Cycle_Details TEXT,
+    No_Of_Births VARCHAR(2),
+    Cancer_Stage VARCHAR(2),
+    Cancer_Type VARCHAR(50),
+    C_Treatment_Period varchar(2)
 );
