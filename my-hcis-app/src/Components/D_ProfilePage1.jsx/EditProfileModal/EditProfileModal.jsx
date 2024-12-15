@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./EditProfileModal.css";
-import My_Profile from "../My_Profile/My_Profile";
-import D_ProfileCard from "../D_ProfileCard/D_ProfileCard";
 
 const EditProfileModal = ({ isOpen, onClose, profile, onSave }) => {
   const [firstName, setFirstName] = useState(profile.firstName || "");
@@ -12,8 +10,28 @@ const EditProfileModal = ({ isOpen, onClose, profile, onSave }) => {
   const [degree, setDegree] = useState(profile.degree || "");
   const [image, setImage] = useState(profile.image || "");
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImage(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSave = () => {
-    onSave({ firstName, lastName,specialty, bio, college, degree, image });
+    const updatedProfile = {
+      firstName,
+      lastName,
+      specialty,
+      bio,
+      college,
+      degree,
+      image,
+    };
+    onSave(updatedProfile);
     onClose();
   };
 
@@ -29,19 +47,32 @@ const EditProfileModal = ({ isOpen, onClose, profile, onSave }) => {
 
         {/* Profile Picture Upload */}
         <div className="profile-picture">
-          <img
-            src={image || "https://via.placeholder.com/300"}
-            alt="profile"
-            className="profile-img"
+          <label htmlFor="file-input" className="profile-img-label">
+            <img
+              src={image || "https://via.placeholder.com/300"}
+              alt="profile"
+              className="profile-img"
+            />
+          </label>
+          <input
+            id="file-input"
+            type="file"
+            accept="image/png, image/jpeg"
+            style={{ display: "none" }}
+            onChange={handleFileChange}
           />
           <div className="upload-buttons">
-            <div className="instructions" onChange>
+            <div className="instructions">
               <h4>Upload your picture</h4>
               <p>For best results, use an image at least 150px by 150px in either JPEG or PNG</p>
             </div>
-            <div className="Buttons-edit">
-            <button className="upload-btn">Upload</button>
-            <button className="remove-btn">Remove</button>
+            <div className="buttons-edit">
+              <label htmlFor="file-input" className="upload-btn">
+                Upload
+              </label>
+              <button className="remove-btn" onClick={() => setImage("")}>
+                Remove
+              </button>
             </div>
           </div>
         </div>
@@ -57,7 +88,7 @@ const EditProfileModal = ({ isOpen, onClose, profile, onSave }) => {
             />
           </div>
           <div className="form-group">
-            <label>Last</label>
+            <label>Last Name</label>
             <input
               type="text"
               value={lastName}
@@ -65,7 +96,7 @@ const EditProfileModal = ({ isOpen, onClose, profile, onSave }) => {
             />
           </div>
           <div className="form-group">
-            <label>Speciality</label>
+            <label>Specialty</label>
             <input
               type="text"
               value={specialty}
