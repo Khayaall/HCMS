@@ -24,6 +24,12 @@ patient_routes.get('/browse-doctors', async (req, res) => {
     res.send(type_doctors.rows);
 });
 
+patient_routes.get('/browse-selected-doctors', async (req, res) => {
+    const {type} = req.body;
+    const type_doctors = await pool.query("SELECT * FROM doctor WHERE specialty = $1;",[type]);
+    res.send(type_doctors.rows)
+})
+
 patient_routes.get('/prescriptions', async (req, res) => {
     const actual_patient_id = req.session.authorization.id;
     const prescriptions = await pool.query("SELECT * FROM prescription WHERE patient_id = $1;",[actual_patient_id]);
