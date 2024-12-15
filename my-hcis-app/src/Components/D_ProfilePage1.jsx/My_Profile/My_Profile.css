@@ -1,0 +1,59 @@
+.profile-container {
+    padding-top: 20px;
+    max-width: 500px;
+    margin-left: 3px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align items to the left */
+  }
+  
+  .profile-section {
+    margin-bottom: 5px; /* Increase the gap between sections */
+    width: 100%; /* Ensure the section takes full width */
+  }
+  
+  .profile-section h3 {
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    color: #f8eeee; 
+  }
+  
+  .profile-section p,
+  .profile-section ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none; /* Remove default bullets */
+  }
+  
+  .profile-section ul {
+    padding-left: 25px; /* Adjust padding to accommodate custom bullets */
+  }
+  
+  .profile-section ul li {
+    margin-bottom: 10px;
+    position: relative; /* Position relative for custom bullets */
+  }
+  
+  .profile-section ul li::before {
+    content: '•';
+    color: #646cff;
+    font-size: 1.5em;
+    position: absolute;
+    left: -25px;
+    top: -5px;
+  }
+  
+  /* Specific styling for department list bullets */
+  .department-list li::before {
+    content: '•'; /* Custom bullet character */
+    color: #fae500; /* Pale yellow bullet color */
+    font-size: 1.5em; /* Custom bullet size */
+  }
+  
+  .profile-section ul li p {
+    margin: 0;
+  }
+  
+  .profile-section ul li p:first-child {
+    font-weight: bold;
+  }

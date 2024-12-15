@@ -1,0 +1,84 @@
+body {
+  background-color: #333; /* Dark background */
+  color: #fff; /* Light text color */
+  padding: 20px;
+}
+
+.profile-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-header {
+  display: flex;
+  justify-content: flex-start; /* Align to the left */
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-header h2 {
+  margin: 0;
+}
+
+.profile-content {
+  display: flex;
+  gap: 10px;
+}
+
+.profile-card {
+  flex: 1; /* Allow the card to take up its natural height */
+  background-color: #444; /* Slightly lighter dark background */
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.profile-bar-reviews {
+  flex: 3; /* Allow the reviews section to grow independently */
+  padding-left: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav {
+  background-color: #444;
+  width: fit-content;
+  border-radius: 10px;
+  height: auto; /* Adjust height to be auto */
+  padding: 1px 15px; /* Adjust padding to make the height shorter */
+}
+
+.nav ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+}
+
+.nav li {
+  cursor: pointer;
+  padding: 1px 10px; /* Adjust padding to make the height shorter */
+  color: #fff;
+  position: relative;
+}
+
+.nav li.active {
+  color: #2e9ef1; /* Change text color to blue */
+}
+
+.nav li.active::after {
+  content: '';
+  display: block;
+  margin: 0 auto;
+  width:90% ;  /* Adjust this value to make the underline shorter */
+  padding-top: 5px; /* Space between text and underline */
+  border-bottom: 2px solid  #2e9ef1;;
+}
+
+.reviews-section {
+  flex: 1;
+}
+
+.review-cards {
+  margin-top: 10px;
+}
