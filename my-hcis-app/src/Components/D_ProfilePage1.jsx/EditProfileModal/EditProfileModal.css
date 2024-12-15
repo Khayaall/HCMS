@@ -45,6 +45,13 @@
   border-radius: 50%;
   object-fit: cover;
   margin-right: 15px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.profile-img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 8px rgba(107, 94, 255, 0.6);
 }
 
 .instructions h4 {
@@ -57,11 +64,22 @@
   margin-bottom: 15px;
   margin-top: 0px;
 }
-.upload-buttons {
 
+.upload-buttons {
   display: flex;
-  flex-direction: row; /* Column layout */
-  gap: 10px;
+  flex-direction: row; /* Align buttons horizontally */
+  gap: 10px; /* Add space between buttons */
+  align-items: center; /* Align vertically with the profile picture */
+  margin-top: 10px; /* Adjust spacing above the buttons */
+  
+}
+/* Buttons Edit */
+.buttons-edit {
+  display: flex;
+  flex-direction: row; /* Align horizontally */
+  gap: 10px; /* Space between buttons */
+  justify-content: flex-start; /* Keep buttons aligned left */
+  align-items: center; /* Center vertically */
 }
 
 .upload-btn, .remove-btn {
@@ -69,19 +87,18 @@
   color: white;
   border: none;
   border-radius: 5px;
-  padding: 8px 12px;
   cursor: pointer;
   font-size: 12px;
   transition: background-color 0.3s;
-  width: 100px;
+  width: 75px;
   height: 40px;
 }
-
-.Buttons-edit{
+.upload-btn{
   display: flex;
-  flex-direction: row; /* Column layout */
-  gap: 10px;
+  justify-content: center;
+  align-items: center;
 }
+
 .remove-btn {
   background-color: #e53e3e;
 }
@@ -94,9 +111,8 @@
 .form-row {
   display: flex;
   gap: 20px;
-
+  
 }
-
 .form-group {
   flex: 1;
   display: flex;
@@ -177,6 +193,11 @@ textarea {
 
 .close-button:hover {
   opacity: 0.8;
+}
+
+/* Hides the input while keeping functionality */
+.upload-btn input[type="file"] {
+  display: none;
 }
 
 /* Responsive */
