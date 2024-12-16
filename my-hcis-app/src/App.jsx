@@ -4,6 +4,7 @@ import Navbar from "./Navbar/Navbar";
 import Sidebar from "./Navbar/Sidebar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import D_ProfilePage from "./Components/D_ProfilePage1.jsx/D_ProfilePage";
+import D_PatientList from "./Components/D_ProfilePage1.jsx/D_PatientList/D_PatientList";
 
 const App = () => {
   return (

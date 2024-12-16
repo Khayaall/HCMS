@@ -17,7 +17,8 @@ const D_ProfilePage = () => {
         <div className="profile-card"> 
           <D_ProfileCard 
             img="https://via.placeholder.com/150"
-            name="Dr. John"
+            firstName="Dr."
+            lastName="John Doe"
             specialty="Cardiologist"
             ratings="4.5"
             trust={95}
