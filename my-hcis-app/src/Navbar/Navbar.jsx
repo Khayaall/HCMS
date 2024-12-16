@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -25,13 +24,15 @@ const Navbar = () => {
     { id: 2, name: "Ziyad Elnady", job: "Pediatric", prof_img: dr_profile },
   ]);
   const [toggle, setToggle] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); // State to manage EditProfileModal visibility
+
   const ProfileMenu = () => {
     return (
       <div className="profile-list">
         <div className="containerP">
           <ul>
             <li>
-              <NavLink to="/profile" onClick={() => setIsModalOpen(true)}>
+              <NavLink to="#" onClick={() => setIsModalOpen(true)}>
                 <FontAwesomeIcon className="icon" icon={faUser} />
                 <p>Profile</p>
               </NavLink>
@@ -43,7 +44,7 @@ const Navbar = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="">
+              <NavLink to="#">
                 <FontAwesomeIcon className="icon" icon={faPowerOff} />
                 <p>Logout</p>
               </NavLink>
@@ -55,17 +56,7 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    setUser(user.filter((profile) => profile.id == 1));
-    //   const users = async () => {
-    //     try {
-    //       const response = fetch();
-    //       const data = await response.json();
-    //       // setUser(data);
-    //     } catch (error) {
-    //       console.log(error);
-    //     }
-    //   };
-    //   users();
+    setUser(user.filter((profile) => profile.id === 1));
   }, []);
 
   return (
@@ -96,8 +87,8 @@ const Navbar = () => {
           {user.map((users) => {
             const { id, name, job, prof_img } = users;
             return (
-              <div className="profile-icon" onClick={() => setToggle(!toggle)}>
-                <div key={id} className="profile-img">
+              <div className="profile-icon" onClick={() => setToggle(!toggle)} key={id}>
+                <div className="profile-img">
                   <img src={prof_img} alt="" />
                 </div>
                 <div className="profile-txt">
@@ -118,6 +109,17 @@ const Navbar = () => {
           })}
         </div>
       </div>
+      {isModalOpen && (
+        <EditProfileModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          profile={user[0]} // Pass the profile data
+          onSave={(updatedProfile) => {
+            // Handle the save action
+            setUser([updatedProfile]);
+          }}
+        />
+      )}
     </div>
   );
 };
