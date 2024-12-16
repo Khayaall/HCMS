@@ -24,13 +24,7 @@
 .profile-content {
   display: flex;
   gap: 10px;
-}
-
-.profile-card {
-  flex: 1;
-  background-color: #444;
-  padding: 20px;
-  border-radius: 10px;
+  margin-bottom: 12%;
 }
 
 .profile-bar-reviews {
@@ -42,18 +36,18 @@
 }
 
 .nav {
-  background-color: #444;
-  width: fit-content;
+  background-color: var(--sec-dark);
+  width: 38%;
   border-radius: 10px;
   height: auto;
-  padding: 1px 15px;
+  padding: 0.5rem 1.5rem;
 }
 
 .nav ul {
   list-style-type: none;
   padding: 0;
   display: flex;
-  gap: 20px;
+  justify-content: space-around;
 }
 
 .nav li {
@@ -78,6 +72,7 @@
 
 .reviews-section {
   flex: 1;
+  margin-top: 4%;
 }
 
 .review-cards {

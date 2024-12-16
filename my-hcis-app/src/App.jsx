@@ -5,6 +5,7 @@ import Sidebar from "./Navbar/Sidebar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import D_ProfilePage from "./Pages/Profile_Page/D_ProfilePage";
 import D_PatientList from "./Pages/D_patientList/D_PatientList";
+import EditProfileModal from "./Components/Mido/D_ProfilePage/EditProfileModal";
 
 const App = () => {
   return (
@@ -25,13 +26,16 @@ const App = () => {
               <Route path="/appointment" element />
             </Routes>
             <Routes>
-              <Route path="/mypatient" element />
+              <Route path="/mypatient" element={<D_PatientList />} />
             </Routes>
             <Routes>
               <Route path="/settings" element={<D_ProfilePage />} />
             </Routes>
             <Routes>
               <Route path="/" />
+            </Routes>
+            <Routes>
+              <Route path="/profile" element={<D_ProfilePage />} />
             </Routes>
           </div>
         </div>

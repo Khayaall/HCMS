@@ -3,7 +3,7 @@ import "../../../Pages/D_patientList/D_PatientList.css"; // Make sure to import 
 
 const PatientTable = ({ patients }) => {
   return (
-    <table>
+    <table className="patient-table">
       <thead>
         <tr>
           <th className="patient-name-header">Patient Name</th>
@@ -18,7 +18,7 @@ const PatientTable = ({ patients }) => {
       </thead>
       <tbody>
         {patients.map((patient) => (
-          <tr key={patient.id}>
+          <tr key={patient.id} className="patient-tr">
             <td className="patient-name">
               <img
                 src={patient.image}

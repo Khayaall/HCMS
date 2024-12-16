@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMagnifyingGlass,
@@ -11,6 +12,7 @@ import {
 import { faCircleQuestion, faUser } from "@fortawesome/free-regular-svg-icons";
 import dr_profile from "../assets/dr_profile.jpg";
 import "./bar.css";
+import EditProfileModal from "../Components/Mido/D_ProfilePage/EditProfileModal";
 
 const Navbar = () => {
   const [user, setUser] = useState([
@@ -29,16 +31,22 @@ const Navbar = () => {
         <div className="containerP">
           <ul>
             <li>
-              <FontAwesomeIcon className="icon" icon={faUser} />
-              <p>Profile</p>
+              <NavLink to="/profile" onClick={() => setIsModalOpen(true)}>
+                <FontAwesomeIcon className="icon" icon={faUser} />
+                <p>Profile</p>
+              </NavLink>
             </li>
             <li className="list-line">
-              <FontAwesomeIcon className="icon" icon={faGear} />
-              <p>Settings</p>
+              <NavLink to="/settings">
+                <FontAwesomeIcon className="icon" icon={faGear} />
+                <p>Settings</p>
+              </NavLink>
             </li>
             <li>
-              <FontAwesomeIcon className="icon" icon={faPowerOff} />
-              <p>Logout</p>
+              <NavLink to="">
+                <FontAwesomeIcon className="icon" icon={faPowerOff} />
+                <p>Logout</p>
+              </NavLink>
             </li>
           </ul>
         </div>

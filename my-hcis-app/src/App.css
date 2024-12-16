@@ -1,21 +1,21 @@
 .app {
-  width: 100vw;
-  /* height: 100vh; */
+  width: 99vw;
+  /* height: 100%; */
 }
 .container {
   width: 100%;
   height: 100%;
   display: grid;
   grid-template-columns: 12% 88%;
-  grid-template-rows: 10% 88%;
+  grid-template-rows: 7% 90%;
   grid-template-areas:
     "s n"
     "s d";
 }
 .sidebar-content {
   grid-area: s;
-  height: 100%;
-  /* width: 12%; */
+  height: 103%;
+  min-height: 98vh;
   /* position: fixed;
   top: 0;
   left: 0; */
@@ -25,9 +25,7 @@
 }
 .navbar-content {
   grid-area: n;
-  /* display: inline; */
-  /* width: 88%;
-  height: 10%; */
+  /* height: 10%;  */
   /* position: fixed;
   top: 0;
   left: 13.5%; */
@@ -36,5 +34,6 @@
 }
 .data {
   grid-area: d;
-  /* padding: 0.4rem 0.8rem; */
+  padding: 0.4rem 2.8rem;
+  margin-bottom: 12%;
 }

@@ -1,8 +1,9 @@
 .profile-card {
   display: flex;
+  flex: 1;
   flex-direction: column;
   align-items: center;
-  background-color: #444; /* Slightly lighter dark background */
+  background-color: var(--sec-dark); /* Slightly lighter dark background */
   padding: 20px;
   border-radius: 10px;
   color: #fff;

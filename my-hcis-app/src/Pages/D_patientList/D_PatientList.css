@@ -14,65 +14,68 @@
 }
 
 .filter-container {
-  margin-left: auto; /* Push the filter container to the far right */
+  margin-left: auto;
 }
 
-table {
+.patient-table {
   width: 100%;
-  border-collapse: separate; /* Use separate border model to allow spacing */
-  border-spacing: 0 8.5px; /* Add gap between rows */
+  border-collapse: separate;
+  border-spacing: 0 8.5px;
   margin-top: 20px;
 }
 
-th,
-td {
-  border: none; /* Remove the border between rows and columns */
+.patient-table th,
+.patient-table td {
+  border: none;
   padding: 8px;
-  text-align: center; /* Center align all table data */
+  text-align: center;
 }
 
-th {
-  background-color: #333; /* Set the background color of the heading row */
-  color: #f9f9f9; /* Ensure the text color is readable */
+.patient-table th {
+  background-color: var(--dark-blue);
+  color: #f9f9f9;
   height: 30px;
 }
 
-tr {
-  background-color: #555; /* Set the background color of all rows */
+.patient-tr {
+  background-color: var(--sec-dark);
+  border-radius: 20px !important;
+  border: 10px solid red !important;
 }
 
-tr:first-child td:first-child {
-  border-top-left-radius: 4px; /* Round top-left corner */
+/* tr:first-child td:first-child {
+  border-top-left-radius: 4px;
 }
 
 tr:first-child td:last-child {
-  border-top-right-radius: 4px; /* Round top-right corner */
+  border-top-right-radius: 4px;
 }
 
 tr:last-child td:first-child {
-  border-bottom-left-radius: 4px; /* Round bottom-left corner */
+  border-bottom-left-radius: 4px;
 }
 
 tr:last-child td:last-child {
-  border-bottom-right-radius: 4px; /* Round bottom-right corner */
+  border-bottom-right-radius: 4px;
 }
 
 td:first-child {
-  border-top-left-radius: 4px; /* Round top-left corner */
-  border-bottom-left-radius: 4px; /* Round bottom-left corner */
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
 }
 
 td:last-child {
-  border-top-right-radius: 4px; /* Round top-right corner */
-  border-bottom-right-radius: 4px; /* Round bottom-right corner */
-}
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+} */
 
 td.patient-name {
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* Align items to the start */
-  text-align: left; /* Left align patient names in the data rows */
+  justify-content: flex-start;
+  text-align: left;
   margin-left: 15px;
+  margin-top: 0.5rem;
 }
 
 .patient-img {
@@ -92,12 +95,12 @@ td.patient-name {
 }
 
 .action-button:hover {
-  color: #63b3ed; /* Lighter blue on hover */
+  color: #63b3ed;
 }
 
 .pagination-container {
   display: flex;
-  justify-content: flex-end; /* Align pagination controls to the right */
+  justify-content: flex-end;
   margin-top: 12px;
 }
 
@@ -107,16 +110,16 @@ td.patient-name {
 
 .pagination button {
   background: none;
-  border: none; /* Make border invisible */
+  border: none;
   color: #a0aec0;
   padding: 5px 5px;
   margin: 0 5px;
   cursor: pointer;
-  font-size: 14px; /* Make numbers smaller */
+  font-size: 14px;
 }
 
 .pagination button.active {
-  color: #646cff; /* Change number color when selected */
+  color: #646cff;
 }
 
 .pagination button:hover {
@@ -129,8 +132,8 @@ td.patient-name {
 }
 
 .pagination button.arrow {
-  font-size: 20px; /* Adjust font size to make arrows smaller */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add shadow effect */
-  border-radius: 4px; /* Add rounded corners */
-  padding: 2px 8px; /* Adjust padding to make the height smaller */
+  font-size: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  padding: 2px 8px;
 }

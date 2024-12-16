@@ -124,19 +124,28 @@
   background: var(--sec-dark);
   right: 28%;
   border-radius: 10px;
+  z-index: 7;
 }
 .profile-list > .containerP > ul {
   list-style: none;
   /* padding: 1rem 0; */
 }
-.profile-list > .containerP > ul > li {
+/* .profile-list > .containerP > ul > li {
+  display: flex;
+  align-items: center;
+  padding: 1.4rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+} */
+.containerP a {
+  color: var(--white);
   display: flex;
   align-items: center;
   padding: 1.4rem 1rem;
   cursor: pointer;
   transition: all 0.2s ease;
 }
-.profile-list > .containerP > ul > li > p {
+.profile-list > .containerP > ul > li > a > p {
   margin-left: 8%;
 }
 .profile-list > .containerP > ul > li:hover {

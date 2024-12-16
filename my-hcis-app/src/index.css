@@ -20,6 +20,8 @@
   --red: #ff5263;
   --white: #f2f3f4;
   --light-grey: #a3a4a5;
+  --grey: #323a46;
+  --dark-blue: #1b2432;
 }
 * {
   margin: 0;
