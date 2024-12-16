@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import CustomDropdown from "../../CustomDropdown";
-import FilterDropdown from "../../FilterDropdown";
-import PatientTable from "./PatientTable";
-import './D_PatientList.css'; // Make sure to import the CSS file
-import patientsData from '../../Patients.json'; // Import the JSON data
+import React, { useState } from "react";
+import CustomDropdown from "../../Components/Mido/D_PatientList/CustomDropdown";
+import FilterDropdown from "../../Components/Mido/D_PatientList/FilterDropdown";
+import PatientTable from "../../Components/Mido/D_PatientList/PatientTable";
+import "./D_PatientList.css"; // Make sure to import the CSS file
+import patientsData from "../../Components/Mido/D_PatientList/Patients.json"; // Import the JSON data
 
 const D_PatientList = () => {
   const [number, setNumber] = useState(10); // Manage rows per page
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState("");
   const [filteredPatients, setFilteredPatients] = useState(patientsData);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -19,22 +19,22 @@ const D_PatientList = () => {
   const applyFilter = (filter) => {
     let filteredData = [...patientsData];
     switch (filter) {
-      case 'name-asc':
+      case "name-asc":
         filteredData.sort((a, b) => a.name.localeCompare(b.name));
         break;
-      case 'name-desc':
+      case "name-desc":
         filteredData.sort((a, b) => b.name.localeCompare(a.name));
         break;
-      case 'date':
+      case "date":
         filteredData.sort((a, b) => new Date(a.date) - new Date(b.date));
         break;
-      case 'disease':
+      case "disease":
         filteredData.sort((a, b) => a.disease.localeCompare(b.disease));
         break;
-      case 'status':
+      case "status":
         filteredData.sort((a, b) => a.status.localeCompare(b.status));
         break;
-      case 'gender':
+      case "gender":
         filteredData.sort((a, b) => a.gender.localeCompare(b.gender));
         break;
       default:
@@ -69,23 +69,39 @@ const D_PatientList = () => {
     if (totalPages <= 5) {
       for (let i = 1; i <= totalPages; i++) {
         paginationButtons.push(
-          <button key={i} onClick={() => paginate(i)} className={currentPage === i ? 'active' : ''}>
+          <button
+            key={i}
+            onClick={() => paginate(i)}
+            className={currentPage === i ? "active" : ""}
+          >
             {i}
           </button>
         );
       }
     } else {
       paginationButtons.push(
-        <button key={1} onClick={() => paginate(1)} className={currentPage === 1 ? 'active' : ''}>
+        <button
+          key={1}
+          onClick={() => paginate(1)}
+          className={currentPage === 1 ? "active" : ""}
+        >
           1
         </button>
       );
       if (currentPage > 3) {
         paginationButtons.push(<span key="ellipsis1">...</span>);
       }
-      for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+      for (
+        let i = Math.max(2, currentPage - 1);
+        i <= Math.min(totalPages - 1, currentPage + 1);
+        i++
+      ) {
         paginationButtons.push(
-          <button key={i} onClick={() => paginate(i)} className={currentPage === i ? 'active' : ''}>
+          <button
+            key={i}
+            onClick={() => paginate(i)}
+            className={currentPage === i ? "active" : ""}
+          >
             {i}
           </button>
         );
@@ -94,7 +110,11 @@ const D_PatientList = () => {
         paginationButtons.push(<span key="ellipsis2">...</span>);
       }
       paginationButtons.push(
-        <button key={totalPages} onClick={() => paginate(totalPages)} className={currentPage === totalPages ? 'active' : ''}>
+        <button
+          key={totalPages}
+          onClick={() => paginate(totalPages)}
+          className={currentPage === totalPages ? "active" : ""}
+        >
           {totalPages}
         </button>
       );
@@ -120,11 +140,21 @@ const D_PatientList = () => {
         <PatientTable patients={currentRows} />
         <div className="pagination-container">
           <div className="pagination">
-            <button className="arrow" onClick={handlePreviousPage} disabled={currentPage === 1}>
+            <button
+              className="arrow"
+              onClick={handlePreviousPage}
+              disabled={currentPage === 1}
+            >
               &lsaquo;
             </button>
             {renderPaginationButtons()}
-            <button className="arrow" onClick={handleNextPage} disabled={currentPage === Math.ceil(filteredPatients.length / number)}>
+            <button
+              className="arrow"
+              onClick={handleNextPage}
+              disabled={
+                currentPage === Math.ceil(filteredPatients.length / number)
+              }
+            >
               &rsaquo;
             </button>
           </div>

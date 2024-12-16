@@ -1,7 +1,6 @@
 .app {
   width: 100vw;
   /* height: 100vh; */
-  /* overflow-x: hidden; */
 }
 .container {
   width: 100%;
@@ -37,4 +36,5 @@
 }
 .data {
   grid-area: d;
+  /* padding: 0.4rem 0.8rem; */
 }

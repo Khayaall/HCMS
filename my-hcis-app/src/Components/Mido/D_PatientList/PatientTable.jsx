@@ -1,5 +1,5 @@
-import React from 'react';
-import './D_PatientList.css'; // Make sure to import the CSS file
+import React from "react";
+import "../../../Pages/D_patientList/D_PatientList.css"; // Make sure to import the CSS file
 
 const PatientTable = ({ patients }) => {
   return (
@@ -20,7 +20,11 @@ const PatientTable = ({ patients }) => {
         {patients.map((patient) => (
           <tr key={patient.id}>
             <td className="patient-name">
-              <img src={patient.image} alt={patient.name} className="patient-img" />
+              <img
+                src={patient.image}
+                alt={patient.name}
+                className="patient-img"
+              />
               {patient.name}
             </td>
             <td>{patient.patientID}</td>

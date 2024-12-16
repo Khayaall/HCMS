@@ -20,7 +20,7 @@ const Navbar = () => {
       job: "Pediatric",
       prof_img: dr_profile,
     },
-    { id: 2, name: "Ziyad Elnady", job: "Pediatric", prof_img: { dr_profile } },
+    { id: 2, name: "Ziyad Elnady", job: "Pediatric", prof_img: dr_profile },
   ]);
   const [toggle, setToggle] = useState(false);
   const ProfileMenu = () => {

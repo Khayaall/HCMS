@@ -51,7 +51,7 @@ const EditProfileModal = ({ isOpen, onClose, profile, onSave }) => {
             <img
               src={image || "https://via.placeholder.com/300"}
               alt="profile"
-              className="profile-img"
+              className="profile-imge"
             />
           </label>
           <input

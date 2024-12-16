@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import EditProfileModal from "../EditProfileModal/EditProfileModal";
+import EditProfileModal from "./EditProfileModal";
 import "./D_ProfileCard.css";
 
 const D_ProfileCard = (props) => {
@@ -36,13 +36,15 @@ const D_ProfileCard = (props) => {
             <i key={`empty-${index}`} className="far fa-star"></i>
           ))}
       </>
-    ); 
+    );
   };
 
   return (
-   <div className="profile-card">
-      <img src={profile.img} alt="Profile" className="profile-img" />
-      <h3>{profile.firstName} {profile.lastName}</h3>
+    <div className="profile-card">
+      <img src={profile.img} alt="Profile" className="profile-imgg" />
+      <h3>
+        {profile.firstName} {profile.lastName}
+      </h3>
       <p>{profile.specialty}</p>
       <button className="edit-button" onClick={() => setIsModalOpen(true)}>
         <i className="fas fa-pen"></i> Edit Profile

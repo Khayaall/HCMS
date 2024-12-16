@@ -49,7 +49,7 @@
   transition: transform 0.3s ease;
 }
 
-.profile-img:hover {
+.profile-imge:hover {
   transform: scale(1.05);
   box-shadow: 0 0 8px rgba(107, 94, 255, 0.6);
 }
@@ -71,7 +71,6 @@
   gap: 10px; /* Add space between buttons */
   align-items: center; /* Align vertically with the profile picture */
   margin-top: 10px; /* Adjust spacing above the buttons */
-  
 }
 /* Buttons Edit */
 .buttons-edit {
@@ -94,7 +93,7 @@
   width: 75px;
   height: 40px;
 }
-.upload-btn{
+.upload-btn {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -113,7 +112,6 @@
 .form-row {
   display: flex;
   gap: 20px;
-  
 }
 .form-group {
   flex: 1;
