@@ -10,9 +10,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faSlack } from "@fortawesome/free-brands-svg-icons";
 
-import Clinic_logo from "../assets/Clinic_logo.jpg";
-import Clinic_logo1 from "../assets/Clinic_logo1.jpg";
-import Clinic_logo2 from "../assets/Clinic_logo2.jpg";
 import Clinic_logo3 from "../assets/Clinic_logo3.png";
 const Sidebar = () => {
   return (

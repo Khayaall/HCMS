@@ -3,7 +3,7 @@ import "./App.css";
 import Navbar from "./Navbar/Navbar";
 import Sidebar from "./Navbar/Sidebar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import D_ProfilePage from "./Pages/D_ProfilePage";
+import D_ProfilePage from "./Components/D_ProfilePage1.jsx/D_ProfilePage";
 
 const App = () => {
   return (
@@ -18,13 +18,13 @@ const App = () => {
           </div>
           <div className="data">
             <Routes>
-              <Route path="/overview" element={<D_ProfilePage />} />
+              <Route path="/overview" element />
             </Routes>
             <Routes>
-              <Route path="/appointment" element={<D_ProfilePage />} />
+              <Route path="/appointment" element />
             </Routes>
             <Routes>
-              <Route path="/mypatient" element={<D_ProfilePage />} />
+              <Route path="/mypatient" element />
             </Routes>
             <Routes>
               <Route path="/settings" element={<D_ProfilePage />} />

@@ -11,12 +11,12 @@
   max-height: 365px; /* Set a maximum height */
 }
 
-.profile-img {
+.profile-imgg {
   width: 100px;
   height: 100px;
   border-radius: 50%;
   margin-bottom: 10px;
-  object-fit: cover; /* Ensures the image is cropped to fit the container */
+  object-fit: cover;
 }
 
 h3 {
@@ -51,7 +51,8 @@ p {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
 }
 
-.ratings, .trust {
+.ratings,
+.trust {
   text-align: center;
   margin: 10px 0;
 }

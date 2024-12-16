@@ -23,16 +23,24 @@ const D_ProfileCard = (props) => {
 
     return (
       <>
-        {Array(fullStars).fill().map((_, index) => <i key={`full-${index}`} className="fas fa-star"></i>)}
+        {Array(fullStars)
+          .fill()
+          .map((_, index) => (
+            <i key={`full-${index}`} className="fas fa-star"></i>
+          ))}
         {halfStar && <i key="half" className="fas fa-star-half-alt"></i>}
-        {Array(emptyStars).fill().map((_, index) => <i key={`empty-${index}`} className="far fa-star"></i>)}
+        {Array(emptyStars)
+          .fill()
+          .map((_, index) => (
+            <i key={`empty-${index}`} className="far fa-star"></i>
+          ))}
       </>
     );
   };
 
   return (
     <div className="profile-card">
-      <img src={profile.img} alt="Profile" className="profile-img" />
+      <img src={profile.img} alt="Profile" className="profile-imgg" />
       <h3>{profile.name}</h3>
       <p>{profile.specialty}</p>
       <button className="edit-button" onClick={() => setIsModalOpen(true)}>
@@ -45,7 +53,10 @@ const D_ProfileCard = (props) => {
       <div className="trust">
         <p>Trust: {profile.trust}%</p>
         <div className="trust-bar">
-          <div className="trust-bar-fill" style={{ width: `${profile.trust}%` }}></div>
+          <div
+            className="trust-bar-fill"
+            style={{ width: `${profile.trust}%` }}
+          ></div>
         </div>
       </div>
       <EditProfileModal

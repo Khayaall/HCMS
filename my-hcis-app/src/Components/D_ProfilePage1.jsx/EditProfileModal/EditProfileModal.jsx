@@ -13,7 +13,7 @@ const EditProfileModal = ({ isOpen, onClose, profile, onSave }) => {
   const [image, setImage] = useState(profile.image || "");
 
   const handleSave = () => {
-    onSave({ firstName, lastName,specialty, bio, college, degree, image });
+    onSave({ firstName, lastName, specialty, bio, college, degree, image });
     onClose();
   };
 
@@ -32,16 +32,19 @@ const EditProfileModal = ({ isOpen, onClose, profile, onSave }) => {
           <img
             src={image || "https://via.placeholder.com/300"}
             alt="profile"
-            className="profile-img"
+            className="profile-imge"
           />
           <div className="upload-buttons">
             <div className="instructions" onChange>
               <h4>Upload your picture</h4>
-              <p>For best results, use an image at least 150px by 150px in either JPEG or PNG</p>
+              <p>
+                For best results, use an image at least 150px by 150px in either
+                JPEG or PNG
+              </p>
             </div>
             <div className="Buttons-edit">
-            <button className="upload-btn">Upload</button>
-            <button className="remove-btn">Remove</button>
+              <button className="upload-btn">Upload</button>
+              <button className="remove-btn">Remove</button>
             </div>
           </div>
         </div>
@@ -92,17 +95,18 @@ const EditProfileModal = ({ isOpen, onClose, profile, onSave }) => {
               value={college}
               onChange={(e) => setCollege(e.target.value)}
             >
-              <option value="Dhaka Medical College">Dhaka Medical College</option>
-              <option value="Harvard Medical School">Harvard Medical School</option>
+              <option value="Dhaka Medical College">
+                Dhaka Medical College
+              </option>
+              <option value="Harvard Medical School">
+                Harvard Medical School
+              </option>
               <option value="Other">Other</option>
             </select>
           </div>
           <div className="form-group">
             <label>Degree</label>
-            <select
-              value={degree}
-              onChange={(e) => setDegree(e.target.value)}
-            >
+            <select value={degree} onChange={(e) => setDegree(e.target.value)}>
               <option value="M.B.B.S">M.B.B.S</option>
               <option value="M.D.">M.D.</option>
               <option value="Other">Other</option>
@@ -112,8 +116,12 @@ const EditProfileModal = ({ isOpen, onClose, profile, onSave }) => {
 
         {/* Action Buttons */}
         <div className="action-buttons">
-          <button className="cancel-btn" onClick={onClose}>Cancel</button>
-          <button className="save-btn" onClick={handleSave}>Save</button>
+          <button className="cancel-btn" onClick={onClose}>
+            Cancel
+          </button>
+          <button className="save-btn" onClick={handleSave}>
+            Save
+          </button>
         </div>
       </div>
     </div>

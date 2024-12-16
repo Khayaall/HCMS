@@ -1,8 +1,8 @@
-body {
-  background-color: #333; /* Dark background */
-  color: #fff; /* Light text color */
+/* body {
+  background-color: #333;
+  color: #fff;
   padding: 20px;
-}
+} */
 
 .profile-page {
   display: flex;
@@ -11,7 +11,7 @@ body {
 
 .profile-header {
   display: flex;
-  justify-content: flex-start; /* Align to the left */
+  justify-content: flex-start;
   align-items: center;
   margin-bottom: 20px;
 }
@@ -26,14 +26,14 @@ body {
 }
 
 .profile-card {
-  flex: 1; /* Allow the card to take up its natural height */
-  background-color: #444; /* Slightly lighter dark background */
+  flex: 1;
+  background-color: #444;
   padding: 20px;
   border-radius: 10px;
 }
 
 .profile-bar-reviews {
-  flex: 3; /* Allow the reviews section to grow independently */
+  flex: 3;
   padding-left: 20px;
   border-radius: 10px;
   display: flex;
@@ -44,8 +44,8 @@ body {
   background-color: #444;
   width: fit-content;
   border-radius: 10px;
-  height: auto; /* Adjust height to be auto */
-  padding: 1px 15px; /* Adjust padding to make the height shorter */
+  height: auto;
+  padding: 1px 15px;
 }
 
 .nav ul {
@@ -57,22 +57,22 @@ body {
 
 .nav li {
   cursor: pointer;
-  padding: 1px 10px; /* Adjust padding to make the height shorter */
+  padding: 1px 10px;
   color: #fff;
   position: relative;
 }
 
 .nav li.active {
-  color: #2e9ef1; /* Change text color to blue */
+  color: #2e9ef1;
 }
 
 .nav li.active::after {
-  content: '';
+  content: "";
   display: block;
   margin: 0 auto;
-  width:90% ;  /* Adjust this value to make the underline shorter */
-  padding-top: 5px; /* Space between text and underline */
-  border-bottom: 2px solid  #2e9ef1;;
+  width: 90%;
+  padding-top: 5px;
+  border-bottom: 2px solid #2e9ef1;
 }
 
 .reviews-section {

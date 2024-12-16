@@ -1,6 +1,7 @@
 .app {
   width: 100vw;
-  height: 100vh;
+  /* height: 100vh; */
+  /* overflow-x: hidden; */
 }
 .container {
   width: 100%;
@@ -14,7 +15,7 @@
 }
 .sidebar-content {
   grid-area: s;
-  /* height: 98%; */
+  height: 100%;
   /* width: 12%; */
   /* position: fixed;
   top: 0;
