@@ -48,6 +48,16 @@ doctor_routes.get('/view_image', async (req, res) => {
         res.status(500).send('An error occurred while viewing the image');
     }
 });
+doctor_routes.get('/doctor', async (req, res) => { 
+    const d_id = req.session.authorization.id;
+    try {
+        const doctor = await pool.query("SELECT * FROM doctor WHERE doctor_id = $1", [d_id]);
+        res.send(doctor.rows[0]);
+    } catch (error) {
+        console.error('Error fetching doctor profile:', error);
+        res.status(500).send('An error occurred while fetching the doctor profile');
+    }
+});
 
 doctor_routes.get('/all', async (req, res) => {
     const doctors = await pool.query("SELECT * FROM doctor");

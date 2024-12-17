@@ -13,6 +13,8 @@ create table admin
     address  text
 );
 
+alter table admin
+    owner to postgres;
 
 create table doctor
 (
@@ -37,6 +39,8 @@ create table doctor
     end_time       time
 );
 
+alter table doctor
+    owner to postgres;
 
 create table patient
 (
@@ -55,6 +59,8 @@ create table patient
     job          text
 );
 
+alter table patient
+    owner to postgres;
 
 create table receptionist
 (
@@ -72,6 +78,8 @@ create table receptionist
     account_status  varchar(50)  not null
 );
 
+alter table receptionist
+    owner to postgres;
 
 create table appointment
 (
@@ -94,6 +102,8 @@ create table appointment
     status         text
 );
 
+alter table appointment
+    owner to postgres;
 
 create table prescription
 (
@@ -113,6 +123,8 @@ create table prescription
     note            text
 );
 
+alter table prescription
+    owner to postgres;
 
 create table rating_review
 (
@@ -131,6 +143,8 @@ create table rating_review
     comment    text
 );
 
+alter table rating_review
+    owner to postgres;
 
 create table infant_medical_record
 (
@@ -150,6 +164,8 @@ create table infant_medical_record
     feeding_method      varchar(50)
 );
 
+alter table infant_medical_record
+    owner to postgres;
 
 create table obstetrics_medical_record
 (
@@ -172,6 +188,8 @@ create table obstetrics_medical_record
     c_treatment_period      varchar(2)
 );
 
+alter table obstetrics_medical_record
+    owner to postgres;
 
 create table patient_ultraimages
 (
@@ -180,4 +198,7 @@ create table patient_ultraimages
             references patient,
     ultraimage text
 );
+
+alter table patient_ultraimages
+    owner to postgres;
 
