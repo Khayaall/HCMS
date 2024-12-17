@@ -4,6 +4,7 @@ import D_ProfileCard from "../../Components/Mido/D_ProfilePage/D_ProfileCard";
 import NavBar from "../../Components/Mido/D_ProfilePage/NavBar";
 import ReviewsSection from "../../Components/Mido/D_ProfilePage/ReviewsSection";
 import My_Profile from "../../Components/Mido/D_ProfilePage/My_Profile";
+import ChangePassword from "../../Components/Mido/D_ProfilePage/ChangePassword";
 
 const D_ProfilePage = () => {
   const [activeTab, setActiveTab] = useState("My Profile");
@@ -28,6 +29,7 @@ const D_ProfilePage = () => {
           <NavBar activeTab={activeTab} setActiveTab={setActiveTab} />
           {activeTab === "My Profile" && <My_Profile />}
           {activeTab === "Reviews" && <ReviewsSection />}
+          {activeTab === "Change Password" && <ChangePassword />}
         </div>
       </div>
     </div>
