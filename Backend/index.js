@@ -9,7 +9,6 @@ const authMiddleware = require('./middlewares/auth');
 const sessionMiddleware = require('./middlewares/session');
 const roleAuth = require('./middlewares/roleAuth'); 
 require('dotenv').config();
-const { Pool } = require('pg');
 const app = express();
 
 app.use(express.json());
