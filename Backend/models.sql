@@ -14,7 +14,6 @@ create table admin
 );
 
 
-
 create table doctor
 (
     doctor_id      varchar(50)  not null
@@ -31,11 +30,12 @@ create table doctor
     address        text,
     specialty      varchar(100),
     about_me       text,
-    starting_hour  time not null,
-    finishing_hour time not null,
-    account_status varchar(50)
+    start_time     time,
+    account_status varchar(50),
+    image_url      text,
+    education      text,
+    end_time       time
 );
-
 
 
 create table patient
@@ -51,7 +51,8 @@ create table patient
     phone        varchar(15),
     dob          date,
     gender       char(10),
-    address      text
+    address      text,
+    job          text
 );
 
 
@@ -78,14 +79,19 @@ create table appointment
         primary key,
     patient_id     integer
         references patient
+            on delete cascade
+        constraint fk_patient
+            references patient
             on delete cascade,
     doctor_id      varchar(50)
         constraint appointment_doctor_doctor_id_fk
             references doctor,
     date           date not null,
-    time           time not null,
+    start_time     time not null,
     diagnosis      text,
-    treatment      text
+    treatment      text,
+    end_time       time,
+    status         text
 );
 
 
@@ -103,10 +109,9 @@ create table prescription
         references patient
             on delete cascade,
     date_issue      date not null,
-    medication      text not null,
+    medication      text,
     note            text
 );
-
 
 
 create table rating_review
@@ -125,7 +130,6 @@ create table rating_review
             check ((rating >= (1)::double precision) AND (rating <= (5)::double precision)),
     comment    text
 );
-
 
 
 create table infant_medical_record
@@ -159,7 +163,6 @@ create table obstetrics_medical_record
     notes                   text,
     treatment               text,
     patient_history         text,
-    ultra_image             bytea,
     pregnancy_stage         varchar(50),
     labor_method            varchar(50),
     menstrual_cycle_details text,
@@ -169,4 +172,12 @@ create table obstetrics_medical_record
     c_treatment_period      varchar(2)
 );
 
+
+create table patient_ultraimages
+(
+    patient_id integer
+        constraint patient_patient_id_fk
+            references patient,
+    ultraimage text
+);
 
