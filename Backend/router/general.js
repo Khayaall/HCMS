@@ -137,7 +137,26 @@ public_users.post('/login', async (req, res) => {
     }
 });
 
+public_users.get('/statistics', async (req, res) => {
+    try {
+        const totalPatients = await pool.query("SELECT COUNT(*) AS total_patients FROM patient");
+        const totalAppointments = await pool.query("SELECT COUNT(*) AS total_appointments FROM appointment");
+        const totalDoctors = await pool.query("SELECT COUNT(*) AS total_doctors FROM doctor");
+        const totalReviews = await pool.query("SELECT COUNT(*) AS total_reviews FROM rating_review");
 
+        const statistics = {
+            total_patients: totalPatients.rows[0].total_patients,
+            total_appointments: totalAppointments.rows[0].total_appointments,
+            total_doctors: totalDoctors.rows[0].total_doctors,
+            total_reviews: totalReviews.rows[0].total_reviews
+        };
+
+        res.json(statistics);
+    } catch (error) {
+        console.error('Error fetching statistics:', error);
+        res.status(500).send('An error occurred while fetching statistics');
+    }
+});
 
 
 

@@ -73,7 +73,7 @@ doctor_routes.get('/reviews', async (req, res) => {
 
 doctor_routes.post('/edit_profile', async (req, res) => {
     const d_id = req.session.authorization.id;
-    const fields = ['f_name', 'l_name', 'email', 'password', 'dob', 'phone', 'gender', 'experience', 'specialty', 'about_me'];
+    const fields = ['f_name', 'l_name', 'email', 'password', 'dob', 'phone', 'gender', 'experience', 'specialty', 'about_me', 'education'];
     const updates = [];
     const values = [];
 
@@ -163,5 +163,110 @@ doctor_routes.get('/get_upcoming_appointments', async (req, res) => {
     }
 });
 
+doctor_routes.get('/statistics', async (req, res) => {
+    const d_id = req.session.authorization.id;
+
+    try {
+        const totalAppointments = await pool.query("SELECT COUNT(*) FROM appointment WHERE doctor_id = $1", [d_id]);
+        const totalPatients = await pool.query("SELECT COUNT(DISTINCT patient_id) FROM appointment WHERE doctor_id = $1", [d_id]);
+        const totalReviews = await pool.query("SELECT COUNT(*) FROM rating_review WHERE doctor_id = $1", [d_id]);
+        const totalPrescriptions = await pool.query("SELECT COUNT(*) FROM prescription WHERE doctor_id = $1", [d_id]);
+
+        const statistics = {
+            total_appointments: totalAppointments.rows[0].count,
+            total_patients: totalPatients.rows[0].count,
+            total_reviews: totalReviews.rows[0].count,
+            total_prescriptions: totalPrescriptions.rows[0].count
+        };
+
+        res.json(statistics);
+    } catch (error) {
+        console.error('Error fetching statistics:', error);
+        res.status(500).send('An error occurred while fetching statistics');
+    }
+});
+
+doctor_routes.post('/edit_medical_record/:patient_id', upload.single('image'), async (req, res) => {
+    const d_id = req.session.authorization.id; 
+    const p_id = req.params.patient_id;
+    const imageUrl = req.file ? path.join('uploads', req.file.filename) : null;
+    
+    try {
+        const patient_type_result = await pool.query("SELECT patient_type FROM patient WHERE patient_id = $1", [p_id]);
+        if (patient_type_result.rows.length === 0) {
+            return res.status(404).send('Patient not found');
+        }
+
+        const patient_type = patient_type_result.rows[0].patient_type.toLowerCase();
+        console.log('Patient type:', patient_type);
+
+        let patient;
+        let fields = [];
+        if (patient_type === 'pediatric') {
+            patient = 'infant';
+            fields = ['notes', 'diagnosis', 'treatment', 'juandice', 'vaccination_history'];
+        } else {
+            patient = 'obstetrics';
+            fields = ['notes', 'diagnosis', 'treatment', 'cancer_stage', 'cancer_type', 'c_treatment_period'];
+        }
+
+        const updates = [];
+        const values = [];
+
+        fields.forEach((field) => {
+            if (req.body[field]) {
+                updates.push(`${field} = $${updates.length + 1}`);
+                values.push(req.body[field]);
+            }
+        });
+
+        if (imageUrl) {
+            try {
+                await pool.query(
+                    "INSERT INTO patient_ultraimages(patient_id, ultraimage) VALUES ($1, $2)", 
+                    [p_id, imageUrl]
+                );
+            } catch (error) {
+                console.error('Error uploading image:', error);
+                return res.status(500).send('An error occurred while uploading the image');
+            }
+        }
+
+    
+        if (updates.length === 0) {
+            return res.status(400).send('No fields to update');
+        }
+
+        values.push(p_id);
+
+        const updateQuery = `
+            UPDATE ${patient}_medical_record
+            SET ${updates.join(', ')}
+            WHERE patient_id = $${updates.length + 1}`;
+        
+        try {
+            const result = await pool.query(updateQuery, values);
+
+            // If no rows were updated, perform an INSERT instead
+            if (result.rowCount === 0) {
+                const insertFields = fields.filter(field => req.body[field]);
+                const insertPlaceholders = insertFields.map((_, index) => `$${index + 2}`);
+                const insertQuery = `
+                    INSERT INTO ${patient}_medical_record (patient_id, ${insertFields.join(', ')})
+                    VALUES ($1, ${insertPlaceholders.join(', ')})`;
+
+                await pool.query(insertQuery, [p_id, ...insertFields.map(field => req.body[field])]);
+            }
+
+            res.send('Medical record updated successfully');
+        } catch (error) {
+            console.error('Error updating medical record:', error);
+            res.status(500).send('An error occurred while updating the medical record');
+        }
+    } catch (error) {
+        console.error('Error retrieving patient type:', error);
+        res.status(500).send('An error occurred while retrieving the patient information');
+    }
+});
 
 module.exports.authenticated = doctor_routes;
