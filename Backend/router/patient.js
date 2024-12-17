@@ -177,17 +177,24 @@ patient_routes.post('/edit-medical-record', async (req, res) => {
 });
 
 patient_routes.post('/new-appointment', async (req, res) => {
-    const { doctor_id, date, start_time, end_time } = req.body;
+    const { doctor_id, date, start_time } = req.body;
     const patient_id = req.session.authorization.id;
 
     try {
-        // Parse and construct Date object for the appointment
+        // Construct Date object for the appointment start time
         const appointmentStartDateTime = new Date(`${date}T${start_time}`);
-        const appointmentEndDateTime = new Date(`${date}T${end_time}`);
+
+        // Check if the constructed start date is valid
+        if (isNaN(appointmentStartDateTime.getTime())) {
+            return res.status(400).send("Invalid date or time format.");
+        }
+
+        // Calculate the end time by adding 30 minutes to the start time
+        const appointmentEndDateTime = new Date(appointmentStartDateTime.getTime() + 30 * 60000);
 
         // Check if the appointment date and time are in the past
         const now = new Date();
-        if (appointmentStartDateTime < now || appointmentEndDateTime < now) {
+        if (appointmentStartDateTime < now) {
             return res.status(400).send("Appointment date and time cannot be in the past.");
         }
 
@@ -199,8 +206,8 @@ patient_routes.post('/new-appointment', async (req, res) => {
 
         // Check if the appointment is within the doctor's working hours
         const { start_time: doctor_start_time, end_time: doctor_end_time } = doctor.rows[0];
-        const doctorStartDateTime = new Date(`${date}T${doctor_start_time}`);
-        const doctorEndDateTime = new Date(`${date}T${doctor_end_time}`);
+        const doctorStartDateTime = new Date(`${date}T${doctor_start_time}:00`);
+        const doctorEndDateTime = new Date(`${date}T${doctor_end_time}:00`);
 
         if (appointmentStartDateTime < doctorStartDateTime || appointmentEndDateTime > doctorEndDateTime) {
             return res.status(400).send("Appointment time is outside the doctor's working hours.");
@@ -209,7 +216,7 @@ patient_routes.post('/new-appointment', async (req, res) => {
         // Check for conflicting appointments
         const conflictingAppointments = await pool.query(
             "SELECT * FROM appointment WHERE doctor_id = $1 AND date = $2 AND ((start_time <= $3 AND end_time > $3) OR (start_time < $4 AND end_time >= $4));",
-            [doctor_id, date, start_time, end_time]
+            [doctor_id, date, start_time, appointmentEndDateTime.toTimeString().slice(0, 8)]
         );
         if (conflictingAppointments.rows.length > 0) {
             return res.status(400).send("The chosen time slot is not available.");
@@ -218,7 +225,7 @@ patient_routes.post('/new-appointment', async (req, res) => {
         // Insert the new appointment
         const newAppointment = await pool.query(
             "INSERT INTO appointment (patient_id, doctor_id, date, start_time, end_time, status) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;",
-            [patient_id, doctor_id, date, start_time, end_time, 'Scheduled']
+            [patient_id, doctor_id, date, start_time, appointmentEndDateTime.toTimeString().slice(0, 8), 'Scheduled']
         );
 
         return res.status(201).send(newAppointment.rows[0]);
