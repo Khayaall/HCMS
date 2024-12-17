@@ -1,7 +1,53 @@
 const express = require('express');
 const pool = require('../db_connection');
 const doctor_routes = express.Router();
+const multer = require('multer');
+const path = require('path');
 
+
+const parentDir = path.dirname(__dirname);
+const uploadsDir = path.join(parentDir, 'uploads');
+// Set up multer for file uploads
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, uploadsDir);
+    },
+    filename: (req, file, cb) => {
+        cb(null, `${Date.now()}-${file.originalname}`);
+    }
+});
+const upload = multer({ storage: storage });
+
+// Upload doctor image
+doctor_routes.post('/upload_image', upload.single('image'), async (req, res) => {
+    const d_id = req.session.authorization.id;
+    const imageUrl = path.join('uploads', req.file.filename);
+
+    try {
+        await pool.query("UPDATE doctor SET image_url = $1 WHERE doctor_id = $2", [imageUrl, d_id]);
+        res.send('Image uploaded successfully');
+    } catch (error) {
+        console.error('Error uploading image:', error);
+        res.status(500).send('An error occurred while uploading the image');
+    }
+});
+
+// View doctor image
+doctor_routes.get('/view_image', async (req, res) => {
+    const d_id = req.session.authorization.id;
+
+    try {
+        const result = await pool.query("SELECT image_url FROM doctor WHERE doctor_id = $1", [d_id]);
+        if (result.rows.length === 0) {
+            return res.status(404).send('Image not found');
+        }
+        const imageUrl = result.rows[0].image_url;
+        res.sendFile(path.join(parentDir, imageUrl));
+    } catch (error) {
+        console.error('Error viewing image:', error);
+        res.status(500).send('An error occurred while viewing the image');
+    }
+});
 
 doctor_routes.get('/all', async (req, res) => {
     const doctors = await pool.query("SELECT * FROM doctor");
