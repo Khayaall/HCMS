@@ -51,7 +51,7 @@ const EditProfileModal = ({ isOpen, onClose, profile, onSave }) => {
             <img
               src={image || "https://via.placeholder.com/300"}
               alt="profile"
-              className="profile-img"
+              className="profile-imge"
             />
           </label>
           <input
@@ -64,7 +64,10 @@ const EditProfileModal = ({ isOpen, onClose, profile, onSave }) => {
           <div className="upload-buttons">
             <div className="instructions">
               <h4>Upload your picture</h4>
-              <p>For best results, use an image at least 150px by 150px in either JPEG or PNG</p>
+              <p>
+                For best results, use an image at least 150px by 150px in either
+                JPEG or PNG
+              </p>
             </div>
             <div className="buttons-edit">
               <label htmlFor="file-input" className="upload-btn">
@@ -123,17 +126,18 @@ const EditProfileModal = ({ isOpen, onClose, profile, onSave }) => {
               value={college}
               onChange={(e) => setCollege(e.target.value)}
             >
-              <option value="Dhaka Medical College">Dhaka Medical College</option>
-              <option value="Harvard Medical School">Harvard Medical School</option>
+              <option value="Dhaka Medical College">
+                Dhaka Medical College
+              </option>
+              <option value="Harvard Medical School">
+                Harvard Medical School
+              </option>
               <option value="Other">Other</option>
             </select>
           </div>
           <div className="form-group">
             <label>Degree</label>
-            <select
-              value={degree}
-              onChange={(e) => setDegree(e.target.value)}
-            >
+            <select value={degree} onChange={(e) => setDegree(e.target.value)}>
               <option value="M.B.B.S">M.B.B.S</option>
               <option value="M.D.">M.D.</option>
               <option value="Other">Other</option>
@@ -143,8 +147,12 @@ const EditProfileModal = ({ isOpen, onClose, profile, onSave }) => {
 
         {/* Action Buttons */}
         <div className="action-buttons">
-          <button className="cancel-btn" onClick={onClose}>Cancel</button>
-          <button className="save-btn" onClick={handleSave}>Save</button>
+          <button className="cancel-btn" onClick={onClose}>
+            Cancel
+          </button>
+          <button className="save-btn" onClick={handleSave}>
+            Save
+          </button>
         </div>
       </div>
     </div>

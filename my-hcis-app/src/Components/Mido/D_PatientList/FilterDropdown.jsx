@@ -1,5 +1,5 @@
-import React from 'react';
-import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import React from "react";
+import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 
 const FilterDropdown = ({ filter, setFilter }) => {
   const handleChange = (event) => {
@@ -7,15 +7,19 @@ const FilterDropdown = ({ filter, setFilter }) => {
   };
 
   return (
-    <FormControl variant="outlined" size="small" style={{ minWidth: 100, backgroundColor: '#333' }}>
-      <InputLabel style={{ color: '#666' }}>Filters</InputLabel>
+    <FormControl
+      // variant="outlined"
+      size="small"
+      style={{ minWidth: 100, backgroundColor: "var(--grey)" }}
+    >
+      <InputLabel style={{ color: "#666" }}>Filters</InputLabel>
       <Select
         value={filter}
         onChange={handleChange}
         label="Filters"
-        style={{ color: '#666' }}
+        style={{ color: "#666" }}
         inputProps={{
-          style: { color: '#666' },
+          style: { color: "#666" },
         }}
       >
         <MenuItem value="">None</MenuItem>

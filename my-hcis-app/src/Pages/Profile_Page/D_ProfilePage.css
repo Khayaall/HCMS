@@ -1,0 +1,80 @@
+/* body {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+} */
+
+.profile-page {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-header h2 {
+  margin: 0;
+}
+
+.profile-content {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12%;
+}
+
+.profile-bar-reviews {
+  flex: 3;
+  padding-left: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav {
+  background-color: var(--sec-dark);
+  width: 38%;
+  border-radius: 10px;
+  height: auto;
+  padding: 0.5rem 1.5rem;
+}
+
+.nav ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+.nav li {
+  cursor: pointer;
+  padding: 1px 10px;
+  color: #fff;
+  position: relative;
+}
+
+.nav li.active {
+  color: #2e9ef1;
+}
+
+.nav li.active::after {
+  content: "";
+  display: block;
+  margin: 0 auto;
+  width: 90%;
+  padding-top: 5px;
+  border-bottom: 2px solid #2e9ef1;
+}
+
+.reviews-section {
+  flex: 1;
+  margin-top: 4%;
+}
+
+.review-cards {
+  margin-top: 10px;
+}
