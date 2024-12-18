@@ -3,23 +3,23 @@
       "id": 1,
       "patientID": "123456",
       "name": "John Doe",
-      "date": "01/01/2022",
+      "date": "12/18/2024",
       "gender": "Male",
       "disease": "Flu",
       "status": "Admitted",
       "payment": "$500.00",
-      "image": "https://via.placeholder.com/40?text=J"
+      "image": "https://via.placeholder.com/80?text=J"
     },
     {
       "id": 2,
       "patientID": "234567",
       "name": "Jane Smith",
-      "date": "02/01/2022",
+      "date": "12/18/2024",
       "gender": "Female",
       "disease": "Cold",
       "status": "Discharged",
       "payment": "$300.00",
-      "image": "https://via.placeholder.com/40?text=J"
+      "image": "https://via.placeholder.com/80?text=J"
     },
     {
       "id": 3,
@@ -30,7 +30,7 @@
       "disease": "COVID-19",
       "status": "Under Treatment",
       "payment": "$1000.00",
-      "image": "https://via.placeholder.com/40?text=A"
+      "image": "https://via.placeholder.com/80?text=A"
     },
     {
       "id": 4,
@@ -41,7 +41,7 @@
       "disease": "Diabetes",
       "status": "Recovered",
       "payment": "$700.00",
-      "image": "https://via.placeholder.com/40?text=B"
+      "image": "https://via.placeholder.com/80?text=B"
     },
     {
       "id": 5,
@@ -52,7 +52,7 @@
       "disease": "Hypertension",
       "status": "Admitted",
       "payment": "$600.00",
-      "image": "https://via.placeholder.com/40?text=C"
+      "image": "https://via.placeholder.com/80?text=C"
     },
     {
         "id": 6,
@@ -63,7 +63,7 @@
         "disease": "Asthma",
         "status": "Admitted",
         "payment": "$450.00",
-        "image": "https://via.placeholder.com/40?text=D"
+        "image": "https://via.placeholder.com/80?text=D"
     },
     {
         "id": 7,
@@ -74,7 +74,7 @@
         "disease": "Pneumonia",
         "status": "Recovered",
         "payment": "$350.00",
-        "image": "https://via.placeholder.com/40?text=E"
+        "image": "https://via.placeholder.com/80?text=E"
     },
     {
         "id": 8,
@@ -85,7 +85,7 @@
         "disease": "Cancer",
         "status": "Under Treatment",
         "payment": "$2000.00",
-        "image": "https://via.placeholder.com/40?text=F"
+        "image": "https://via.placeholder.com/80?text=F"
     },
     {
         "id": 9,
@@ -96,7 +96,7 @@
         "disease": "COVID-19",
         "status": "Admitted",
         "payment": "$1200.00",
-        "image": "https://via.placeholder.com/40?text=G"
+        "image": "https://via.placeholder.com/80?text=G"
     },
     {
         "id": 10,
@@ -107,7 +107,7 @@
         "disease": "Diabetes",
         "status": "Recovered",
         "payment": "$650.00",
-        "image": "https://via.placeholder.com/40?text=H"
+        "image": "https://via.placeholder.com/80?text=H"
     },
     {
         "id": 11,
@@ -118,7 +118,7 @@
         "disease": "Flu",
         "status": "Discharged",
         "payment": "$380.00",
-        "image": "https://via.placeholder.com/40?text=I"
+        "image": "https://via.placeholder.com/80?text=I"
     },
     {
         "id": 12,
@@ -129,7 +129,7 @@
         "disease": "Cold",
         "status": "Admitted",
         "payment": "$450.00",
-        "image": "https://via.placeholder.com/40?text=J"
+        "image": "https://via.placeholder.com/80?text=J"
     },
     {
         "id": 13,
@@ -140,7 +140,7 @@
         "disease": "Hypertension",
         "status": "Recovered",
         "payment": "$550.00",
-        "image": "https://via.placeholder.com/40?text=K"
+        "image": "https://via.placeholder.com/80?text=K"
     },
     {
         "id": 14,
@@ -151,7 +151,7 @@
         "disease": "Asthma",
         "status": "Under Treatment",
         "payment": "$500.00",
-        "image": "https://via.placeholder.com/40?text=L"
+        "image": "https://via.placeholder.com/80?text=L"
     },
     {
         "id": 15,
@@ -162,7 +162,7 @@
         "disease": "Pneumonia",
         "status": "Admitted",
         "payment": "$700.00",
-        "image": "https://via.placeholder.com/40?text=M"
+        "image": "https://via.placeholder.com/80?text=M"
     },
     {
         "id": 16,
@@ -173,7 +173,7 @@
         "disease": "Diabetes",
         "status": "Discharged",
         "payment": "$450.00",
-        "image": "https://via.placeholder.com/40?text=N"
+        "image": "https://via.placeholder.com/80?text=N"
     },
     {
         "id": 17,
@@ -184,7 +184,7 @@
         "disease": "COVID-19",
         "status": "Under Treatment",
         "payment": "$800.00",
-        "image": "https://via.placeholder.com/40?text=O"
+        "image": "https://via.placeholder.com/80?text=O"
     },
     {
         "id": 18,
@@ -195,7 +195,7 @@
         "disease": "Cancer",
         "status": "Admitted",
         "payment": "$1500.00",
-        "image": "https://via.placeholder.com/40?text=P"
+        "image": "https://via.placeholder.com/80?text=P"
     },
     {
         "id": 19,
@@ -206,7 +206,7 @@
         "disease": "Asthma",
         "status": "Recovered",
         "payment": "$600.00",
-        "image": "https://via.placeholder.com/40?text=Q"
+        "image": "https://via.placeholder.com/80?text=Q"
     },
     {
         "id": 20,
@@ -216,8 +216,8 @@
         "gender": "Female",
         "disease": "Flu",
         "status": "Discharged",
-        "payment": "$400.00",
-        "image": "https://via.placeholder.com/40?text=R"
+        "payment": "$800.00",
+        "image": "https://via.placeholder.com/80?text=R"
     },
     {
         "id": 21,
@@ -228,7 +228,7 @@
         "disease": "Cold",
         "status": "Admitted",
         "payment": "$450.00",
-        "image": "https://via.placeholder.com/40?text=S"
+        "image": "https://via.placeholder.com/80?text=S"
     },
     {
         "id": 22,
@@ -239,7 +239,7 @@
         "disease": "Hypertension",
         "status": "Recovered",
         "payment": "$600.00",
-        "image": "https://via.placeholder.com/40?text=T"
+        "image": "https://via.placeholder.com/80?text=T"
     },
     {
         "id": 23,
@@ -250,7 +250,7 @@
         "disease": "Pneumonia",
         "status": "Under Treatment",
         "payment": "$800.00",
-        "image": "https://via.placeholder.com/40?text=U"
+        "image": "https://via.placeholder.com/80?text=U"
     },
     {
         "id": 24,
@@ -261,7 +261,7 @@
         "disease": "Diabetes",
         "status": "Discharged",
         "payment": "$650.00",
-        "image": "https://via.placeholder.com/40?text=V"
+        "image": "https://via.placeholder.com/80?text=V"
     },
     {
         "id": 25,
@@ -272,7 +272,7 @@
         "disease": "Flu",
         "status": "Admitted",
         "payment": "$500.00",
-        "image": "https://via.placeholder.com/40?text=W"
+        "image": "https://via.placeholder.com/80?text=W"
     },
     {
         "id": 26,
@@ -283,7 +283,7 @@
         "disease": "Asthma",
         "status": "Recovered",
         "payment": "$600.00",
-        "image": "https://via.placeholder.com/40?text=X"
+        "image": "https://via.placeholder.com/80?text=X"
     },
     {
         "id": 27,
@@ -293,8 +293,8 @@
         "gender": "Female",
         "disease": "Pneumonia",
         "status": "Discharged",
-        "payment": "$400.00",
-        "image": "https://via.placeholder.com/40?text=Y"
+        "payment": "$800.00",
+        "image": "https://via.placeholder.com/80?text=Y"
     },
     {
         "id": 28,
@@ -305,7 +305,7 @@
         "disease": "COVID-19",
         "status": "Under Treatment",
         "payment": "$1200.00",
-        "image": "https://via.placeholder.com/40?text=Z"
+        "image": "https://via.placeholder.com/80?text=Z"
     },
     {
         "id": 29,
@@ -316,7 +316,7 @@
         "disease": "Diabetes",
         "status": "Admitted",
         "payment": "$700.00",
-        "image": "https://via.placeholder.com/40?text=A"
+        "image": "https://via.placeholder.com/80?text=A"
     },
     {
         "id": 30,
@@ -327,7 +327,7 @@
         "disease": "Cancer",
         "status": "Discharged",
         "payment": "$1500.00",
-        "image": "https://via.placeholder.com/40?text=B"
+        "image": "https://via.placeholder.com/80?text=B"
     },
     {
         "id": 31,
@@ -338,7 +338,7 @@
         "disease": "Cold",
         "status": "Admitted",
         "payment": "$350.00",
-        "image": "https://via.placeholder.com/40?text=C"
+        "image": "https://via.placeholder.com/80?text=C"
     },
     {
         "id": 32,
@@ -349,7 +349,7 @@
         "disease": "Hypertension",
         "status": "Recovered",
         "payment": "$550.00",
-        "image": "https://via.placeholder.com/40?text=D"
+        "image": "https://via.placeholder.com/80?text=D"
     },
     {
         "id": 33,
@@ -359,8 +359,8 @@
         "gender": "Female",
         "disease": "Flu",
         "status": "Under Treatment",
-        "payment": "$400.00",
-        "image": "https://via.placeholder.com/40?text=E"
+        "payment": "$800.00",
+        "image": "https://via.placeholder.com/80?text=E"
     },
     {
         "id": 34,
@@ -371,7 +371,7 @@
         "disease": "Asthma",
         "status": "Admitted",
         "payment": "$500.00",
-        "image": "https://via.placeholder.com/40?text=F"
+        "image": "https://via.placeholder.com/80?text=F"
     },
     {
         "id": 35,
@@ -382,7 +382,7 @@
         "disease": "COVID-19",
         "status": "Discharged",
         "payment": "$1200.00",
-        "image": "https://via.placeholder.com/40?text=G"
+        "image": "https://via.placeholder.com/80?text=G"
     },
     {
         "id": 36,
@@ -393,7 +393,7 @@
         "disease": "Pneumonia",
         "status": "Recovered",
         "payment": "$600.00",
-        "image": "https://via.placeholder.com/40?text=H"
+        "image": "https://via.placeholder.com/80?text=H"
     },
     {
         "id": 37,
@@ -404,7 +404,7 @@
         "disease": "Hypertension",
         "status": "Admitted",
         "payment": "$550.00",
-        "image": "https://via.placeholder.com/40?text=I"
+        "image": "https://via.placeholder.com/80?text=I"
     },
     {
         "id": 38,
@@ -415,7 +415,7 @@
         "disease": "Cold",
         "status": "Discharged",
         "payment": "$350.00",
-        "image": "https://via.placeholder.com/40?text=J"
+        "image": "https://via.placeholder.com/80?text=J"
     },
     {
         "id": 39,
@@ -426,10 +426,10 @@
         "disease": "Diabetes",
         "status": "Under Treatment",
         "payment": "$650.00",
-        "image": "https://via.placeholder.com/40?text=K"
+        "image": "https://via.placeholder.com/80?text=K"
     },
     {
-        "id": 40,
+        "id": 80,
         "patientID": "456793",
         "name": "Landon Wilson",
         "date": "09/02/2022",
@@ -437,7 +437,7 @@
         "disease": "Cancer",
         "status": "Recovered",
         "payment": "$1600.00",
-        "image": "https://via.placeholder.com/40?text=L"
+        "image": "https://via.placeholder.com/80?text=L"
     },
     {
         "id": 41,
@@ -448,7 +448,7 @@
         "disease": "COVID-19",
         "status": "Admitted",
         "payment": "$1100.00",
-        "image": "https://via.placeholder.com/40?text=M"
+        "image": "https://via.placeholder.com/80?text=M"
     },
     {
         "id": 42,
@@ -459,7 +459,7 @@
         "disease": "Asthma",
         "status": "Recovered",
         "payment": "$600.00",
-        "image": "https://via.placeholder.com/40?text=N"
+        "image": "https://via.placeholder.com/80?text=N"
     },
     {
         "id": 43,
@@ -469,8 +469,8 @@
         "gender": "Male",
         "disease": "Flu",
         "status": "Discharged",
-        "payment": "$400.00",
-        "image": "https://via.placeholder.com/40?text=O"
+        "payment": "$800.00",
+        "image": "https://via.placeholder.com/80?text=O"
     },
     {
         "id": 44,
@@ -481,7 +481,7 @@
         "disease": "Diabetes",
         "status": "Admitted",
         "payment": "$700.00",
-        "image": "https://via.placeholder.com/40?text=P"
+        "image": "https://via.placeholder.com/80?text=P"
     },
     {
         "id": 45,
@@ -492,7 +492,7 @@
         "disease": "Cold",
         "status": "Recovered",
         "payment": "$350.00",
-        "image": "https://via.placeholder.com/40?text=Q"
+        "image": "https://via.placeholder.com/80?text=Q"
     },
     {
         "id": 46,
@@ -503,7 +503,7 @@
         "disease": "Pneumonia",
         "status": "Under Treatment",
         "payment": "$750.00",
-        "image": "https://via.placeholder.com/40?text=R"
+        "image": "https://via.placeholder.com/80?text=R"
     },
     {
         "id": 47,
@@ -514,7 +514,7 @@
         "disease": "Asthma",
         "status": "Discharged",
         "payment": "$450.00",
-        "image": "https://via.placeholder.com/40?text=S"
+        "image": "https://via.placeholder.com/80?text=S"
     },
     {
         "id": 48,
@@ -525,7 +525,7 @@
         "disease": "COVID-19",
         "status": "Admitted",
         "payment": "$1300.00",
-        "image": "https://via.placeholder.com/40?text=T"
+        "image": "https://via.placeholder.com/80?text=T"
     },
     {
         "id": 49,
@@ -536,7 +536,7 @@
         "disease": "Hypertension",
         "status": "Recovered",
         "payment": "$700.00",
-        "image": "https://via.placeholder.com/40?text=U"
+        "image": "https://via.placeholder.com/80?text=U"
     },
     {
         "id": 50,
@@ -547,6 +547,6 @@
         "disease": "Pneumonia",
         "status": "Under Treatment",
         "payment": "$800.00",
-        "image": "https://via.placeholder.com/40?text=V"
+        "image": "https://via.placeholder.com/80?text=V"
     }    
   ]

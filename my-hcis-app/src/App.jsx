@@ -6,10 +6,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import D_ProfilePage from "./Pages/Profile_Page/D_ProfilePage";
 import D_PatientList from "./Pages/D_patientList/D_PatientList";
 import D_Overview from "./Pages/Overview/D_Overview";
+import D_Appointment from "./Pages/D_Appointment/d_appointment";
 import Sign_in from "./Pages/Sign_in/Sign_in";
 import Sign_up from "./Pages/Sign_up/Sign_up";
 import { useState } from "react";
 import { useAuth } from "./Pages/Sign_in/AuthContext";
+
 
 const App = () => {
   // const [login, setLogin] = useState(false);
@@ -17,7 +19,7 @@ const App = () => {
   return (
     <Router>
       <div className="app">
-        {!login ? (
+        {/* {!login ? (
           <>
             <Routes>
               <Route path="/login" element={<Sign_in />} />
@@ -29,7 +31,7 @@ const App = () => {
               <Route path="/" element={<Sign_up />} />
             </Routes>
           </>
-        ) : (
+        ) : ( */}
           <div className="container">
             <div className="sidebar-content">
               <Sidebar />
@@ -42,7 +44,7 @@ const App = () => {
                 <Route path="/overview" element={<D_Overview />} />
               </Routes>
               <Routes>
-                <Route path="/appointment" element />
+                <Route path="/appointment" element={<D_Appointment />}/>
               </Routes>
               <Routes>
                 <Route path="/mypatient" element={<D_PatientList />} />
