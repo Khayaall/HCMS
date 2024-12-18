@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import CustomDropdown from "../../Components/Mido/D_PatientList/CustomDropdown";
-import FilterDropdown from "../../Components/Mido/D_PatientList/FilterDropdown";
-import PatientTable from "../../Components/Mido/D_PatientList/PatientTable";
+import CustomDropdown from "../../Components/D_PatientList/CustomDropdown";
+import FilterDropdown from "../../Components/D_PatientList/FilterDropdown";
+import PatientTable from "../../Components/D_PatientList/PatientTable";
 import "./D_PatientList.css"; // Make sure to import the CSS file
-import patientsData from "../../Components/Mido/D_PatientList/Patients.json"; // Import the JSON data
+import patientsData from "../../Components/D_PatientList/Patients.json"; // Import the JSON data
 
 const D_PatientList = () => {
   const [number, setNumber] = useState(10); // Manage rows per page

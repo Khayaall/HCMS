@@ -126,17 +126,13 @@
   border-radius: 10px;
   z-index: 7;
 }
+.profile-list li {
+  border-radius: 10px;
+}
 .profile-list > .containerP > ul {
   list-style: none;
   /* padding: 1rem 0; */
 }
-/* .profile-list > .containerP > ul > li {
-  display: flex;
-  align-items: center;
-  padding: 1.4rem 1rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-} */
 .containerP a {
   color: var(--white);
   display: flex;

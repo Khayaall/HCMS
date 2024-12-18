@@ -1,5 +1,5 @@
 import React from "react";
-import "../../../Pages/D_patientList/D_PatientList.css"; // Make sure to import the CSS file
+import "../../Pages/D_patientList/D_PatientList.css"; // Make sure to import the CSS file
 
 const PatientTable = ({ patients }) => {
   return (

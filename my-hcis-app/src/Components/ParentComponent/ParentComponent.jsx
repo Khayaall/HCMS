@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import EditProfileModal from "./EditProfileModal";
-import D_ProfileCard from "../D_ProfileCard/D_ProfileCard";
-import My_Profile from "../My_Profile/My_Profile";
+import EditProfileModal from "../D_ProfilePage/EditProfileModal";
+import D_ProfileCard from "../D_ProfilePage/D_ProfileCard";
+import My_Profile from "../D_ProfilePage/My_Profile";
 
 const ParentComponent = () => {
   const [profile, setProfile] = useState({
@@ -18,12 +18,12 @@ const ParentComponent = () => {
 
   const handleSave = (updatedProfile) => {
     setProfile(updatedProfile);
-    setIsModalOpen(false);  
+    setIsModalOpen(false);
   };
 
   return (
     <div>
-      <D_ProfileCard 
+      <D_ProfileCard
         profile={profile}
         onEdit={() => setIsModalOpen(true)} // Open modal via D_ProfileCard
       />
