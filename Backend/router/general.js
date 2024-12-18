@@ -13,7 +13,7 @@ public_users.post('/signup', async (req, res) => {
         if(role == 'doctor')
         {
             const { email, password, role, f_name, l_name, d_id } = req.body;
-            if ((d_id.startsWith('dr') == false || d_id.length != 5)) {
+            if ((d_id.startsWith('dr') == false || d_id.length <= 5)) {
                 return res.status(400).send("Please enter a vaild doctor id");
             }
             const ids = await pool.query("SELECT * FROM doctor WHERE doctor_id = $1", [d_id]);
@@ -42,6 +42,14 @@ public_users.post('/signup', async (req, res) => {
                 else
                 {
                     const newUser = await pool.query("INSERT INTO patient (f_name, l_name, email, password, patient_type) VALUES ($1, $2, $3, $4, $5) RETURNING *", [f_name, l_name, email, password, patient_type]);
+                    if(patient_type.toLowerCase() == 'obstetrics' || patient_type.toLowerCase() == 'obstetric')
+                    {
+                        await pool.query("INSERT INTO obstetrics_medical_record(patient_id) VALUES ($1)", [newUser.rows[0].patient_id]);
+                    }
+                    else
+                    {
+                        await pool.query("INSERT INTO infant_medical_record(patient_id) VALUES ($1)", [newUser.rows[0].patient_id]);
+                    }
                     return res.json("patient added succesfuly");
                 }
             }
@@ -127,9 +135,11 @@ public_users.post('/login', async (req, res) => {
 
         // Create JWT with user info and role
         let token = jwt.sign({ username: user.rows[0].f_name, role: role }, 'access', { expiresIn: 60 * 60 });
-
         req.session.authorization = { accessToken: token, user: user.rows[0].f_name, role: role, id: user.rows[0].doctor_id || user.rows[0].patient_id || user.rows[0].receptionist_id || user.rows[0].admin_id };
-        return res.status(200).json({ message: `${req.session.authorization.user} logged in successfully` });
+        return res.status(200).json({ 
+            message: `${req.session.authorization.user} logged in successfully`,
+            token: token
+        });
 
     } catch (err) {
         console.error(err.message);
