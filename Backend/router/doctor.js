@@ -117,23 +117,44 @@ doctor_routes.post('/appointment/:a_id', async (req, res) => {
         const p_id_result = await pool.query('SELECT patient_id FROM appointment WHERE appointment_id = $1', [appointment_id]);
         const p_id = p_id_result.rows[0].patient_id;
 
+        const patient_type_result = await pool.query("SELECT patient_type FROM patient WHERE patient_id = $1", [p_id]);
+        const patient_type = patient_type_result.rows[0].patient_type.toLowerCase();
+        const table_name = patient_type === 'obstetrics' ? 'obstetrics_medical_record' : 'infant_medical_record';
+        await pool.query("UPDATE appointment SET status = $1 WHERE appointment_id = $2", ['completed', appointment_id]);
+
         if (req.body.diagnosis) {
             await pool.query("UPDATE appointment SET diagnosis = $1 WHERE appointment_id = $2", [req.body.diagnosis, appointment_id]);
+            await pool.query(
+                `INSERT INTO ${table_name} (patient_id, diagnosis) VALUES ($1, $2)`,
+                [p_id, req.body.diagnosis]
+            );
         }
+
         if (req.body.treatment) {
             await pool.query("UPDATE appointment SET treatment = $1 WHERE appointment_id = $2", [req.body.treatment, appointment_id]);
+            await pool.query(
+                `INSERT INTO ${table_name} (patient_id, treatment) VALUES ($1, $2)`,
+                [p_id, req.body.treatment]
+            );
         }
+
         if (req.body.medication || req.body.note) {
             const date_issue_result = await pool.query("SELECT date FROM appointment WHERE appointment_id = $1", [appointment_id]);
             const date_issue = date_issue_result.rows[0].date; // Extract the date value
-            await pool.query("INSERT INTO prescription(appointment_id, doctor_id, patient_id, date_issue) VALUES ($1, $2, $3, $4)", [appointment_id, d_id, p_id, date_issue]);
+            await pool.query(
+                `INSERT INTO prescription (appointment_id, doctor_id, patient_id, date_issue) VALUES ($1, $2, $3, $4)`,
+                [appointment_id, d_id, p_id, date_issue]
+            );
         }
+
         if (req.body.medication) {
             await pool.query("UPDATE prescription SET medication = $1 WHERE appointment_id = $2", [req.body.medication, appointment_id]);
         }
+
         if (req.body.note) {
             await pool.query("UPDATE prescription SET note = $1 WHERE appointment_id = $2", [req.body.note, appointment_id]);
         }
+
         res.send('Appointment updated successfully');
     } catch (error) {
         console.error('Error editing appointment:', error);
@@ -257,17 +278,16 @@ doctor_routes.post('/edit_medical_record/:patient_id', upload.single('image'), a
         try {
             const result = await pool.query(updateQuery, values);
 
-            // If no rows were updated, perform an INSERT instead
-            if (result.rowCount === 0) {
-                const insertFields = fields.filter(field => req.body[field]);
-                const insertPlaceholders = insertFields.map((_, index) => `$${index + 2}`);
-                const insertQuery = `
-                    INSERT INTO ${patient}_medical_record (patient_id, ${insertFields.join(', ')})
-                    VALUES ($1, ${insertPlaceholders.join(', ')})`;
+            // // If no rows were updated, perform an INSERT instead
+            // if (result.rowCount === 0) {
+            //     const insertFields = fields.filter(field => req.body[field]);
+            //     const insertPlaceholders = insertFields.map((_, index) => `$${index + 2}`);
+            //     const insertQuery = `
+            //         INSERT INTO ${patient}_medical_record (patient_id, ${insertFields.join(', ')})
+            //         VALUES ($1, ${insertPlaceholders.join(', ')})`;
 
-                await pool.query(insertQuery, [p_id, ...insertFields.map(field => req.body[field])]);
-            }
-
+            //     await pool.query(insertQuery, [p_id, ...insertFields.map(field => req.body[field])]);
+            // }
             res.send('Medical record updated successfully');
         } catch (error) {
             console.error('Error updating medical record:', error);
