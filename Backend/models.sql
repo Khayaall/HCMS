@@ -56,7 +56,8 @@ create table patient
     dob          date,
     gender       char(10),
     address      text,
-    job          text
+    job          text,
+    image_url    text
 );
 
 alter table patient
