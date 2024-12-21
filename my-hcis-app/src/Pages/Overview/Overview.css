@@ -52,7 +52,7 @@
   align-items: center;
   margin-bottom: 2%;
 }
-.reschedule-txt > span {
+.reschedule-txt > a {
   color: var(--blue);
   cursor: pointer;
 }

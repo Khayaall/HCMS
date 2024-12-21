@@ -84,9 +84,9 @@ const D_Overview = () => {
         <div className="reschedule">
           <div className="reschedule-txt">
             <h3>Remaining Appointments</h3>
-            <span>
+            <NavLink to="/appointment">
               View All <FontAwesomeIcon icon={faChevronRight} />
-            </span>
+            </NavLink>
           </div>
           <div className="reschedule-list">
             {patient.map((patients) => {

@@ -8,7 +8,7 @@ import { useAuth } from "./AuthContext";
 
 const Sign_in = () => {
   const [role, setRole] = useState("Doctor"); // Default role
-  const [type, setType] = useState(false);
+  const [type, setType] = useState(true);
   const navigate = useNavigate();
   const { setLogin } = useAuth();
 
