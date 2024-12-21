@@ -1,0 +1,121 @@
+/* body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    } */
+
+.container {
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--main-dark);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.signContainer {
+  display: flex;
+  height: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+.img img {
+  height: 100%;
+  aspect-ratio: 1/1.3;
+}
+.img {
+  height: 100%;
+  position: relative;
+  /* margin-left: 5%; */
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(27, 36, 50, 0.35);
+}
+.loginBox {
+  padding: 18%;
+  width: 26%;
+}
+
+.login-box h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.toggleButtons {
+  display: flex;
+  justify-content: space-around;
+  margin: 5% 0;
+}
+
+.roleButton {
+  background-color: transparent;
+  outline: 1px var(--blue) solid;
+  width: 32%;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.roleButton:hover,
+.roleButton.active {
+  background-color: var(--blue);
+  outline: none;
+}
+
+.inputBox,
+.inputSmall {
+  width: calc(100% - 2rem);
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+}
+
+.flexInput {
+  display: flex;
+  gap: 10px;
+}
+
+.inputSmall {
+  flex: 1;
+}
+
+.loginButton {
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--purple);
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.loginButton:hover {
+  background-color: #8c82fa;
+}
+
+.signupText {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.signupText a {
+  color: #4a90e2;
+  text-decoration: none;
+}
+
+.signupText a:hover {
+  text-decoration: underline;
+}

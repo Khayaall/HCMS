@@ -7,12 +7,15 @@ const receptionist_routes = require('./router/receptionist.js').authenticated;
 const gen_routes = require('./router/general.js').general;
 const authMiddleware = require('./middlewares/auth');
 const sessionMiddleware = require('./middlewares/session');
+const sessionDataMiddleware = require('./middlewares/sessionDataMiddleware');
 const roleAuth = require('./middlewares/roleAuth'); 
+const cors = require('cors');
 require('dotenv').config();
 const app = express();
-
+app.use(cors()); // Allow all origins
 app.use(express.json());
 app.use(sessionMiddleware);
+app.use(sessionDataMiddleware); 
 const PORT = 5000;
 
 // Routes with role-based access control

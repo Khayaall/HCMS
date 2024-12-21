@@ -50,6 +50,7 @@ doctor_routes.get('/view_image', async (req, res) => {
 });
 doctor_routes.get('/', async (req, res) => { 
     const d_id = req.session.authorization.id;
+    console.log('d_id', d_id);
     try {
         const doctor = await pool.query("SELECT * FROM doctor WHERE doctor_id = $1", [d_id]);
         res.send(doctor.rows[0]);

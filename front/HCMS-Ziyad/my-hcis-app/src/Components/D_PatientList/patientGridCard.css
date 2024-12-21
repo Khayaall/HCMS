@@ -1,0 +1,102 @@
+.patientGridCard-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Fixed width columns */
+    justify-content: left; /* Center the grid items */
+    gap: 1rem; /* Gap between cards */
+}
+
+.patientGridCard-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #2e2e3e;
+    border-radius: 10px;
+    color: #fff;
+    padding: 16px;
+    margin: .8rem;
+    transition: transform 0.2s, box-shadow 0.2s; /* Add transition for smooth effect */
+    width: 300px; /* Fixed width */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.patientGridCard-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add box shadow on hover */
+    transform: translateY(-4px); /* Slightly lift the card on hover */
+}
+
+.patientGridCard-profile-image {
+    width: 100%;
+    height: 120px; /* Smaller height for the image */
+    border-radius: 8px;
+    overflow: hidden; /* Ensure the image does not overflow the container */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.patientGridCard-profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
+}
+
+.patientGridCard-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.patientGridCard-details {
+    flex: 1;
+}
+
+.patientGridCard-name {
+    margin: 0;
+    font-size: 16px; /* Smaller font size */
+}
+
+.patientGridCard-info {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem; /* Add gap between items */
+    align-items: center;
+}
+
+.patientGridCard-info p {
+    font-size: 14px; /* Smaller font size */
+}
+
+.patientGridCard-time {
+    color: #aaa;
+    font-size: 12px; /* Smaller font size */
+}
+
+.patientGridCard-description {
+    margin: 8px 0;
+    font-size: 12px; /* Smaller font size */
+    color: #bbb;
+}
+
+.patientGridCard-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+button.patientGridCard-confirm {
+    margin-bottom: .6rem;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    background-color: #ffb800;
+    color: #333;
+}
+
+.patientGridCard-status {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #ffa500;
+}
