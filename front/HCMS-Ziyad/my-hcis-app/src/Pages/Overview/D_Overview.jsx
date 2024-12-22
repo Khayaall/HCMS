@@ -56,6 +56,10 @@ const D_Overview = () => {
     fetchDoctorData();
   }, []);
 
+  if (!doctor) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="overview-page">
           <div className="overview-title">
