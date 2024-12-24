@@ -1,0 +1,142 @@
+/* SignUp.css */
+
+.signup-container {
+  font-family: Arial, sans-serif;
+  background-color: var(--main-dark);
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.signup-container .form-container {
+  width: 50%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-content: center;
+}
+.signup-container .form-txt {
+  display: flex;
+  flex-direction: column;
+}
+
+.signup-container .form-container h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.signup-container .form-container p {
+  margin-bottom: 2rem;
+}
+
+.signup-container .input-group {
+  display: flex;
+  gap: 1rem;
+}
+
+.signup-container input,
+.signup-container select {
+  margin-bottom: 3%;
+  width: 50%;
+  background: var(--main-dark);
+  padding: 0.8rem;
+  outline: 1px solid var(--grey);
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+.signup-container input[type="email"] {
+  width: 94%;
+}
+
+.signup-container input[type="date"] {
+  color: #555;
+}
+.signup-container input[name="address"] {
+  width: 94%;
+}
+
+.signup-container input:focus,
+.signup-container select:focus {
+  border-color: #4a90e2;
+  outline: none;
+}
+
+.signup-container .terms {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  margin: 1rem 0;
+}
+.signup-container .terms input {
+  width: fit-content;
+  margin: 0;
+  margin-right: 3%;
+}
+
+.signup-container .terms a {
+  color: #4a90e2;
+  text-decoration: none;
+}
+
+.signup-container .terms a:hover {
+  text-decoration: underline;
+}
+
+.signup-container .sign-up-button {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  background-color: var(--blue);
+  color: white;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.signup-container .sign-up-button:hover {
+  background-color: #357ab8;
+}
+
+.signup-container .signin-link {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.signup-container .signin-link a {
+  color: #4a90e2;
+  text-decoration: none;
+}
+
+.signup-container .signin-link a:hover {
+  text-decoration: underline;
+}
+
+.signup-container .image-container {
+  height: 100%;
+  position: relative;
+}
+.signup-container .overlay {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(27, 36, 50, 0.35);
+}
+
+.signup-container .image-container img {
+  width: 100%;
+  /* aspect-ratio: 1/1.3; */
+}
+
+.signup-container .logo {
+  position: absolute;
+  bottom: 20px;
+  font-size: 1.5rem;
+  color: #555;
+  font-weight: bold;
+}
