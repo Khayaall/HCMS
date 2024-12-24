@@ -11,10 +11,3 @@
     "react-router-dom": "^7.0.2"
   }
 }
-
-{
-  "dependencies": {
-    "cors": "^2.8.5",
-    "pg": "^8.13.1"
-  }
-}
