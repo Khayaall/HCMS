@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMagnifyingGlass,
@@ -13,11 +13,20 @@ import { faCircleQuestion, faUser } from "@fortawesome/free-regular-svg-icons";
 import "./bar.css";
 import EditProfileModal from "../Components/D_ProfilePage/EditProfileModal";
 import { data } from "./data";
+import { useAuth } from "../../AuthContext";
 
 const Navbar = () => {
   const [user, setUser] = useState(data);
-  const [toggle, setToggle] = useState(false);
+  const [barToggle, setBarToggle] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false); // State to manage EditProfileModal visibility
+  const [isDarkMode, setIsDarkMode] = useState(false); // State to manage dark mode
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   const ProfileMenu = () => {
     return (
@@ -36,7 +45,7 @@ const Navbar = () => {
                 <p>Settings</p>
               </NavLink>
             </li>
-            <li>
+            <li onClick={handleLogout}>
               <NavLink to="#">
                 <FontAwesomeIcon className="icon" icon={faPowerOff} />
                 <p>Logout</p>
@@ -82,7 +91,7 @@ const Navbar = () => {
             return (
               <div
                 className="profile-icon"
-                onClick={() => setToggle(!toggle)}
+                onClick={() => setBarToggle(!barToggle)}
                 key={id}
               >
                 <div className="profile-img">
@@ -100,7 +109,7 @@ const Navbar = () => {
                     style={{ color: "#c7c0bd" }}
                   />
                 </p>
-                {toggle && <ProfileMenu />}
+                {barToggle && <ProfileMenu />}
               </div>
             );
           })}

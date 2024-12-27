@@ -23,33 +23,33 @@ const D_Overview = () => {
 
   useEffect(() => {
     const fetchDoctorData = async () => {
-      const token = localStorage.getItem('token');
-      const id = localStorage.getItem('id');
-      const role = localStorage.getItem('role').toLowerCase();
+      const token = localStorage.getItem("token");
+      const id = localStorage.getItem("id");
+      const role = localStorage.getItem("role").toLowerCase();
       if (!token || !id || !role) {
-        console.error('No token, id, or role found, please log in');
+        console.error("No token, id, or role found, please log in");
         return;
       }
 
       try {
-        const response = await fetch('http://localhost:5000/doctor/', {
-          method: 'GET',
+        const response = await fetch("http://localhost:5000/doctor/", {
+          method: "GET",
           headers: {
-            'authorization': `Bearer ${token}`,
-            'User-Id': id,
-            'User-Role': role
-          }
+            authorization: `Bearer ${token}`,
+            "User-Id": id,
+            "User-Role": role,
+          },
         });
 
         if (!response.ok) {
-          throw new Error('Failed to fetch doctor data');
+          throw new Error("Failed to fetch doctor data");
         }
 
         const doctorData = await response.json();
         setDoctor(doctorData);
-        console.log('Doctor data:', doctorData);
+        // console.log("Doctor data:", doctorData);
       } catch (error) {
-        console.error('Error fetching doctor data:', error);
+        console.error("Error fetching doctor data:", error);
       }
     };
 
@@ -62,10 +62,12 @@ const D_Overview = () => {
 
   return (
     <div className="overview-page">
-          <div className="overview-title">
-            <h2>Welcome, Dr. {doctor.f_name} {doctor.l_name}</h2>
-            <p>Have a nice day at great work </p>
-          </div>
+      <div className="overview-title">
+        <h2>
+          Welcome, Dr. {doctor.f_name} {doctor.l_name}
+        </h2>
+        <p>Have a nice day at great work </p>
+      </div>
       <div className="overview-cards">
         <div className="card">
           <div className="card-logo">
@@ -123,6 +125,7 @@ const D_Overview = () => {
           <div className="reschedule-list">
             {patient.map((patients) => {
               const {
+                id,
                 name,
                 age,
                 image,
@@ -131,7 +134,7 @@ const D_Overview = () => {
                 appointment_time,
               } = patients;
               return (
-                <ul>
+                <ul key={id}>
                   <li>
                     <div className="list-img">
                       <img src={image} alt="" />
@@ -156,11 +159,12 @@ const D_Overview = () => {
           <h3>Today Appointments</h3>
           <div className="today-list">
             {today.length > 4
-              ? setToday(today.splice(0, 3))
+              ? setToday(today.splice(0, 4))
               : today.map((today) => {
-                  const { name, job_title, image, appointment_time } = today;
+                  const { id, name, job_title, image, appointment_time } =
+                    today;
                   return (
-                    <ul>
+                    <ul key={id}>
                       <li>
                         <div className="today-img">
                           <img src={image} alt="" />

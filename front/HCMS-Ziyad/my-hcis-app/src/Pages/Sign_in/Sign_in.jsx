@@ -3,7 +3,7 @@ import styles from "./signin.module.css";
 import Plogin from "../../assets/Plogin.jpeg";
 import Dlogin from "../../assets/Dlogin.jpg";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "../../../AuthContext";
 
 const Sign_in = () => {
   const [role, setRole] = useState("Doctor"); // Default role
@@ -12,7 +12,7 @@ const Sign_in = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { setLogin } = useAuth();
+  const { login } = useAuth();
 
   const handleRoleChange = (selectedRole) => {
     setRole(selectedRole);
@@ -21,7 +21,7 @@ const Sign_in = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log("handleSubmit called");
-    console.log(role)
+    console.log(role);
 
     const requestBody = {
       role,
@@ -30,10 +30,10 @@ const Sign_in = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:5000/login', {
-        method: 'POST',
+      const response = await fetch("http://localhost:5000/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(requestBody),
       });
@@ -41,22 +41,22 @@ const Sign_in = () => {
       if (response.ok) {
         const data = await response.json();
         // Save token, id, and role in local storage
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('id', data.id);
-        localStorage.setItem('role', data.role);
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("id", data.id);
+        localStorage.setItem("role", data.role);
 
         // Handle successful response
-        console.log('Login successful');
-        setLogin(true);
+        console.log("Login successful");
+        login();
         navigate("/overview");
       } else {
         // Handle error response
         const errorText = await response.text();
-        console.error('Login failed:', errorText);
+        console.error("Login failed:", errorText);
         alert(`Login failed: ${errorText}`);
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
       alert(`Error: ${error.message}`);
     }
   };
@@ -137,7 +137,11 @@ const Sign_in = () => {
           </p>
         </div>
         <div className={styles.img}>
-          {!type ? <img src={Plogin} alt="Patient login" /> : <img src={Dlogin} alt="Doctor login" />}
+          {!type ? (
+            <img src={Plogin} alt="Patient login" />
+          ) : (
+            <img src={Dlogin} alt="Doctor login" />
+          )}
           <div className={styles.overlay}></div>
         </div>
       </div>
