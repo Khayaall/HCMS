@@ -32,7 +32,7 @@ const Sign_up = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("handleSubmit called");
-    const { email, password, confirmPassword, role, firstName, lastName, doctorId } = formData;
+    const { email, password, confirmPassword, role, firstName, lastName, doctorId,patientType } = formData;
   
     if (password !== confirmPassword) {
       alert("Passwords do not match");
@@ -49,6 +49,9 @@ const Sign_up = () => {
   
     if (role === 'doctor') {
       requestBody.d_id = doctorId;
+    }
+    if (role === 'patient') {
+      requestBody.patient_type = patientType;
     }
   
     console.log(requestBody);

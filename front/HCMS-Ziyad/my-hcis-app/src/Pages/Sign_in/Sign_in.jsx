@@ -22,12 +22,24 @@ const Sign_in = () => {
     event.preventDefault();
     console.log("handleSubmit called");
     console.log(role)
-
     const requestBody = {
       role,
-      d_id: id,
       password,
     };
+    if (role === 'doctor') {
+      requestBody.d_id = id;
+    }
+    if (role.toLowerCase() === 'patient') 
+    {
+      requestBody.email =  email;
+    }
+    if (role === 'admin')
+    {
+      requestBody.a_id = id;
+    }
+
+    console.log(requestBody);
+
 
     try {
       const response = await fetch('http://localhost:5000/login', {
@@ -99,6 +111,17 @@ const Sign_in = () => {
               }}
             >
               Receptionist
+            </button>
+            <button
+              className={`${styles.roleButton} ${
+                role === "admin" ? styles.active : ""
+              }`}
+              onClick={() => {
+                handleRoleChange("admin");
+                setType(true);
+              }}
+            >
+              Admin
             </button>
           </div>
           <form onSubmit={handleSubmit}>
