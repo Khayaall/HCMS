@@ -26,15 +26,17 @@ const EditProfileModal = ({ isOpen, onClose, profile, onSave }) => {
       firstName,
       lastName,
       specialty,
-      bio,
-      college,
-      degree,
-      image,
+      bio: bio || profile.bio,
+      college: college || profile.college,
+      degree: degree || profile.degree,
+      img: image || "https://via.placeholder.com/300", // Default image if none is provided
+      ratings: profile.ratings,
+      trust: profile.trust,
     };
     onSave(updatedProfile);
     onClose();
   };
-
+  
   if (!isOpen) return null;
 
   return (
@@ -73,9 +75,15 @@ const EditProfileModal = ({ isOpen, onClose, profile, onSave }) => {
               <label htmlFor="file-input" className="upload-btn">
                 Upload
               </label>
-              <button className="remove-btn" onClick={() => setImage("")}>
+              <button
+                className="remove-btn"
+                onClick={() => {
+                  setImage(""); // Set image to empty string when removed
+                }}
+              >
                 Remove
               </button>
+
             </div>
           </div>
         </div>
