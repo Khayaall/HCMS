@@ -1,0 +1,169 @@
+.sidebar > .container {
+  display: flex;
+  flex-direction: column;
+  padding-top: 1rem;
+}
+.sidebar-links {
+  padding-top: 1rem;
+}
+.logo {
+  display: flex;
+}
+.logo-img {
+  width: 16%;
+  margin-right: 0.5rem;
+}
+.logo-img img {
+  width: 100%;
+  /* mix-blend-mode: difference; */
+}
+.links-list {
+  list-style: none;
+  padding: 0 1rem;
+  justify-items: center;
+}
+.links a {
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 10px;
+  color: #4f545d;
+  padding: 0.8rem 0.5rem;
+  margin: 0.5rem 0;
+  width: 12rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+}
+.links p {
+  padding: 0 0.6rem;
+}
+.links {
+  display: flex;
+}
+.links a:hover {
+  background: var(--white);
+  color: var(--dark);
+}
+.links a.active {
+  background: var(--white);
+  color: var(--dark);
+}
+
+.navbar > .container {
+  display: flex;
+  flex-direction: row;
+  padding-top: 1rem;
+}
+.search-bar {
+  width: 74%;
+  padding-left: 1rem;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.search-bar > p {
+  position: absolute;
+  left: 2%;
+}
+.search-bar > input {
+  width: 95%;
+  background: transparent;
+  border: none;
+  padding: 12px;
+  padding-left: 34px;
+  border-radius: 8px;
+  transition: all 0.4s ease;
+}
+.search-bar > input:focus {
+  outline: 1.5px solid var(--purple);
+  /* transition: all 1s ease; */
+}
+
+.nav-icons {
+  width: 25%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.profile-icon {
+  display: flex;
+  width: 50%;
+  align-items: center;
+  position: relative;
+}
+.profile-img img {
+  width: 100%;
+  border-radius: 50%;
+}
+.profile-img {
+  width: 15%;
+  margin-right: 7%;
+  cursor: pointer;
+}
+.profile-txt {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  cursor: pointer;
+  margin-right: 7%;
+}
+.profile-txt > h6 {
+  font-weight: 300;
+  font-size: 0.8rem;
+  color: var(--light-grey);
+}
+.profile-icon > p {
+  cursor: pointer;
+}
+.profile-list {
+  position: absolute;
+  top: 100%;
+  width: 115%;
+  background: var(--sec-dark);
+  right: 28%;
+  border-radius: 10px;
+  z-index: 7;
+}
+.profile-list li {
+  border-radius: 10px;
+}
+.profile-list > .containerP > ul {
+  list-style: none;
+  /* padding: 1rem 0; */
+}
+.containerP a {
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  padding: 1.4rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.profile-list > .containerP > ul > li > a > p {
+  margin-left: 8%;
+}
+.profile-list > .containerP > ul > li:hover {
+  background: var(--main-dark);
+}
+.list-line {
+  position: relative;
+}
+.list-line::after {
+  background: #f6f7fb;
+  height: 1px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 90px;
+  content: "";
+  width: 100%;
+  margin: 0 auto;
+}
+.icon {
+  cursor: pointer;
+}
+.icon:hover {
+  color: var(--light-grey);
+}

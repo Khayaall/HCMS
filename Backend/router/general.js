@@ -10,7 +10,7 @@ public_users.post('/signup', async (req, res) => {
         if (!email || !password || !role || !f_name || !l_name) {
             return res.status(400).send("Please fill in all the fields");
         }
-        if(role == 'doctor')
+        if(role.toLowerCase() == 'doctor')
         {
             const { email, password, role, f_name, l_name, d_id } = req.body;
             if ((d_id.startsWith('dr') == false || d_id.length <= 5)) {
@@ -31,7 +31,7 @@ public_users.post('/signup', async (req, res) => {
                 return res.json("doctor added waiting for admin approval");
             }
         }
-        if(role == 'patient')
+        if(role.toLowerCase() == 'patient')
             {
                 const { email, password, role, f_name, l_name,patient_type } = req.body;
                 const user = await pool.query("SELECT * FROM patient WHERE email = $1", [email]);
@@ -53,7 +53,7 @@ public_users.post('/signup', async (req, res) => {
                     return res.json("patient added succesfuly");
                 }
             }
-        if(role == 'receptionist')
+        if(role.toLowerCase() == 'receptionist')
             {   
                 const { email, password, role, f_name, l_name, r_id } = req.body;
                 if (r_id.startsWith('re') == false || r_id.length < 5) {
@@ -89,7 +89,7 @@ public_users.post('/login', async (req, res) => {
         }
 
         let user;
-        if (role === 'patient') {
+        if (role.toLowerCase() === 'patient') {
             const { email, password } = req.body;
             if (!email || !password) {
                 return res.status(400).send("Please fill in all the fields.");
@@ -99,7 +99,7 @@ public_users.post('/login', async (req, res) => {
                 return res.status(400).send("Invalid Credentials");
             }
         } 
-        else if (role === 'doctor') {
+        else if (role.toLowerCase() === 'doctor') {
             const { d_id, password } = req.body;
             if (!d_id || !password) {
                 return res.status(400).send("Please fill in all the fields.");
@@ -109,7 +109,7 @@ public_users.post('/login', async (req, res) => {
                 return res.status(400).send("Invalid Credentials");
             }
         } 
-        else if (role === 'receptionist') {
+        else if (role.toLowerCase() === 'receptionist') {
             const { r_id, password } = req.body;
             if (!r_id || !password) {
                 return res.status(400).send("Please fill in all the fields.");
@@ -119,7 +119,7 @@ public_users.post('/login', async (req, res) => {
                 return res.status(400).send("Invalid Credentials");
             }
         } 
-        else if (role === 'admin') {
+        else if (role.toLowerCase() === 'admin') {
             const { a_id, password } = req.body;
             if (!a_id || !password) {
                 return res.status(400).send("Please fill in all the fields.");
@@ -134,11 +134,13 @@ public_users.post('/login', async (req, res) => {
         }
 
         // Create JWT with user info and role
-        let token = jwt.sign({ username: user.rows[0].f_name, role: role }, 'access', { expiresIn: 60 * 60 });
+        let token = jwt.sign({ username: user.rows[0].f_name, role: role}, 'access', { expiresIn: 60 * 60 });
         req.session.authorization = { accessToken: token, user: user.rows[0].f_name, role: role, id: user.rows[0].doctor_id || user.rows[0].patient_id || user.rows[0].receptionist_id || user.rows[0].admin_id };
         return res.status(200).json({ 
             message: `${req.session.authorization.user} logged in successfully`,
-            token: token
+            token: token,
+            role: req.session.authorization.role,
+            id: req.session.authorization.id    
         });
 
     } catch (err) {
