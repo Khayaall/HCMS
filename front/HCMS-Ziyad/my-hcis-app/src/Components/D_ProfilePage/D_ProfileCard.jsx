@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import EditProfileModal from "./EditProfileModal";
 import "./D_ProfileCard.css";
+import NavBar from "./NavBar";
 
 const D_ProfileCard = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,7 +17,6 @@ const D_ProfileCard = (props) => {
     trust: props.trust,
   });
   
-
   const handleSave = (updatedProfile) => {
     setProfile(updatedProfile);
   };

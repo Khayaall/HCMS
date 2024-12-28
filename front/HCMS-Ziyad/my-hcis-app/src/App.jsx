@@ -18,7 +18,7 @@ const App = () => {
   return (
     <Router>
       <div className="app">
-        {!login ? (
+        {/* {!login ? (
           <>
             <Routes>
               <Route path="/login" element={<Sign_in />} />
@@ -30,7 +30,7 @@ const App = () => {
               <Route path="/" element={<Sign_up />} />
             </Routes>
           </>
-        ) : (
+        ) : ( */}
           <div className="container">
             <div className="sidebar-content">
               <Sidebar />
@@ -56,7 +56,7 @@ const App = () => {
               </Routes> */}
             </div>
           </div>
-        )}
+        {/* )} */}
       </div>
     </Router>
   );
