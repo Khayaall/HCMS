@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import EditProfileModal from "./EditProfileModal";
 import "./D_ProfileCard.css";
+import NavBar from "./NavBar";
 
 const D_ProfileCard = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -9,10 +10,13 @@ const D_ProfileCard = (props) => {
     lastName: props.lastName,
     img: props.img,
     specialty: props.specialty,
+    bio: props.bio || "",
+    college: props.college || "",
+    degree: props.degree || "",
     ratings: props.ratings,
     trust: props.trust,
   });
-
+  
   const handleSave = (updatedProfile) => {
     setProfile(updatedProfile);
   };
@@ -41,7 +45,10 @@ const D_ProfileCard = (props) => {
 
   return (
     <div className="profile-card">
-      <img src={profile.img} alt="Profile" className="profile-imgg" />
+      <div className="profile-img-wrapper">
+        <img src={profile.img} alt="Profile" className="profile-imgg" />
+      </div>
+
       <h3>
         {profile.firstName} {profile.lastName}
       </h3>

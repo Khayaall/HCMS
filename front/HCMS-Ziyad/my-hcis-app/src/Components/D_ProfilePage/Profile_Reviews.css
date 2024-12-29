@@ -69,18 +69,18 @@
   margin-top: 10px;
 }
 
-.reviews-section.scrollable {
-  max-height: 400px; /* Set a max height for the scrollable section */
-  overflow-y: auto; /* Enable vertical scrolling */
-  padding-right: 10px; /* Add padding to avoid content being hidden by scrollbar */
-  border: 1px solid #555; /* Add border to distinguish the scrollable area */
-  border-radius: 10px; /* Match the border radius of review cards */
-  background-color: #333; /* Match the background color of the page */
-}
+/* .reviews-section.scrollable {
+  max-height: 400px; 
+  overflow-y: auto; 
+  padding-right: 10px; 
+  border: 1px solid #555; 
+  border-radius: 10px; 
+  background-color: #333; 
+} */
 
 .see-more-button {
   background: none; /* Remove background color */
-  color: #007bff; /* Set text color to blue */
+  color: #646cff; /* Set text color to blue */
   border: none;
   padding: 5px 10px; /* Make the button smaller */
   margin-top: 10px;
