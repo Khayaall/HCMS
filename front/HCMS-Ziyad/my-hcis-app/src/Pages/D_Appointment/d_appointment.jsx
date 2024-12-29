@@ -4,7 +4,6 @@ import FilterDropdown from "../../Components/D_PatientList/FilterDropdown";
 import ArrowButton from "../../Components/D_PatientList/ArrowButton";
 import PatientList from "../../Components/D_PatientList/patientListCard";
 import PatientGrid from "../../Components/D_PatientList/patientGridCard";
-import patients from "../../Components/D_PatientList/Patients.json";
 
 const Today = new Date();
 Today.setDate(Today.getDate());
@@ -14,11 +13,10 @@ const D_Appointment = () => {
   const [layout, setLayout] = useState("list"); // State to manage layout type
   const [filter, setFilter] = useState(""); // State to manage filter
   const [filteredPatients, setFilteredPatients] = useState([]);
+  const [patients, setPatients] = useState([]); // State to manage patients data
 
   const handleDateChange = (days) => {
-    setDate(
-      (prevDate) => new Date(prevDate.setDate(prevDate.getDate() + days))
-    );
+    setDate((prevDate) => new Date(prevDate.setDate(prevDate.getDate() + days)));
   };
 
   const formatDate = (date) => {
@@ -53,6 +51,40 @@ const D_Appointment = () => {
   };
 
   useEffect(() => {
+    const fetchPatients = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const id = localStorage.getItem("id");
+        const role = localStorage.getItem("role").toLowerCase();
+        if (!token || !id || !role) {
+          console.error("No token, id, or role found, please log in");
+          return;
+        }
+
+        const response = await fetch("http://localhost:5000/doctor/patients", {
+          method: "GET",
+          headers: {
+            'authorization': `Bearer ${token}`,
+            'User-Id': id,
+            'User-Role': role
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setPatients(data);
+      } catch (error) {
+        console.error("Error fetching patients data:", error);
+      }
+    };
+
+    fetchPatients();
+  }, []);
+
+  useEffect(() => {
     const filteredPatients = applyFilter(
       patients.filter((patient) => {
         const appointmentDate = new Date(patient.date);
@@ -60,7 +92,7 @@ const D_Appointment = () => {
       })
     );
     setFilteredPatients(filteredPatients);
-  }, [date, filter]);
+  }, [date, filter, patients]);
 
   return (
     <div className="appointment-container">
