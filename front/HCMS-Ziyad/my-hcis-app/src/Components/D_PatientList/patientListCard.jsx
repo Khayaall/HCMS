@@ -43,19 +43,14 @@ const PatientListCard = ({ patient }) => {
 const PatientList = ({ patients }) => {
   const [showAll, setShowAll] = useState(false);
 
-  const today = new Date().toDateString();
-  const todayPatients = patients.filter(
-    (patient) => new Date(patient.date).toDateString() === today
-  );
-
-  const visiblePatients = showAll ? todayPatients : todayPatients.slice(0, 4);
+  const visiblePatients = showAll ? patients : patients.slice(0, 4);
 
   return (
     <>
       {visiblePatients.map((patient) => (
         <PatientListCard key={patient.id} patient={patient} />
       ))}
-      {todayPatients.length > 4 && (
+      {patients.length > 4 && (
         <button
           className="see-more-button"
           onClick={() => setShowAll(!showAll)}

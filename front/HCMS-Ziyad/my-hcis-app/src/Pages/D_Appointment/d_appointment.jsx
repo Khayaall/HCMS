@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./d_appointment.css";
 import FilterDropdown from "../../Components/D_PatientList/FilterDropdown";
 import ArrowButton from "../../Components/D_PatientList/ArrowButton";
@@ -13,6 +13,7 @@ const D_Appointment = () => {
   const [date, setDate] = useState(new Date(Today)); // State to manage date
   const [layout, setLayout] = useState("list"); // State to manage layout type
   const [filter, setFilter] = useState(""); // State to manage filter
+  const [filteredPatients, setFilteredPatients] = useState([]);
 
   const handleDateChange = (days) => {
     setDate(
@@ -51,12 +52,15 @@ const D_Appointment = () => {
     }
   };
 
-  const filteredPatients = applyFilter(
-    patients.filter((patient) => {
-      const appointmentDate = new Date(patient.date);
-      return appointmentDate.toDateString() === date.toDateString();
-    })
-  );
+  useEffect(() => {
+    const filteredPatients = applyFilter(
+      patients.filter((patient) => {
+        const appointmentDate = new Date(patient.date);
+        return formatDate(appointmentDate) === formatDate(date);
+      })
+    );
+    setFilteredPatients(filteredPatients);
+  }, [date, filter]);
 
   return (
     <div className="appointment-container">
