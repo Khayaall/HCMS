@@ -26,14 +26,14 @@ const Sign_in = () => {
       role,
       password,
     };
-    if (role === 'doctor') {
+    if (role.toLowerCase() === 'doctor') {
       requestBody.d_id = id;
     }
     if (role.toLowerCase() === 'patient') 
     {
       requestBody.email =  email;
     }
-    if (role === 'admin')
+    if (role.toLowerCase() === 'admin')
     {
       requestBody.a_id = id;
     }
@@ -114,10 +114,10 @@ const Sign_in = () => {
             </button>
             <button
               className={`${styles.roleButton} ${
-                role === "admin" ? styles.active : ""
+                role === "Admin" ? styles.active : ""
               }`}
               onClick={() => {
-                handleRoleChange("admin");
+                handleRoleChange("Admin");
                 setType(true);
               }}
             >

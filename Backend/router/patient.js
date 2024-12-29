@@ -29,14 +29,19 @@ patient_routes.get('/', async (req, res) => {
         return res.status(200).send(patient.rows[0]);
     } catch (error) {
         console.error('Error fetching patient profile:', error);
-        return res.status(500).send('An error occurred while fetching the patient profile');
+        return res.status(500).send('An error occurred while fetching the patient profile.');
     }
 })
 
 patient_routes.get('/recent-doctors', async (req, res) => {
+    try{
     const actual_patient_id = req.session.authorization.id;
-    const recent_doctors = await pool.query("SELECT * FROM doctor WHERE doctor_id = (SELECT doctor_id FROM appointment WHERE patient_id = $1);",[actual_patient_id]);
+    const recent_doctors = await pool.query("SELECT * FROM doctor WHERE doctor_id = (SELECT DISTINCT doctor_id FROM appointment WHERE patient_id = $1);",[actual_patient_id]);
     return res.status(200).send(recent_doctors.rows);
+    }catch(error){
+        console.error('Error fetching recent doctors:', error);
+        return res.status(500).send('An error occurred while fetching recent doctors of patient.');
+    }
 });
 
 patient_routes.get('/appointments', async (req, res) => {
