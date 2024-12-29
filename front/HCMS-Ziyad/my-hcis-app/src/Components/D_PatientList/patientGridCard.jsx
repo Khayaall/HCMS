@@ -12,18 +12,18 @@ const PatientGridCard = ({ patient }) => {
     <div className="patientGridCard-card">
       <div className="patientGridCard-content">
         <div className="patientGridCard-details">
-          <h3 className="patientGridCard-name">{patient.name}</h3>
+          <h3 className="patientGridCard-name">{patient.patientName}</h3>
           <div className="patientGridCard-info">
             <p>🩺{patient.job}</p>
             <p className="patientGridCard-time">🕒{patient.date}</p>
           </div>
           <p className="patientGridCard-description">
-            Disease: {patient.disease}
+              Patient: {patient.patient_type}
           </p>
         </div>
       </div>
       <div className="patientGridCard-profile-image" style={{ backgroundColor: "#FFD700" }}>
-        <img src={patient.image} alt={patient.name} />
+        <img src={patient.image} alt={patient.patientName} />
       </div>
       <div className="patientGridCard-actions">
         <div><p className="patientGridCard-status">{getStatus(patient.date)} • {patient.payment}</p></div>
@@ -37,7 +37,7 @@ const PatientGrid = ({ patients }) => {
   return (
     <div className="patientGridCard-container">
       {patients.slice(0, 12).map((patient) => (
-        <PatientGridCard key={patient.id} patient={patient} />
+        <PatientGridCard key={patient.patient_id} patient={patient} />
       ))}
     </div>
   );
