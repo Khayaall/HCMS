@@ -20,17 +20,10 @@ import P_appointment from "./Pages/D_Appointment/P_appointment";
 import A_appointment from "./Pages/D_Appointment/A_appointment";
 import Home from "./Pages/Home/Home";
 import { useAuth } from "../AuthContext";
+import { MergedDataProvider } from "./Components/D_PatientList/AppointmentsWithPatients";
 
 const App = () => {
   const { isLoggedIn } = useAuth();
-
-  // useEffect(() => {
-  //   // Check if the user is logged in by checking local storage or any other method
-  //   const token = localStorage.getItem("token");
-  //   if (token) {
-  //     setIsLoggedIn(true);
-  //   }
-  // }, []);
 
   return (
     <Router>
@@ -57,7 +50,14 @@ const App = () => {
                   <Route path="/overview" element={<D_Overview />} />
                 </Routes>
                 <Routes>
-                  <Route path="/appointment" element={<D_Appointment />} />
+                  <Route
+                    path="/appointment"
+                    element={
+                      <MergedDataProvider>
+                        <D_Appointment />
+                      </MergedDataProvider>
+                    }
+                  />
                 </Routes>
                 <Routes>
                   <Route path="/mypatient" element={<D_PatientList />} />

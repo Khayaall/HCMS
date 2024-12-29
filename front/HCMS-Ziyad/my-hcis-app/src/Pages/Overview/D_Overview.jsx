@@ -20,40 +20,65 @@ const D_Overview = () => {
   const [recent, setRecent] = useState(recentPatients);
   const fewRecent = recent.splice(0, 4);
   const [doctor, setDoctor] = useState(null);
+  const [doctorStats, setDoctorStats] = useState(false);
+
+  const token = localStorage.getItem("token");
+  const id = localStorage.getItem("id");
+  const role = localStorage.getItem("role").toLowerCase();
+
+  const fetchDoctorStats = async () => {
+    try {
+      const resp = await fetch("http://localhost:5000/doctor/statistics", {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${token}`,
+          "User-Id": id,
+          "User-Role": role,
+        },
+      });
+      if (!resp.ok) {
+        throw new Error("Failed to fetch doctor stats");
+      }
+      const stats = await resp.json();
+      setDoctorStats(stats);
+      // console.log(stats);
+    } catch (error) {
+      console.error("Error fetching doctor stats:", error);
+      throw new Error("Failed to fetch doctor stats");
+    }
+  };
+
+  const fetchDoctorData = async () => {
+    if (!token || !id || !role) {
+      console.error("No token, id, or role found, please log in");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/doctor/", {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${token}`,
+          "User-Id": id,
+          "User-Role": role,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch doctor data");
+      }
+
+      const doctorData = await response.json();
+      setDoctor(doctorData);
+      // console.log("Doctor data:", doctorData);
+    } catch (error) {
+      console.error("Error fetching doctor data:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchDoctorData = async () => {
-      const token = localStorage.getItem("token");
-      const id = localStorage.getItem("id");
-      const role = localStorage.getItem("role").toLowerCase();
-      if (!token || !id || !role) {
-        console.error("No token, id, or role found, please log in");
-        return;
-      }
-
-      try {
-        const response = await fetch("http://localhost:5000/doctor/", {
-          method: "GET",
-          headers: {
-            authorization: `Bearer ${token}`,
-            "User-Id": id,
-            "User-Role": role,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch doctor data");
-        }
-
-        const doctorData = await response.json();
-        setDoctor(doctorData);
-        // console.log("Doctor data:", doctorData);
-      } catch (error) {
-        console.error("Error fetching doctor data:", error);
-      }
-    };
-
     fetchDoctorData();
+    fetchDoctorStats();
   }, []);
 
   if (!doctor) {
@@ -76,7 +101,7 @@ const D_Overview = () => {
             </p>
           </div>
           <div className="card-txt">
-            <h1>10.1k</h1>
+            <h1>{doctorStats.total_appointments}k</h1>
             <h5>Appointments</h5>
           </div>
         </div>
@@ -87,7 +112,7 @@ const D_Overview = () => {
             </p>
           </div>
           <div className="card-txt">
-            <h1>5.37k</h1>
+            <h1>{doctorStats.total_patients}k</h1>
             <h5>Total Patient</h5>
           </div>
         </div>
@@ -98,7 +123,7 @@ const D_Overview = () => {
             </p>
           </div>
           <div className="card-txt">
-            <h1>2.7k</h1>
+            <h1>{doctorStats.total_reviews}k</h1>
             <h5>Review</h5>
           </div>
         </div>
@@ -109,7 +134,7 @@ const D_Overview = () => {
             </p>
           </div>
           <div className="card-txt">
-            <h1>24.4k</h1>
+            <h1>{doctorStats.total_prescriptions}k</h1>
             <h5>Prescription</h5>
           </div>
         </div>
