@@ -1,22 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./d_appointment.css";
 import FilterDropdown from "../../Components/D_PatientList/FilterDropdown";
 import ArrowButton from "../../Components/D_PatientList/ArrowButton";
 import PatientList from "../../Components/D_PatientList/patientListCard";
 import PatientGrid from "../../Components/D_PatientList/patientGridCard";
+import { MergedDataContext } from "../../Components/D_PatientList/AppointmentsWithPatients";
 
 const Today = new Date();
-Today.setDate(Today.getDate());
+Today.setHours(0, 0, 0, 0); // Ensure Today's date has no time portion
 
 const D_Appointment = () => {
   const [date, setDate] = useState(new Date(Today)); // State to manage date
   const [layout, setLayout] = useState("list"); // State to manage layout type
   const [filter, setFilter] = useState(""); // State to manage filter
-  const [filteredPatients, setFilteredPatients] = useState([]);
-  const [patients, setPatients] = useState([]); // State to manage patients data
+  const mergedData = useContext(MergedDataContext); // Get merged data from context
 
   const handleDateChange = (days) => {
-    setDate((prevDate) => new Date(prevDate.setDate(prevDate.getDate() + days)));
+    setDate((prevDate) => {
+      const newDate = new Date(prevDate);
+      newDate.setDate(newDate.getDate() + days);
+      // Ensure the date does not go below today
+      return newDate < Today ? new Date(Today) : newDate;
+    });
   };
 
   const formatDate = (date) => {
@@ -34,9 +39,9 @@ const D_Appointment = () => {
   const applyFilter = (patients) => {
     switch (filter) {
       case "name-asc":
-        return patients.sort((a, b) => a.name.localeCompare(b.name));
+        return patients.sort((a, b) => a.patientName.localeCompare(b.patientName));
       case "name-desc":
-        return patients.sort((a, b) => b.name.localeCompare(a.name));
+        return patients.sort((a, b) => b.patientName.localeCompare(a.patientName));
       case "date":
         return patients.sort((a, b) => new Date(a.date) - new Date(b.date));
       case "disease":
@@ -50,49 +55,14 @@ const D_Appointment = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchPatients = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const id = localStorage.getItem("id");
-        const role = localStorage.getItem("role").toLowerCase();
-        if (!token || !id || !role) {
-          console.error("No token, id, or role found, please log in");
-          return;
-        }
+  const filteredPatients = applyFilter(
+    mergedData.filter((patient) => {
+      const appointmentDate = new Date(patient.date).toDateString();
+      return appointmentDate === date.toDateString();
+    })
+  );
 
-        const response = await fetch("http://localhost:5000/doctor/patients", {
-          method: "GET",
-          headers: {
-            'authorization': `Bearer ${token}`,
-            'User-Id': id,
-            'User-Role': role
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        setPatients(data);
-      } catch (error) {
-        console.error("Error fetching patients data:", error);
-      }
-    };
-
-    fetchPatients();
-  }, []);
-
-  useEffect(() => {
-    const filteredPatients = applyFilter(
-      patients.filter((patient) => {
-        const appointmentDate = new Date(patient.date);
-        return formatDate(appointmentDate) === formatDate(date);
-      })
-    );
-    setFilteredPatients(filteredPatients);
-  }, [date, filter, patients]);
+  console.log("Filtered Patients:", filteredPatients);
 
   return (
     <div className="appointment-container">
@@ -119,7 +89,11 @@ const D_Appointment = () => {
       <div className="appointment-controls">
         <div className="date-controls">
           <span className="date-display">{formatDate(date)}</span>
-          <ArrowButton direction="left" onClick={() => handleDateChange(-1)} />
+          <ArrowButton
+            direction="left"
+            onClick={() => handleDateChange(-1)}
+            disabled={date.toDateString() === Today.toDateString()} // Disable if date matches today's date
+          />
           <ArrowButton direction="right" onClick={() => handleDateChange(1)} />
         </div>
         <div className="filter-dropdown-container">
@@ -132,7 +106,7 @@ const D_Appointment = () => {
       </div>
       {layout === "list" && (
         <div className="cards-container list">
-          <PatientList patients={filteredPatients} />
+          <PatientList patients={filteredPatients} formattedDate={formatDate(date)} />
         </div>
       )}
       {layout === "grid" && (

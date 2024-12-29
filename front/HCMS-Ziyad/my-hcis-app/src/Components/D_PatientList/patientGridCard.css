@@ -1,7 +1,7 @@
 .patientGridCard-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); /* Fixed width columns */
-    
+    align-items: start;
     justify-content: left; /* Center the grid items */
 }
 
