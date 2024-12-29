@@ -525,6 +525,11 @@ doctor_routes.get('/infant_treatment_plan/:patient_id', async (req, res) => {
     }
 });
 
+doctor_routes.get('/patient_details/:id',async (req,res)=>{
+    const id = req.params.id;
+    const patient = await pool.query("SELECT * FROM patient WHERE patient_id = $1", [id]);
+    res.send(patient.rows[0]);
+});
 
 
 module.exports.authenticated = doctor_routes;
