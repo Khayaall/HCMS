@@ -14,7 +14,6 @@ import D_Overview from "./Pages/Overview/D_Overview";
 import Sign_in from "./Pages/Sign_in/Sign_in";
 import Sign_up from "./Pages/Sign_up/Sign_up";
 import D_Appointment from "./Pages/D_Appointment/D_appointment";
-import Home from "./Pages/Home/Home";
 import { useAuth } from "../AuthContext";
 
 const App = () => {
@@ -36,7 +35,7 @@ const App = () => {
             <Routes>
               <Route path="/login" element={<Sign_in />} />
               <Route path="/signup" element={<Sign_up />} />
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Navigate to="/login" />} />
             </Routes>
           </>
         ) : (
