@@ -119,7 +119,7 @@ public_users.post('/login', async (req, res) => {
                 return res.status(400).send("Invalid Credentials");
             }
         } 
-        else if (role === 'admin') {
+        else if (role.toLowerCase() === 'admin') {
             const { a_id, password } = req.body;
             if (!a_id || !password) {
                 return res.status(400).send("Please fill in all the fields.");

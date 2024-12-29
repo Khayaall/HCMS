@@ -300,4 +300,231 @@ doctor_routes.post('/edit_medical_record/:patient_id', upload.single('image'), a
     }
 });
 
+doctor_routes.post('/add_prescription/:appointment_id', async (req, res) => {
+    const appointment_id = req.params.appointment_id;
+    const d_id = req.session.authorization.id;
+    const p_id_result = await pool.query('SELECT patient_id FROM appointment WHERE appointment_id = $1', [appointment_id]);
+    const p_id = p_id_result.rows[0].patient_id;
+    const date_issue_result = await pool.query("SELECT date FROM appointment WHERE appointment_id = $1", [appointment_id]);
+    const date_issue = date_issue_result.rows[0].date; // Extract the date value
+
+    try {
+        await pool.query(
+            `INSERT INTO prescription (appointment_id, doctor_id, patient_id, date_issue, medication, note)
+            VALUES ($1, $2, $3, $4, $5, $6)`,
+            [appointment_id, d_id, p_id, date_issue, req.body.medication, req.body.note]
+        );
+        res.send('Prescription added successfully');
+    } catch (error) {
+        console.error('Error adding prescription:', error);
+        res.status(500).send('An error occurred while adding the prescription');
+    }
+});
+
+doctor_routes.get('/get_prescriptions/:patient_id', async (req, res) => {
+const p_id = req.params.patient_id;
+try {
+    const result = await pool.query("SELECT * FROM prescription WHERE patient_id = $1", [p_id]);
+    res.send(result.rows);
+}
+catch (error) {
+    console.error('Error fetching prescriptions:', error);
+    res.status(500).send('An error occurred while fetching prescriptions');
+}
+});
+
+doctor_routes.post('/treatment_plan/:patient_id', async (req, res) => {
+    const p_id = req.params.patient_id;
+    const d_id = req.session.authorization.id;
+    patient_type_result = await pool.query("SELECT patient_type FROM patient WHERE patient_id = $1", [p_id]);
+    let fields = ['session_date', 'cancer_stage', 'dosage', 'age', 'blood_pressure', 'heart_rate'];
+    let query = 'INSERT INTO treatment_plan (patient_id, doctor_id, ';
+    if(patient_type_result.rows[0].patient_type.toLowerCase() === 'pediatric') {
+        console.log('Pediatric patient');
+        fields = ['vaccination_date', 'vaccine_type', 'temprature', 'weight', 'age' , 'immune_system_status', 'heart_rate' , 'vaccination_instructions'];
+        query = 'INSERT INTO infant (patient_id, doctor_id, ';
+    }
+    console.log('fields:', fields);
+    console.log('query:', query);
+    let valuesQuery = 'VALUES ($1, $2, ';
+    const values = [p_id, d_id];
+    let index = 3;
+
+    fields.forEach(field => {
+        if (req.body[field]) {
+            query += `${field}, `;
+            valuesQuery += `$${index}, `;
+            values.push(req.body[field]);
+            index++;
+        }
+    });
+
+    // Remove the trailing comma and space
+    query = query.slice(0, -2) + ') ';
+    valuesQuery = valuesQuery.slice(0, -2) + ')';
+    query += valuesQuery;
+
+    try {
+        const result = await pool.query(query, values);
+        res.status(200).send('Treatment plan added successfully');
+    } catch (error) {
+        console.error('Error adding treatment plan:', error);
+        res.status(500).send('An error occurred while adding the treatment plan');
+    }
+});
+
+
+doctor_routes.put('/edit_treatment_plan/:patient_id', async (req, res) => {
+    const patient_id = req.params.patient_id;
+    const doctor_id = req.session.authorization.id;
+    patient_type_result = await pool.query("SELECT patient_type FROM patient WHERE patient_id = $1", [p_id]);
+    const fields = ['session_date', 'cancer_stage', 'dosage', 'age', 'blood_pressure', 'heart_rate'];
+    let query = 'UPDATE treatment_plan SET ';
+    if(patient_type_result.rows[0].patient_type.toLowerCase() === 'pediatric') {
+        fields = ['vaccination_date', 'vaccine_type', 'temprature', 'weight', 'age' , 'immune_system_status', 'heart_rate' , 'vaccination_instructions'];
+        query = 'UPDATE infant SET ';
+    }
+    const values = [];
+    let index = 1;
+
+    fields.forEach(field => {
+        if (req.body[field]) {
+            query += `${field} = $${index}, `;
+            values.push(req.body[field]);
+            index++;
+        }
+    });
+
+    // Remove the trailing comma and space
+    query = query.slice(0, -2);
+
+    // Add the WHERE clause
+    query += ` WHERE patient_id = $${index} AND doctor_id = $${index + 1}`;
+    values.push(patient_id, doctor_id);
+
+    try {
+        const result = await pool.query(query, values);
+        res.status(200).send('Treatment plan updated successfully');
+    } catch (error) {
+        console.error('Error updating treatment plan:', error);
+        res.status(500).send('An error occurred while updating the treatment plan');
+    }
+});
+
+doctor_routes.get('/get_cancer_treatment_plan/:patient_id', async (req, res) => {
+    const patient_id = req.params.patient_id;
+    const doctor_id = req.session.authorization.id;
+
+    try {
+        const result = await pool.query(
+            'SELECT * FROM treatment_plan WHERE patient_id = $1 AND doctor_id = $2',
+            [patient_id, doctor_id]
+        );
+        res.send(result.rows);
+    } catch (error) {
+        console.error('Error fetching treatment plan:', error);
+        res.status(500).send('An error occurred while fetching the treatment plan');
+    }
+});
+
+doctor_routes.post('/tracking_pregnancy/:patient_id', async (req, res) => {
+    const p_id = req.params.patient_id;
+    const d_id = req.session.authorization.id;
+    const fields = ['date', 'pregnancy_stage', 'weight', 'age', 'blood_pressure', 'heart_rate'];
+    
+    let query = 'INSERT INTO patient_ultraimages (patient_id, doctor_id, ';
+    let valuesQuery = 'VALUES ($1, $2, ';
+    const values = [p_id, d_id];
+    let index = 3;
+
+    fields.forEach(field => {
+        if (req.body[field]) {
+            query += `${field}, `;
+            valuesQuery += `$${index}, `;
+            values.push(req.body[field]);
+            index++;
+        }
+    });
+
+    // Remove the trailing comma and space
+    query = query.slice(0, -2) + ') ';
+    valuesQuery = valuesQuery.slice(0, -2) + ')';
+    query += valuesQuery;
+
+    try {
+        const result = await pool.query(query, values);
+        res.status(200).send('Tracking pregnancy added successfully');
+    } catch (error) {
+        console.error('Error Tracking pregnancy:', error);
+        res.status(500).send('An error occurred while adding the treatment plan');
+    }
+});
+
+doctor_routes.put('/edit_pregnancy_tracking/:patient_id', async (req, res) => {
+    const patient_id = req.params.patient_id;
+    const doctor_id = req.session.authorization.id;
+    const fields = ['date', 'pregnancy_stage', 'weight', 'age', 'blood_pressure', 'heart_rate'];
+    
+    let query = 'UPDATE patient_ultraimages SET ';
+    const values = [];
+    let index = 1;
+
+    fields.forEach(field => {
+        if (req.body[field]) {
+            query += `${field} = $${index}, `;
+            values.push(req.body[field]);
+            index++;
+        }
+    });
+
+    // Remove the trailing comma and space
+    query = query.slice(0, -2);
+
+    // Add the WHERE clause
+    query += ` WHERE patient_id = $${index} AND doctor_id = $${index + 1}`;
+    values.push(patient_id, doctor_id);
+
+    try {
+        const result = await pool.query(query, values);
+        res.status(200).send('Treatment plan updated successfully');
+    } catch (error) {
+        console.error('Error updating treatment plan:', error);
+        res.status(500).send('An error occurred while updating the treatment plan');
+    }
+});
+
+doctor_routes.get('/get_pregnancy_tracking/:patient_id', async (req, res) => {
+    const patient_id = req.params.patient_id;
+    const doctor_id = req.session.authorization.id;
+
+    try {
+        const result = await pool.query(
+            'SELECT * FROM patient_ultraimages WHERE patient_id = $1 AND doctor_id = $2',
+            [patient_id, doctor_id]
+        );
+        res.send(result.rows);
+    } catch (error) {
+        console.error('Error fetching treatment plan:', error);
+        res.status(500).send('An error occurred while fetching the treatment plan');
+    }
+});
+
+doctor_routes.get('/infant_treatment_plan/:patient_id', async (req, res) => {
+    const patient_id = req.params.patient_id;
+    const doctor_id = req.session.authorization.id;
+
+    try {
+        const result = await pool.query(
+            'SELECT * FROM infant WHERE patient_id = $1 AND doctor_id = $2',
+            [patient_id, doctor_id]
+        );
+        res.send(result.rows);
+    } catch (error) {
+        console.error('Error fetching treatment plan:', error);
+        res.status(500).send('An error occurred while fetching the treatment plan');
+    }
+});
+
+
+
 module.exports.authenticated = doctor_routes;
