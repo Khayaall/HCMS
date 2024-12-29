@@ -32,7 +32,7 @@ const P_Overview = () => {
       }
 
       try {
-        const response = await fetch("http://localhost:5000/doctor/", {
+        const response = await fetch("http://localhost:5000/patient/", {
           method: "GET",
           headers: {
             authorization: `Bearer ${token}`,
@@ -40,7 +40,7 @@ const P_Overview = () => {
             "User-Role": role,
           },
         });
-
+        console.log(response);
         if (!response.ok) {
           throw new Error("Failed to fetch doctor data");
         }
@@ -64,7 +64,7 @@ const P_Overview = () => {
     <div className="overview-page">
       <div className="overview-title">
         <h2>
-          Welcome, Dr. {doctor.f_name} {doctor.l_name}
+          Welcome, Mr. {doctor.f_name} {doctor.l_name}
         </h2>
         <p>Have a nice day at great work </p>
       </div>
@@ -77,7 +77,7 @@ const P_Overview = () => {
           </div>
           <div className="card-txt">
             <h1>10.1k</h1>
-            <h5>Appointments</h5>
+            <h5>Available Doctors</h5>
           </div>
         </div>
         <div className="card">
@@ -88,7 +88,7 @@ const P_Overview = () => {
           </div>
           <div className="card-txt">
             <h1>5.37k</h1>
-            <h5>Total Patient</h5>
+            <h5>Total Appointments</h5>
           </div>
         </div>
         <div className="card">
@@ -117,7 +117,7 @@ const P_Overview = () => {
       <div className="overview-app">
         <div className="reschedule">
           <div className="reschedule-txt">
-            <h3>Remaining Appointments</h3>
+            <h3>Recent Doctors</h3>
             <NavLink to="/appointment">
               View All <FontAwesomeIcon icon={faChevronRight} />
             </NavLink>
@@ -155,7 +155,7 @@ const P_Overview = () => {
           </div>
         </div>
         <div className="statistics"></div>
-        <div className="today-appointments">
+        {/* <div className="today-appointments">
           <h3>Today Appointments</h3>
           <div className="today-list">
             {today.length > 4
@@ -181,12 +181,12 @@ const P_Overview = () => {
                   );
                 })}
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="overview-patients">
         <div className="patients-txt">
-          <h3>Recent Patients</h3>
+          <h3>Appointment History</h3>
           <NavLink to="/mypatient" onClick={() => window.scrollTo(0, 0)}>
             View All <FontAwesomeIcon icon={faChevronRight} />
           </NavLink>

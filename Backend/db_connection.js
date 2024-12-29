@@ -20,10 +20,12 @@ require("dotenv").config();
 // Use a connection pool for better connection management
 
 const pool = new Pool({
-  connectionString: process.env.POSTGRES_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
+  connectionString:
+  process.env.POSTGRES_URL,
+  ssl:
+    process.env.NODE_ENV === "production"
+      ? { rejectUnauthorized: false }
+      : false,
 });
 
 pool
