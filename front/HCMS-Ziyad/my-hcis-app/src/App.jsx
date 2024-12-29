@@ -11,6 +11,9 @@ import {
 import D_ProfilePage from "./Pages/Profile_Page/D_ProfilePage";
 import D_PatientList from "./Pages/D_patientList/D_PatientList";
 import D_Overview from "./Pages/Overview/D_Overview";
+// import P_Overview from "./Pages/Overview/P_Overview";
+// import A_Overview from "./Pages/Overview/A_Overview";
+
 import Sign_in from "./Pages/Sign_in/Sign_in";
 import Sign_up from "./Pages/Sign_up/Sign_up";
 import D_Appointment from "./Pages/D_Appointment/D_appointment";
