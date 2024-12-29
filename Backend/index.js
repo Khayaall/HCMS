@@ -14,6 +14,8 @@ require('dotenv').config();
 const app = express();
 app.use(cors()); // Allow all origins
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use(sessionMiddleware);
 app.use(sessionDataMiddleware); 
 const PORT = 5000;
