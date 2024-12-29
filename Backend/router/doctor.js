@@ -195,6 +195,12 @@ doctor_routes.get('/get_upcoming_appointments', async (req, res) => {
     }
 });
 
+doctor_routes.get('/all_appointments', async (req, res) => {
+    const d_id = req.session.authorization.id;
+    const result = await pool.query("SELECT * FROM appointment WHERE doctor_id = $1", [d_id]);
+    res.status(200).send(result.rows);
+});
+
 doctor_routes.get('/statistics', async (req, res) => {
     const d_id = req.session.authorization.id;
 
@@ -525,6 +531,11 @@ doctor_routes.get('/infant_treatment_plan/:patient_id', async (req, res) => {
     }
 });
 
+doctor_routes.get('/patient_details/:id',async (req,res)=>{
+    const id = req.params.id;
+    const patient = await pool.query("SELECT * FROM patient WHERE patient_id = $1", [id]);
+    res.send(patient.rows[0]);
+});
 
 
 module.exports.authenticated = doctor_routes;
