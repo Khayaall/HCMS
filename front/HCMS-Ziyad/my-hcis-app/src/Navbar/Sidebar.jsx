@@ -58,14 +58,14 @@ const Sidebar = () => {
                   Settings
                 </NavLink>
               </li>
-              <li className="links">
+              {/* <li className="links">
                 <NavLink to="/">
                   <p>
                     <FontAwesomeIcon icon={faHouse} />
                   </p>
                   Home
                 </NavLink>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

@@ -15,7 +15,9 @@ const D_Appointment = () => {
   const [filter, setFilter] = useState(""); // State to manage filter
 
   const handleDateChange = (days) => {
-    setDate((prevDate) => new Date(prevDate.setDate(prevDate.getDate() + days)));
+    setDate(
+      (prevDate) => new Date(prevDate.setDate(prevDate.getDate() + days))
+    );
   };
 
   const formatDate = (date) => {
@@ -85,7 +87,11 @@ const D_Appointment = () => {
           <ArrowButton direction="right" onClick={() => handleDateChange(1)} />
         </div>
         <div className="filter-dropdown-container">
-          <FilterDropdown filter={filter} setFilter={setFilter} className="filter-dropdown-left" />
+          <FilterDropdown
+            filter={filter}
+            setFilter={setFilter}
+            className="filter-dropdown-left"
+          />
         </div>
       </div>
       {layout === "list" && (
