@@ -16,7 +16,7 @@ import { NavLink } from "react-router-dom";
 const D_Overview = () => {
   const [userOverview, setUserOverview] = useState(data);
   const [patient, setPatient] = useState(patients);
-  const [today, setToday] = useState(today_patients);
+  const [today, setToday] = useState([]);
   const [recent, setRecent] = useState(recentPatients);
   const fewRecent = recent.splice(0, 4);
   const [doctor, setDoctor] = useState(null);
@@ -25,28 +25,6 @@ const D_Overview = () => {
   const token = localStorage.getItem("token");
   const id = localStorage.getItem("id");
   const role = localStorage.getItem("role").toLowerCase();
-
-  const fetchDoctorStats = async () => {
-    try {
-      const resp = await fetch("http://localhost:5000/doctor/statistics", {
-        method: "GET",
-        headers: {
-          authorization: `Bearer ${token}`,
-          "User-Id": id,
-          "User-Role": role,
-        },
-      });
-      if (!resp.ok) {
-        throw new Error("Failed to fetch doctor stats");
-      }
-      const stats = await resp.json();
-      setDoctorStats(stats);
-      // console.log(stats);
-    } catch (error) {
-      console.error("Error fetching doctor stats:", error);
-      throw new Error("Failed to fetch doctor stats");
-    }
-  };
 
   const fetchDoctorData = async () => {
     if (!token || !id || !role) {
@@ -75,10 +53,58 @@ const D_Overview = () => {
       console.error("Error fetching doctor data:", error);
     }
   };
+  const fetchDoctorStats = async () => {
+    try {
+      const resp = await fetch("http://localhost:5000/doctor/statistics", {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${token}`,
+          "User-Id": id,
+          "User-Role": role,
+        },
+      });
+      if (!resp.ok) {
+        throw new Error("Failed to fetch doctor stats");
+      }
+      const stats = await resp.json();
+      setDoctorStats(stats);
+      // console.log(stats);
+    } catch (error) {
+      console.error("Error fetching doctor stats:", error);
+      throw new Error("Failed to fetch doctor stats");
+    }
+  };
+
+  const fetchTodayAppointments = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:5000/doctor/get_todays_appointments",
+        {
+          method: "GET",
+          headers: {
+            authorization: `Bearer ${token}`,
+            "User-Id": id,
+            "User-Role": role,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch today's appointments");
+      }
+
+      const todayAppointments = await response.json();
+      setToday(todayAppointments);
+      console.log("Today's appointments:", todayAppointments);
+    } catch (error) {
+      console.error("Error fetching today's appointments:", error);
+    }
+  };
 
   useEffect(() => {
     fetchDoctorData();
     fetchDoctorStats();
+    fetchTodayAppointments();
   }, []);
 
   if (!doctor) {
@@ -186,10 +212,15 @@ const D_Overview = () => {
             {today.length > 4
               ? setToday(today.splice(0, 4))
               : today.map((today) => {
-                  const { id, name, job_title, image, appointment_time } =
-                    today;
+                  const {
+                    appointment_id,
+                    name,
+                    job_title,
+                    image,
+                    appointment_time,
+                  } = today;
                   return (
-                    <ul key={id}>
+                    <ul key={appointment_id}>
                       <li>
                         <div className="today-img">
                           <img src={image} alt="" />
