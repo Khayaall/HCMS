@@ -17,6 +17,7 @@ import D_Appointment from "./Pages/D_Appointment/D_appointment";
 import Home from "./Pages/Home/Home";
 import { useAuth } from "../AuthContext";
 import { MergedDataProvider } from "./Components/D_PatientList/AppointmentsWithPatients";
+import D_patientDetails from "./Pages/D_patientDetails/D_patientDetails";
 
 const App = () => {
   const { isLoggedIn } = useAuth();
@@ -74,6 +75,12 @@ const App = () => {
                 </Routes>
                 <Routes>
                   <Route path="/settings" element={<D_ProfilePage />} />
+                </Routes>
+                <Routes>
+                  <Route
+                    path="/doctor/patientDetails/:patientId"
+                    element={<D_patientDetails />}
+                  />
                 </Routes>
               </div>
             </div>

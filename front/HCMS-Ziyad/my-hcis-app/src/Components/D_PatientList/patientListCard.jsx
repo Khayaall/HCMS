@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./patientListCard.css";
+import { NavLink } from "react-router-dom";
 
 const PatientListCard = ({ patient }) => {
   const [hidden, setHidden] = useState(true);
@@ -31,13 +32,15 @@ const PatientListCard = ({ patient }) => {
           </p>
         </div>
         <div className="patientlistcard-actions">
-          <button
-            className="patientlistcard-confirm"
-            onMouseEnter={() => setHidden(false)}
-            onMouseLeave={() => setHidden(true)}
-          >
-            View
-          </button>
+          <NavLink to={`/doctor/patientDetails/${patient.patient_id}`}>
+            <button
+              className="patientlistcard-confirm"
+              onMouseEnter={() => setHidden(false)}
+              onMouseLeave={() => setHidden(true)}
+            >
+              View
+            </button>
+          </NavLink>
           <p className="patientlistcard-status">
             {getStatus(patient.date)} • {patient.timeRange}
           </p>

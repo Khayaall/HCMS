@@ -5,7 +5,10 @@ import NavBar from "../../Components/D_ProfilePage/NavBar";
 import ReviewsSection from "../../Components/D_ProfilePage/ReviewsSection";
 import My_Profile from "../../Components/D_ProfilePage/My_Profile";
 import ChangePassword from "../../Components/D_ProfilePage/ChangePassword";
-import { ReviewsDataProvider, ReviewsDataContext } from "../../Components/D_PatientList/RevWithPatients";
+import {
+  ReviewsDataProvider,
+  ReviewsDataContext,
+} from "../../Components/APIs/RevWithPatients";
 
 const D_ProfilePage = () => {
   const [activeTab, setActiveTab] = useState("My Profile");
@@ -30,10 +33,10 @@ const D_ProfilePage = () => {
         const doctorResponse = await fetch("http://localhost:5000/doctor", {
           method: "GET",
           headers: {
-            'authorization': `Bearer ${token}`,
-            'User-Id': id,
-            'User-Role': role
-          }
+            authorization: `Bearer ${token}`,
+            "User-Id": id,
+            "User-Role": role,
+          },
         });
 
         if (!doctorResponse.ok) {
@@ -71,9 +74,7 @@ const D_ProfilePage = () => {
             ) : error ? (
               <p>{error}</p>
             ) : (
-              doctorData && (
-                <ProfileCardWithRating doctorData={doctorData} />
-              )
+              doctorData && <ProfileCardWithRating doctorData={doctorData} />
             )}
           </div>
           <div className="profile-bar-reviews">
