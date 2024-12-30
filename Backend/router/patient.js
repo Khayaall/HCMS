@@ -67,9 +67,9 @@ patient_routes.get('/browse-doctors', async (req, res) => {
     }
 });
 
-patient_routes.get('/browse-selected-doctors', async (req, res) => {
+patient_routes.get('/browse-selected-doctors/:type', async (req, res) => {
     try{
-    const {type} = req.body.toLowerCase();
+    const type = req.params.type;
     const type_doctors = await pool.query("SELECT * FROM doctor WHERE specialty = $1;",[type]);
     return res.status(200).send(type_doctors.rows)
     }catch(error){
@@ -159,7 +159,7 @@ patient_routes.get('/doctors', async (req, res) => {
     }
 });
 
-
+patient_routes.get('/trea')
 
 patient_routes.put('/edit-profile', async (req, res) => {
     const actual_patient_id = req.session.authorization.id;
