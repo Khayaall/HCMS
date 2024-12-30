@@ -1,67 +1,118 @@
-import React, { useState, useContext } from "react";
-import "./P_booking.css";
+import React, { useState, useContext, useEffect } from "react";
+import "./P_Booking.css";
 import FilterDropdown from "../../Components/D_PatientList/FilterDropdown";
-import ArrowButton from "../../Components/D_PatientList/ArrowButton";
 import DoctorList from "../../Components/D_PatientList/DocList";
 import DoctorGrid from "../../Components/D_PatientList/DocGrid";
 import { DoctorsDataContext } from "../../Components/APIs/getAllDr";
 import { PatientDataContext } from "../../Components/APIs/PatientInfo";
 
-const Today = new Date();
-Today.setHours(0, 0, 0, 0); // Ensure Today's date has no time portion
-
 const P_Booking = () => {
-  const [date, setDate] = useState(new Date(Today)); // State to manage date
   const [layout, setLayout] = useState("list"); // State to manage layout type
   const [filter, setFilter] = useState(""); // State to manage filter
   const { patient_type } = useContext(PatientDataContext) || {}; // Get patient type from context
   const [selectedButton, setSelectedButton] = useState(
-    patient_type === "Ob/gyn" ? "Ob/gyn" : patient_type
+    patient_type === "obstetrics"
+      ? "Ob/gyn"
+      : patient_type === "infant"
+      ? "Infant"
+      : "Ob/gyn"
   ); // Automatically select button based on patient type
-  const doctorsData = useContext(DoctorsDataContext); // Get doctors data from context
+  const [type, setType] = useState(
+    selectedButton === "Ob/gyn"
+      ? "obstetrics"
+      : selectedButton === "Infant"
+      ? "infant"
+      : "obstetrics"
+  ); // Automatically select type based on selected button
+  const [doctorsData, setDoctorsData] = useState([]); // State to manage doctors data
   const { patientData } = useContext(PatientDataContext); // Get patient data from context
+  const [filteredDoctors, setFilteredDoctors] = useState([]); // State to manage filtered doctors
 
-  const handleDateChange = (days) => {
-    setDate((prevDate) => {
-      const newDate = new Date(prevDate);
-      newDate.setDate(newDate.getDate() + days);
-      // Ensure the date does not go below today
-      return newDate < Today ? new Date(Today) : newDate;
-    });
+  console.log("Selected Button:", selectedButton);
+  console.log("Type:", type);
+
+  const fetchDoctors = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const id = localStorage.getItem("id");
+      const role = localStorage.getItem("role").toLowerCase();
+
+      if (!token || !id || !role) {
+        console.error("No token, id, or role found, please log in");
+        return;
+      }
+
+      // Append selectedButton as a query parameter
+      const response = await fetch(
+        `http://localhost:5000/patient/browse-selected-doctors/${type}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${token}`,
+            "User-Id": id,
+            "User-Role": role,
+          },
+        }
+      );
+
+      console.log("Response Status:", response.status);
+      console.log("Response Headers:", response.headers);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Response Error Text:", errorText);
+        throw new Error("Failed to fetch doctors");
+      }
+
+      const data = await response.json();
+      console.log("Fetched Doctors Data:", data); // Log the fetched data
+      setDoctorsData(data);
+      console.log("Doctors Data State:", data); // Log the state after setting it
+    } catch (error) {
+      console.error("Error fetching doctors:", error);
+    }
   };
 
-  console.log("AAAAAAAAAAAAAA:", patient_type);
-  const formatDate = (date) => {
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-  };
+  useEffect(() => {
+    fetchDoctors();
+  }, [type]);
 
-  const toggleLayout = (layoutType) => {
-    setLayout(layoutType);
-  };
+  useEffect(() => {
+    setType(selectedButton === "Ob/gyn" ? "obstetrics" : "infant");
+  }, [selectedButton]);
 
   const applyFilter = (doctors) => {
+    if (!doctors || doctors.length === 0) return [];
     switch (filter) {
       case "name-asc":
-        return doctors.sort((a, b) => a.name.localeCompare(b.name));
+        return doctors.sort((a, b) =>
+          (a.name || "").localeCompare(b.name || "")
+        );
       case "name-desc":
-        return doctors.sort((a, b) => b.name.localeCompare(a.name));
+        return doctors.sort((a, b) =>
+          (b.name || "").localeCompare(a.name || "")
+        );
       case "specialty":
-        return doctors.sort((a, b) => a.specialty.localeCompare(b.specialty));
+        return doctors.sort((a, b) =>
+          (a.specialty || "").localeCompare(b.specialty || "")
+        );
       case "experience":
-        return doctors.sort((a, b) => b.experience - a.experience);
+        return doctors.sort(
+          (a, b) => (b.experience || 0) - (a.experience || 0)
+        );
       default:
         return doctors;
     }
   };
 
-  const filteredDoctors = applyFilter(doctorsData);
+  useEffect(() => {
+    setFilteredDoctors(applyFilter(doctorsData));
+  }, [filter, doctorsData]);
 
-  console.log("Filtered Doctors:", filteredDoctors);
-  console.log("Patient Data:", patientData);
+  const toggleLayout = (layoutType) => {
+    setLayout(layoutType);
+  };
 
   return (
     <div className="appointment-container">
@@ -73,12 +124,6 @@ const P_Booking = () => {
           </p>
         </div>
         <div className="appointment-buttons">
-          {/* <button
-            className={`Cancer-button ${selectedButton === "Cancer" ? "active" : ""}`}
-            onClick={() => setSelectedButton("Cancer")}
-          >
-            Cancer
-          </button> */}
           <button
             className={`Obstetrics-button ${
               selectedButton === "Ob/gyn" ? "active" : ""
@@ -97,44 +142,32 @@ const P_Booking = () => {
           </button>
         </div>
       </div>
-      <div className="layout-toggle-buttons">
-        <button
-          className={`layout-button ${layout === "list" ? "active" : ""}`}
-          onClick={() => toggleLayout("list")}
-        >
-          List
-        </button>
-        <button
-          className={`layout-button ${layout === "grid" ? "active" : ""}`}
-          onClick={() => toggleLayout("grid")}
-        >
-          Grid
-        </button>
-      </div>
       <div className="appointment-controls">
-        <div className="date-controls">
-          <span className="date-display">{formatDate(date)}</span>
-          <ArrowButton
-            direction="left"
-            onClick={() => handleDateChange(-1)}
-            disabled={date.toDateString() === Today.toDateString()} // Disable if date matches today's date
-          />
-          <ArrowButton direction="right" onClick={() => handleDateChange(1)} />
+        <div className="layout-toggle-buttons">
+          <button
+            className={`layout-button ${layout === "list" ? "active" : ""}`}
+            onClick={() => toggleLayout("list")}
+          >
+            List
+          </button>
+          <button
+            className={`layout-button ${layout === "grid" ? "active" : ""}`}
+            onClick={() => toggleLayout("grid")}
+          >
+            Grid
+          </button>
         </div>
         <div className="filter-dropdown-container">
           <FilterDropdown
             filter={filter}
             setFilter={setFilter}
-            className="filter-dropdown-left"
+            className="filter-dropdown-right"
           />
         </div>
       </div>
       {layout === "list" && (
         <div className="cards-container list">
-          <DoctorList
-            doctors={filteredDoctors}
-            formattedDate={formatDate(date)}
-          />
+          <DoctorList doctors={filteredDoctors} />
         </div>
       )}
       {layout === "grid" && (

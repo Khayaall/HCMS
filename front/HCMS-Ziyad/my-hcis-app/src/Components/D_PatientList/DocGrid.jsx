@@ -1,5 +1,5 @@
 import React from "react";
-import "./patientGridCard.css";
+import "./doctorGridCard.css";
 
 const DoctorGridCard = ({ doctor }) => {
   const getStatus = (date) => {
@@ -9,25 +9,25 @@ const DoctorGridCard = ({ doctor }) => {
   };
 
   return (
-    <div className="patientGridCard-card">
-      <div className="patientGridCard-content">
-        <div className="patientGridCard-details">
-          <h3 className="patientGridCard-name">{doctor.name}</h3>
-          <div className="patientGridCard-info">
+    <div className="doctorGridCard-card">
+      <div className="doctorGridCard-content">
+        <div className="doctorGridCard-details">
+          <h3 className="doctorGridCard-name">{`${doctor.f_name} ${doctor.l_name}`}</h3>
+          <div className="doctorGridCard-info">
             <p>🩺{doctor.specialty}</p>
-            <p className="patientGridCard-time">🕒{doctor.experience} years</p>
+            <p className="doctorGridCard-time">🕒{doctor.dob} years</p>
           </div>
-          <p className="patientGridCard-description">
+          <p className="doctorGridCard-description">
             Doctor: {doctor.specialty}
           </p>
         </div>
       </div>
-      <div className="patientGridCard-profile-image" style={{ backgroundColor: "#FFD700" }}>
-        <img src={doctor.image} alt={doctor.name} />
+      <div className="doctorGridCard-profile-image" style={{ backgroundColor: "#FFD700" }}>
+        <img src={doctor.image_url} alt={doctor.name} />
       </div>
-      <div className="patientGridCard-actions">
-        <div><p className="patientGridCard-status">{getStatus(doctor.date)} • {doctor.timeRange}</p></div>
-        <div><button className="patientGridCard-confirm">View</button></div>
+      <div className="doctorGridCard-actions">
+        <div><p className="doctorGridCard-status">{getStatus(doctor.date)} • {doctor.account_status}</p></div>
+        <div><button className="doctorGridCard-confirm">View</button></div>
       </div>
     </div>
   );
@@ -35,8 +35,8 @@ const DoctorGridCard = ({ doctor }) => {
 
 const DoctorGrid = ({ doctors }) => {
   return (
-    <div className="patientGridCard-container">
-      {doctors.slice(0, 12).map((doctor) => (
+    <div className="doctorGridCard-container">
+      {doctors.map((doctor) => (
         <DoctorGridCard key={doctor.id} doctor={doctor} />
       ))}
     </div>

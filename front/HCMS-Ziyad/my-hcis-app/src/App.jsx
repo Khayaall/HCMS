@@ -29,13 +29,11 @@ const App = () => {
     <Router>
       <div className="app">
         {!isLoggedIn ? (
-          <>
-            <Routes>
-              <Route path="/login" element={<Sign_in />} />
-              <Route path="/signup" element={<Sign_up />} />
-              <Route path="/" element={<Home />} />
-            </Routes>
-          </>
+          <Routes>
+            <Route path="/login" element={<Sign_in />} />
+            <Route path="/signup" element={<Sign_up />} />
+            <Route path="/" element={<Home />} />
+          </Routes>
         ) : (
           <>
             <div className="container">
