@@ -146,7 +146,7 @@ const D_patientDetails = () => {
             <h3>{patient.f_name + " " + patient.l_name}</h3>
           </div>
         </div>
-        {/* <PatientDetailsTable patientDetails={} /> */}
+        <PatientDetailsTable patientDetails={cancerData} />
         <div className="patient-Input">
           <p>Fill in the details below</p>
           <input type="text" placeholder="Patient Name" />

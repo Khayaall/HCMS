@@ -199,6 +199,8 @@ const D_Overview = () => {
                   );
                 })
               : remainingAppointment.map((appointments) => {
+                  {
+                  }
                   const {
                     patient_id,
                     patientName,
@@ -208,6 +210,7 @@ const D_Overview = () => {
                     start_time,
                     gender,
                   } = appointments;
+                  console.log(appointments);
                   return (
                     <ul key={patient_id}>
                       <li>

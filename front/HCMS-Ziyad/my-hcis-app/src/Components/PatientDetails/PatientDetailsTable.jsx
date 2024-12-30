@@ -43,39 +43,45 @@ const PatientDetailsTable = ({ patientDetails }) => {
     //   </table>
     // </div>
     <div className="patient-records">
-      <h3>{patientDetails.session_date}</h3>
-      <div className="patient-record-container">
-        <div className="patient-record">
-          <div className="record-top-row">
-            <div className="single-records">
-              <h4>Cancer Stage</h4>
-              <p>{patientDetails.cancer_stage}</p>
-            </div>
-            <div className="single-records">
-              <h4>Dosagee</h4>
-              <p>{patientDetails.dosage}</p>
-            </div>
-            <div className="single-records">
-              <h4>Heart Rate</h4>
-              <p>{patientDetails.heart_rate}</p>
+      {patientDetails.length > 0 ? (
+        patientDetails.map((plan, index) => (
+          <div key={index} className="patient-record-container">
+            <h3>{plan.session_date}</h3>
+            <div className="patient-record">
+              <div className="record-top-row">
+                <div className="single-records">
+                  <h4>Cancer Stage</h4>
+                  <p>{plan.cancer_stage}</p>
+                </div>
+                <div className="single-records">
+                  <h4>Dosage</h4>
+                  <p>{plan.dosage}</p>
+                </div>
+                <div className="single-records">
+                  <h4>Heart Rate</h4>
+                  <p>{plan.heart_rate}</p>
+                </div>
+              </div>
+              <div className="record-bottom-row">
+                <div className="single-records">
+                  <h4>Treatment Type</h4>
+                  <p>{plan.treatment_type}</p>
+                </div>
+                <div className="single-records">
+                  <h4>Age</h4>
+                  <p>{plan.age}</p>
+                </div>
+                <div className="single-records">
+                  <h4>Blood Pressure</h4>
+                  <p>{plan.blood_pressure}</p>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="record-bottom-row">
-            <div className="single-records">
-              <h4>Treatment Type</h4>
-              <p>{patientDetails.treatment_type}</p>
-            </div>
-            <div className="single-records">
-              <h4>Age</h4>
-              <p>{patientDetails.age}</p>
-            </div>
-            <div className="single-records">
-              <h4>Blood Pressure</h4>
-              <p>{patientDetails.blood_pressure}</p>
-            </div>
-          </div>
-        </div>
-      </div>
+        ))
+      ) : (
+        <p>No cancer treatment plan available.</p>
+      )}
     </div>
   );
 };

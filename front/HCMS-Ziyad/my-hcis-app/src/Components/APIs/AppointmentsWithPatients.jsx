@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect } from "react";
 
 export const MergedDataContext = createContext();
 
@@ -17,26 +17,34 @@ export const MergedDataProvider = ({ children }) => {
         }
 
         // Fetch patients and appointments
-        const patientsResponse = await fetch("http://localhost:5000/doctor/patients", {
-          method: "GET",
-          headers: {
-            'authorization': `Bearer ${token}`,
-            'User-Id': id,
-            'User-Role': role
+        const patientsResponse = await fetch(
+          "http://localhost:5000/doctor/patients",
+          {
+            method: "GET",
+            headers: {
+              authorization: `Bearer ${token}`,
+              "User-Id": id,
+              "User-Role": role,
+            },
           }
-        });
+        );
 
-        const appointmentsResponse = await fetch("http://localhost:5000/doctor/all_appointments", {
-          method: "GET",
-          headers: {
-            'authorization': `Bearer ${token}`,
-            'User-Id': id,
-            'User-Role': role
+        const appointmentsResponse = await fetch(
+          "http://localhost:5000/doctor/all_appointments",
+          {
+            method: "GET",
+            headers: {
+              authorization: `Bearer ${token}`,
+              "User-Id": id,
+              "User-Role": role,
+            },
           }
-        });
+        );
 
         if (!patientsResponse.ok || !appointmentsResponse.ok) {
-          throw new Error(`HTTP error! status: ${patientsResponse.status} ${appointmentsResponse.status}`);
+          throw new Error(
+            `HTTP error! status: ${patientsResponse.status} ${appointmentsResponse.status}`
+          );
         }
 
         const patients = await patientsResponse.json();
@@ -47,50 +55,54 @@ export const MergedDataProvider = ({ children }) => {
         console.log("Appointments Data:", appointments);
 
         // Merge data
-        const merged = appointments.map((appointment) => {
-          const patient = patients.find(
-            (p) => p.patient_id === appointment.patient_id
-          );
-          if (patient) {
-            // Format the date to US style MM/DD/YYYY
-            const formattedDate = new Date(appointment.date).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: '2-digit',
-              day: '2-digit'
-            });
+        const merged = appointments
+          .map((appointment) => {
+            const patient = patients.find(
+              (p) => p.patient_id === appointment.patient_id
+            );
+            if (patient) {
+              // Format the date to US style MM/DD/YYYY
+              const formattedDate = new Date(
+                appointment.date
+              ).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+              });
 
-            // Format the start and end time
-            const formatTime = (time) => {
-              const date = new Date(time);
-              let hours = date.getHours();
-              let minutes = date.getMinutes();
-              const ampm = hours >= 12 ? 'PM' : 'AM';
-              hours = hours % 12;
-              hours = hours ? hours : 12; // the hour '0' should be '12'
-              const minutesStr = minutes < 10 ? '0' + minutes : minutes;
-              return `${hours}:${minutesStr} ${ampm}`;
-            };
+              // Function to format time to 12-hour format with AM/PM
+              const formatTime = (time) => {
+                const [hours, minutes, seconds] = time.split(":").map(Number);
+                const ampm = hours >= 12 ? "PM" : "AM";
+                const formattedHours = hours % 12 || 12; // Convert 0 to 12 for 12 AM
+                const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+                const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+                return `${formattedHours}:${formattedMinutes} ${ampm}`;
+              };
 
-            const startTime = formatTime(appointment.start_time);
-            const endTime = formatTime(appointment.end_time);
-            const timeRange = `${startTime} - ${endTime}`;
+              // Format the start and end time
+              const startTime = formatTime(appointment.start_time);
+              const endTime = formatTime(appointment.end_time);
+              const timeRange = `${startTime} - ${endTime}`;
 
-            return {
-              patient_id: patient.patient_id, // Add patient_id for unique key
-              patientName: `${patient.f_name} ${patient.l_name}`,
-              job: patient.job,
-              patient_type: patient.patient_type, // Get patient_type from patient data
-              date: formattedDate,
-              timeRange: timeRange, // Include the formatted time range
-              image: patient.image_url, // Include image URL
-              gender: patient.gender, // Include gender from patient data
-              diagnosis: appointment.diagnosis, // Include diagnosis from appointment data
-              status: appointment.status, // Include status from appointment data
-              treatment: appointment.treatment // Include treatment from appointment data
-            };
-          }
-          return null; // Skip if patient not found
-        }).filter(Boolean); // Remove nulls
+              return {
+                patient_id: patient.patient_id, // Add patient_id for unique key
+                patientName: `${patient.f_name} ${patient.l_name}`,
+                job: patient.job,
+                patient_type: patient.patient_type, // Get patient_type from patient data
+                date: formattedDate,
+                timeRange: timeRange, // Include the formatted time range
+                image: patient.image_url, // Include image URL
+                gender: patient.gender, // Include gender from patient data
+                start_time: startTime, // Include start_time from appointment data
+                diagnosis: appointment.diagnosis, // Include diagnosis from appointment data
+                status: appointment.status, // Include status from appointment data
+                treatment: appointment.treatment, // Include treatment from appointment data
+              };
+            }
+            return null; // Skip if patient not found
+          })
+          .filter(Boolean); // Remove nulls
 
         // Log the merged data
         console.log("Merged Data:", merged);
