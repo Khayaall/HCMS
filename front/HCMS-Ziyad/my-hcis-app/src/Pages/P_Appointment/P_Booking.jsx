@@ -116,7 +116,7 @@ const P_Booking = () => {
 
   return (
     <div className="appointment-container">
-      <div className="appointment-header">
+      <div className="booking-header">
         <div className="appointment-title">
           <h2>Appointment</h2>
           <p>

@@ -4,6 +4,13 @@
   align-items: left;
   justify-content: center;
 }
+.appointment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  flex-direction: column;
+}
 
 .appointment-container h2 {
   margin-bottom: 1rem;

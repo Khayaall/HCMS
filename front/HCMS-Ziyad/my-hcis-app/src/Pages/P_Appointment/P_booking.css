@@ -5,12 +5,11 @@
   justify-content: center;
 }
 
-.appointment-header {
+.booking-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 1rem;
-  flex-direction: column;
 }
 
 .appointment-buttons {

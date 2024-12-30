@@ -85,7 +85,7 @@ const App = () => {
                 </Routes>
                 <Routes>
                   <Route
-                    path="/PatientBooking"
+                    path="/patientbooking"
                     element={
                       <DoctorsDataProvider>
                         <PatientDataProvider>
