@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import CustomDropdown from "../../Components/D_PatientList/CustomDropdown";
 import FilterDropdown from "../../Components/D_PatientList/FilterDropdown";
 import PatientTable from "../../Components/D_PatientList/PatientTable";
-import { MergedDataContext } from "../../Components/D_PatientList/AppointmentsWithPatients"; // Adjust the import path if needed
+import { MergedDataContext } from "../../Components/APIs/AppointmentsWithPatients"; // Adjust the import path if needed
 import "./D_PatientList.css";
 
 const D_PatientList = () => {
