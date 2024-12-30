@@ -92,37 +92,38 @@ const D_patientDetails = () => {
       throw new Error("Failed to fetch cancer details");
     }
   };
-  // const fetchEditCancer = async () => {
-  //   try {const resp = await fetch(
-  //     `http://localhost:5000/doctor/edit_treatment_plan/${patientId}`,
-  //     {
-  //       method: "PUT",
-  //       headers: {
-  //         authorization: `Bearer ${token}`,
-  //         "User-Id": id,
-  //         "User-Role": role,
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         session_date: "2024-12-30",
-  //         cancer_stage: "1",
-  //         dosage: "40mg",
-  //         age: "45",
-  //         blood_pressure: "120/80",
-  //         heart_rate: "70",
-  //         treatment_type: "Follow-up Care",
-  //       }),
-  //     }
-  //   );
-  //   console.log(resp);
-  //   if (!resp.ok) {
-  //     throw new Error("Failed to fetch cancer details");
-  //   }
-  // } catch (error) {
-  //   console.error("Error fetching cancer:", error);
-  //   throw new Error("Failed to fetch cancer details");
-  // }
-  // }
+  const fetchEditCancer = async () => {
+    try {
+      const resp = await fetch(
+        `http://localhost:5000/doctor/edit_treatment_plan/${patientId}`,
+        {
+          method: "PUT",
+          headers: {
+            authorization: `Bearer ${token}`,
+            "User-Id": id,
+            "User-Role": role,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            session_date: "2024-12-30",
+            cancer_stage: "1",
+            dosage: "40mg",
+            age: "45",
+            blood_pressure: "120/80",
+            heart_rate: "70",
+            treatment_type: "Follow-up Care",
+          }),
+        }
+      );
+      console.log(resp);
+      if (!resp.ok) {
+        throw new Error("Failed to fetch cancer details");
+      }
+    } catch (error) {
+      console.error("Error fetching cancer:", error);
+      throw new Error("Failed to fetch cancer details");
+    }
+  };
 
   useEffect(() => {
     fetchPatient();
