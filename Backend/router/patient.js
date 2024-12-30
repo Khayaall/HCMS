@@ -69,7 +69,7 @@ patient_routes.get('/browse-doctors', async (req, res) => {
 
 patient_routes.get('/browse-selected-doctors', async (req, res) => {
     try{
-    const {type} = req.body;
+    const {type} = req.body.toLowerCase();
     const type_doctors = await pool.query("SELECT * FROM doctor WHERE specialty = $1;",[type]);
     return res.status(200).send(type_doctors.rows)
     }catch(error){
@@ -156,7 +156,7 @@ patient_routes.put('/edit-profile', async (req, res) => {
     try{
         for await (const field of fields){
             if (req.body[field]) {
-                await pool.query(`UPDATE patient SET ${field} = $1 WHERE patient_id = $2`,[req.body[field],actual_patient_id]);
+                await pool.query(`UPDATE patient SET ${field} = $1 WHERE patient_id = $2`,[req.body[field].toLowerCase(),actual_patient_id]);
                 c++;
             }
         };
@@ -175,26 +175,26 @@ patient_routes.put('/edit-medical-record', async (req, res) => {
     const type = await pool.query("SELECT patient_type FROM patient WHERE patient_id = $1;",[actual_patient_id])
     var c = 0;
     try{
-        if (type.rows[0].patient_type === 'pediatric'){
+        if (type.rows[0].patient_type.toLowerCase() === 'infant'){
             if ((await pool.query("SELECT * FROM infant_medical_record WHERE patient_id = $1",[actual_patient_id])).rows.length === 0){
                 return res.status(404).send("Medical record not found.")
             }
             const fields = ['birth_weight','feeding_method','vaccination_history','patient_history']
                 for await (const field of fields){
                     if (req.body[field]) {
-                        await pool.query(`UPDATE infant_medical_record SET ${field} = $1 WHERE patient_id = $2`,[req.body[field],actual_patient_id]);
+                        await pool.query(`UPDATE infant_medical_record SET ${field} = $1 WHERE patient_id = $2`,[req.body[field].toLowerCase(),actual_patient_id]);
                         c++;
                     }
                 };
             };
-        if (type.rows[0].patient_type === 'obstetric'){
+        if (type.rows[0].patient_type.toLowerCase() === 'obstetrics'){
             if ((await pool.query("SELECT * FROM obstetrics_medical_record WHERE patient_id = $1",[actual_patient_id])).rows.length === 0){
                 return res.status(404).send("Medical record not found.")
             }
             const fields = ['patient_type','patient_history','labor_method','no_of_births','menstrual_cycle_details']
             for await (const field of fields){
                 if (req.body[field]) {
-                    await pool.query(`UPDATE obstetrics_medical_record SET ${field} = $1 WHERE patient_id = $2`,[req.body[field],actual_patient_id]);
+                    await pool.query(`UPDATE obstetrics_medical_record SET ${field} = $1 WHERE patient_id = $2`,[req.body[field].toLowerCase(),actual_patient_id]);
                     c++;
                 }
             };
