@@ -13,7 +13,7 @@ import D_Overview from "./Pages/Overview/D_Overview";
 import Sign_in from "./Pages/Sign_in/Sign_in";
 import Sign_up from "./Pages/Sign_up/Sign_up";
 import D_Appointment from "./Pages/D_Appointment/D_appointment";
-import P_Appointment from "./Pages/P_Appointment/P_Appointment";
+import P_Booking from "./Pages/P_Appointment/P_Booking";
 import Home from "./Pages/Home/Home";
 import { useAuth } from "../AuthContext";
 import { MergedDataProvider } from "./Components/APIs/AppointmentsWithPatients";
@@ -27,48 +27,28 @@ const App = () => {
     <Router>
       <div className="app">
         {!isLoggedIn ? (
-          <>
-            <Routes>
-              <Route path="/login" element={<Sign_in />} />
-              <Route path="/signup" element={<Sign_up />} />
-              <Route path="/" element={<Home />} />
-            </Routes>
-          </>
+          <Routes>
+            <Route path="/login" element={<Sign_in />} />
+            <Route path="/signup" element={<Sign_up />} />
+            <Route path="/" element={<Home />} />
+          </Routes>
         ) : (
-          <>
-            <div className="container">
-              <div className="sidebar-content">
-                <Sidebar />
-              </div>
-              <div className="navbar-content">
-                <Navbar />
-              </div>
-              <div className="data">
-                <Routes>
-                  <Route path="/overview" element={<D_Overview />} />
-                  <Route
-                    path="/appointment"
-                    element={
-                      <DoctorsDataProvider>
-                        <PatientDataProvider>
-                          <P_Appointment />
-                        </PatientDataProvider>
-                      </DoctorsDataProvider>
-                    }
-                  />
-                  <Route
-                    path="/mypatient"
-                    element={
-                      <MergedDataProvider>
-                        <D_PatientList />
-                      </MergedDataProvider>
-                    }
-                  />
-                  <Route path="/settings" element={<D_ProfilePage />} />
-                </Routes>
-              </div>
+          <div className="container">
+            <div className="sidebar-content">
+              <Sidebar />
             </div>
-          </>
+            <div className="navbar-content">
+              <Navbar />
+            </div>
+            <div className="data">
+              <Routes>
+                <Route path="/overview" element={<D_Overview />} />
+                <Route path="/appointment" element={<MergedDataProvider><D_Appointment /></MergedDataProvider>} />
+                <Route path="/mypatient" element={<MergedDataProvider><D_PatientList /></MergedDataProvider>} />
+                <Route path="/settings" element={<D_ProfilePage />} />
+              </Routes>
+            </div>
+          </div>
         )}
       </div>
     </Router>

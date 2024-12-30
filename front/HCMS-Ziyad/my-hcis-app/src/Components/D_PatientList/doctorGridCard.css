@@ -1,0 +1,116 @@
+.doctorGridCard-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); /* Fixed width columns */
+    align-items: start;
+    justify-content: left; /* Center the grid items */
+}
+
+.doctorGridCard-card {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* 2 columns: image, content */
+    grid-template-rows: auto auto; /* 2 rows: content, actions */
+    background-color: #2e2e3e;
+    border-radius: 10px;
+    color: #fff;
+    padding: 16px;
+    margin: .8rem;
+    transition: transform 0.2s, box-shadow 0.2s; /* Add transition for smooth effect */
+    width: 330px; /* Fixed width */
+    height: 250px; /* Fixed height */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.doctorGridCard-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add box shadow on hover */
+    transform: translateY(-4px); /* Slightly lift the card on hover */
+}
+
+.doctorGridCard-profile-image {
+    grid-row: 1 / 2; /* Place image in the first row */
+    grid-column: 1 / 2; /* Place image in the first column */
+    width: 85px; /* Smaller width for the image */
+    height: 85px; /* Smaller height for the image */
+    border-radius: 50%;
+    overflow: hidden; /* Ensure the image does not overflow the container */
+    display: flex;
+    object-fit: cover;
+    margin-top: 1rem;
+}
+
+.doctorGridCard-profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
+}
+
+.doctorGridCard-content {
+    grid-row: 1 / 2; /* Place content in the first row */
+    grid-column: 2 / 3; /* Place content in the second column */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 1rem;
+    margin-left: 1rem; /* Add margin to separate content from image */
+}
+
+.doctorGridCard-details {
+    flex: 1;
+}
+
+.doctorGridCard-name {
+    margin: 0;
+    font-size: 18px; /* Smaller font size */
+}
+
+.doctorGridCard-info {
+    display: flex;
+    flex-direction: row;
+    gap: .5rem; /* Add gap between items */
+    align-items: left;
+    margin-top: .5rem;
+    margin-left: -.25rem;
+}
+
+.doctorGridCard-info p {
+    margin-top: .5rem;
+    font-size: 14px; /* Smaller font size */
+}
+
+.doctorGridCard-time {
+    color: #aaa;
+    font-size: 12px; /* Smaller font size */
+}
+
+.doctorGridCard-description {
+    margin: 8px 0;
+    font-size: 14px; /* Smaller font size */
+    color: #bbb;
+}
+
+.doctorGridCard-actions {
+    grid-row: 2 / 3; /* Place actions in the second row */
+    grid-column: 1 / 3; /* Span actions across both columns */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: .5rem;
+    margin-left: .5rem;
+}
+
+button.doctorGridCard-confirm {
+    margin-bottom: .6rem;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    background-color: #ffb800;
+    color: #333;
+}
+
+.doctorGridCard-status {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #ffa500;
+}
