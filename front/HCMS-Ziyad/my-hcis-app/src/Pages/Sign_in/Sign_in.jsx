@@ -115,7 +115,7 @@ const Sign_in = () => {
                 role === "Admin" ? styles.active : ""
               }`}
               onClick={() => {
-                handleRoleChange("admin");
+                handleRoleChange("Admin");
                 setType(true);
               }}
             >
