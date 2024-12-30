@@ -37,6 +37,10 @@ const Sign_in = () => {
     {
       requestBody.a_id = id;
     }
+    if (role.toLowerCase() === 'receptionist')
+    {
+      requestBody.r_id = id;
+    }
 
     console.log(requestBody);
 
@@ -125,23 +129,25 @@ const Sign_in = () => {
             </button>
           </div>
           <form onSubmit={handleSubmit}>
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className={styles.inputBox}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <div className={styles.flexInput}>
+          {role === 'Patient' && (
               <input
+                type="email"
+                placeholder="Enter your email"
+                className={styles.inputBox}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            )}
+            <div className={styles.flexInput}>
+              {role != 'Patient' &&(<input
                 type="text"
                 placeholder="ID"
                 className={styles.inputSmall}
                 value={id}
                 onChange={(e) => setId(e.target.value)}
                 required
-              />
+              />)}
               <input
                 type="password"
                 placeholder="Password"
