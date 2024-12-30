@@ -149,6 +149,8 @@ patient_routes.get('/statistics',async (req, res) => {
     }
 });
 
+
+
 patient_routes.put('/edit-profile', async (req, res) => {
     const actual_patient_id = req.session.authorization.id;
     const fields = ['f_name', 'l_name', 'email', 'password', 'dob', 'phone', 'gender','address'];
