@@ -52,7 +52,7 @@ const PatientDetailsTable = ({ patientDetails }) => {
               <p>{patientDetails.cancer_stage}</p>
             </div>
             <div className="single-records">
-              <h4>Dosage</h4>
+              <h4>Dosagee</h4>
               <p>{patientDetails.dosage}</p>
             </div>
             <div className="single-records">
