@@ -479,6 +479,7 @@ doctor_routes.post("/treatment_plan/:patient_id", async (req, res) => {
     "age",
     "blood_pressure",
     "heart_rate",
+    "treatment_type",
   ];
   let query = "INSERT INTO cancer_treatment_plan (patient_id, doctor_id, ";
   if (patient_type_result.rows[0].patient_type.toLowerCase() === "infant") {
@@ -538,6 +539,7 @@ doctor_routes.put("/edit_treatment_plan/:patient_id", async (req, res) => {
     "age",
     "blood_pressure",
     "heart_rate",
+    "treatment_type",
   ];
   let query = "UPDATE cancer_treatment_plan SET ";
   if (patient_type_result.rows[0].patient_type.toLowerCase() === "infant") {
@@ -588,7 +590,7 @@ doctor_routes.get(
 
     try {
       const result = await pool.query(
-        "SELECT * FROM treatment_plan WHERE patient_id = $1 AND doctor_id = $2",
+        "SELECT * FROM cancer_treatment_plan WHERE patient_id = $1 AND doctor_id = $2",
         [patient_id, doctor_id]
       );
       res.send(result.rows);
