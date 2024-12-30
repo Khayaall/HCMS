@@ -22,7 +22,7 @@ const Profile_Reviews = (props) => {
         <img src={props.img} alt="Profile" className="review-img" />
         <div className="review-info">
           <h4 className="review-name">{props.name}</h4>
-          <p className="review-specialty">{props.specialty}</p>
+          <p className="review-job">{props.job}</p>
         </div>
         <div className="review-meta">
           <div className="stars">{generateStars(props.ratings)}</div>
