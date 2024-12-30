@@ -32,7 +32,7 @@ patient_routes.get('/', async (req, res) => {
         console.error('Error fetching patient profile:', error);
         return res.status(500).send('An error occurred while fetching the patient profile.');
     }
-})
+});
 
 patient_routes.get('/recent-doctors', async (req, res) => {
     try{
@@ -173,9 +173,23 @@ patient_routes.get('/treatment-plan', async (req, res) => {
         }
     }catch(error){
         console.error('Error fetching treatment plan:', error);
-        return res.status(500).send('An error occurred while fetching patient\'s treatment plan');
+        return res.status(500).send('An error occurred while fetching patient\'s treatment plan.');
     }
 });
+
+patient_routes.get('/selected-ratings/:type', async (req, res) => {
+    try{
+        const type = req.params.type;
+        const result = await pool.query("SELECT d.doctor_id, AVG(rr.rating) AS avg_rating FROM doctor d LEFT JOIN rating_review rr ON d.doctor_id = rr.doctor_id WHERE d.specialty = $1 GROUP BY d.doctor_id;",[type]);
+        if (result.rows.length === 0){
+            return res.status(404).send('No ratings found.')
+        }
+        return res.status(200).send(result.rows);
+    }catch(error){
+        console.error('Error fetching selected ratings:', error);
+        return res.status(500).send('An error occurred while fetching selected ratings.');
+    }
+})
 
 patient_routes.put('/edit-profile', async (req, res) => {
     const actual_patient_id = req.session.authorization.id;
