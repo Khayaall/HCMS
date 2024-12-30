@@ -344,7 +344,7 @@ doctor_routes.post('/treatment_plan/:patient_id', async (req, res) => {
     const d_id = req.session.authorization.id;
     patient_type_result = await pool.query("SELECT patient_type FROM patient WHERE patient_id = $1", [p_id]);
     let fields = ['session_date', 'cancer_stage', 'dosage', 'age', 'blood_pressure', 'heart_rate'];
-    let query = 'INSERT INTO treatment_plan (patient_id, doctor_id, ';
+    let query = 'INSERT INTO cancer_treatment_plan (patient_id, doctor_id, ';
     if(patient_type_result.rows[0].patient_type.toLowerCase() === 'infant') {
         console.log('Pediatric patient');
         fields = ['vaccination_date', 'vaccine_type', 'temprature', 'weight', 'age' , 'immune_system_status', 'heart_rate' , 'vaccination_instructions'];
