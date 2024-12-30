@@ -1,10 +1,16 @@
 import React, { useState, useContext } from "react";
 import Profile_Reviews from "./Profile_Reviews";
-import { ReviewsDataContext } from "../D_PatientList/RevWithPatients";
+import { ReviewsDataContext } from "../APIs/RevWithPatients";
 
 const ReviewsSection = () => {
   const [showAllReviews, setShowAllReviews] = useState(false);
-  const reviewsData = useContext(ReviewsDataContext);
+  const { reviewsData } = useContext(ReviewsDataContext);
+
+  console.log("reviewsData:", reviewsData); // Log the reviewsData to debug
+
+  if (!Array.isArray(reviewsData)) {
+    return <div>Error: Reviews data is not available</div>;
+  }
 
   const displayedReviews = showAllReviews ? reviewsData : reviewsData.slice(0, 4);
 
