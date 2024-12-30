@@ -5,11 +5,12 @@
   justify-content: center;
 }
 
-.appointment-header  {
+.appointment-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 1rem;
+  flex-direction: column;
 }
 
 .appointment-buttons {
@@ -18,14 +19,13 @@
 }
 
 .appointment-buttons button {
-  padding: .8rem 1.5rem;
+  padding: 0.8rem 1.5rem;
   border: 1px solid var(--purple);
   cursor: pointer;
   border-radius: 4px;
   background-color: transparent;
   color: white;
   transition: background-color 0.2s ease-in-out;
-
 }
 
 .appointment-buttons button:focus {
@@ -38,7 +38,9 @@
 }
 
 .appointment-buttons button:hover {
-  background-color: var(--primary-color-light); /* Change to a lighter shade of your primary color */
+  background-color: var(
+    --primary-color-light
+  ); /* Change to a lighter shade of your primary color */
 }
 
 .appointment-container h2 {
@@ -84,7 +86,9 @@
 }
 
 .layout-button:hover {
-  background-color: var(--primary-color-light); /* Change to a lighter shade of your primary color */
+  background-color: var(
+    --primary-color-light
+  ); /* Change to a lighter shade of your primary color */
 }
 
 .layout-button:focus {
@@ -102,7 +106,6 @@
   color: inherit; /* Inherit color from parent */
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
-
 
 .arrow-button:hover {
   color: #fff;
