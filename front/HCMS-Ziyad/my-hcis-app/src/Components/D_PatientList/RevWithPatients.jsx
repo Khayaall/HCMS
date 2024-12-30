@@ -4,6 +4,7 @@ export const ReviewsDataContext = createContext();
 
 export const ReviewsDataProvider = ({ children }) => {
   const [reviewsData, setReviewsData] = useState([]);
+  const [averageRating, setAverageRating] = useState(0);
 
   useEffect(() => {
     const fetchAndMergeData = async () => {
@@ -74,6 +75,12 @@ export const ReviewsDataProvider = ({ children }) => {
         console.log("Reviews Data:", merged);
 
         setReviewsData(merged);
+
+        // Calculate average rating
+        const totalRating = merged.reduce((sum, review) => sum + review.rating, 0);
+        const avgRating = merged.length ? totalRating / merged.length : 0;
+        setAverageRating(avgRating);
+
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -83,7 +90,7 @@ export const ReviewsDataProvider = ({ children }) => {
   }, []);
 
   return (
-    <ReviewsDataContext.Provider value={reviewsData}>
+    <ReviewsDataContext.Provider value={{ reviewsData, averageRating }}>
       {children}
     </ReviewsDataContext.Provider>
   );

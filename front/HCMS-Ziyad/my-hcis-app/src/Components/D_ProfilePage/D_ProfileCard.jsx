@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import EditProfileModal from "./EditProfileModal";
 import "./D_ProfileCard.css";
 import NavBar from "./NavBar";
@@ -14,8 +14,20 @@ const D_ProfileCard = (props) => {
     college: props.college || "",
     degree: props.degree || "",
     ratings: props.ratings !== undefined ? props.ratings : 0, // Provide default value
-    trust: props.trust !== undefined ? props.trust : 0, // Provide default value
+    trust: 0, // Initialize trust to 0
   });
+
+  useEffect(() => {
+    // Calculate trust based on average rating
+    const calculateTrust = (averageRating) => {
+      return Math.min(100, Math.max(0, (averageRating / 5) * 100)); // Ensure trust is between 0 and 100
+    };
+
+    setProfile((prevProfile) => ({
+      ...prevProfile,
+      trust: calculateTrust(props.averageRating),
+    }));
+  }, [props.averageRating]);
 
   const handleSave = (updatedProfile) => {
     setProfile(updatedProfile);
@@ -63,8 +75,8 @@ const D_ProfileCard = (props) => {
         <i className="fas fa-pen"></i> Edit Profile
       </button>
       <div className="ratings">
-        <p>Ratings: {profile.ratings}</p>
-        <div className="stars">{generateStars(profile.ratings)}</div>
+        <p>Ratings: {props.averageRating}</p>
+        <div className="stars">{generateStars(props.averageRating)}</div>
       </div>
       <div className="trust">
         <p>Trust: {profile.trust}%</p>
