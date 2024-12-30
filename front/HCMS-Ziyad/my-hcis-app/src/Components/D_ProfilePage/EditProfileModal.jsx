@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./EditProfileModal.css";
 
 const EditProfileModal = ({ isOpen, onClose, profile, onSave }) => {
@@ -9,6 +9,7 @@ const EditProfileModal = ({ isOpen, onClose, profile, onSave }) => {
   const [college, setCollege] = useState(profile.college || "");
   const [degree, setDegree] = useState(profile.degree || "");
   const [image, setImage] = useState(profile.image || "");
+  const [isUpdated, setIsUpdated] = useState(false);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -21,22 +22,54 @@ const EditProfileModal = ({ isOpen, onClose, profile, onSave }) => {
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const updatedProfile = {
-      firstName,
-      lastName,
+      f_name: firstName,
+      l_name: lastName,
       specialty,
-      bio: bio || profile.bio,
-      college: college || profile.college,
-      degree: degree || profile.degree,
-      img: image || "https://via.placeholder.com/300", // Default image if none is provided
-      ratings: profile.ratings,
-      trust: profile.trust,
+      about_me: bio || profile.bio,
+      education: `${college}, ${degree}`,
+      image,
     };
-    onSave(updatedProfile);
-    onClose();
+
+    const token = localStorage.getItem("token");
+    const id = localStorage.getItem("id");
+    const role = localStorage.getItem("role").toLowerCase();
+    if (!token || !id || !role) {
+      console.error("No token, id, or role found, please log in");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/doctor/edit_profile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          'authorization': `Bearer ${token}`,
+          'User-Id': id,
+          'User-Role': role
+        },
+        body: JSON.stringify(updatedProfile),
+      });
+
+      if (response.ok) {
+        onSave(updatedProfile);
+        setIsUpdated(true);
+        onClose();
+      } else {
+        console.error("Failed to update profile", response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error("An error occurred while updating the profile:", error);
+    }
   };
-  
+
+  useEffect(() => {
+    if (isUpdated) {
+      window.location.reload();
+    }
+  }, [isUpdated]);
+
   if (!isOpen) return null;
 
   return (
@@ -83,7 +116,6 @@ const EditProfileModal = ({ isOpen, onClose, profile, onSave }) => {
               >
                 Remove
               </button>
-
             </div>
           </div>
         </div>

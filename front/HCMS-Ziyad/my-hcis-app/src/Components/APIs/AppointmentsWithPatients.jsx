@@ -50,19 +50,9 @@ export const MergedDataProvider = ({ children }) => {
         const patients = await patientsResponse.json();
         const appointments = await appointmentsResponse.json();
 
-        const calculateAge = (dob) => {
-          const birthDate = new Date(dob);
-          const today = new Date();
-          let age = today.getFullYear() - birthDate.getFullYear();
-          const monthDiff = today.getMonth() - birthDate.getMonth();
-          if (
-            monthDiff < 0 ||
-            (monthDiff === 0 && today.getDate() < birthDate.getDate())
-          ) {
-            age--;
-          }
-          return age;
-        };
+        // Print fetched data
+        console.log("Patients Data:", patients);
+        console.log("Appointments Data:", appointments);
 
         // Merge data
         const merged = appointments
@@ -80,20 +70,17 @@ export const MergedDataProvider = ({ children }) => {
                 day: "2-digit",
               });
 
-              // Format the start and end time
+              // Function to format time to 12-hour format with AM/PM
               const formatTime = (time) => {
-                const date = new Date(time);
-                let hours = date.getHours();
-                let minutes = date.getMinutes();
-                let seconds = date.getSeconds();
+                const [hours, minutes, seconds] = time.split(":").map(Number);
                 const ampm = hours >= 12 ? "PM" : "AM";
-                const hour = hours % 12;
-                const hourss = hour ? hours : 12; // the hour '0' should be '12'
-                const minutesStr = minutes < 10 ? "0" + minutes : minutes;
-                const secondsStr = seconds < 10 ? "0" + seconds : seconds;
-                return `${hourss}:${minutesStr}:${secondsStr} ${ampm}`;
+                const formattedHours = hours % 12 || 12; // Convert 0 to 12 for 12 AM
+                const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+                const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+                return `${formattedHours}:${formattedMinutes} ${ampm}`;
               };
 
+              // Format the start and end time
               const startTime = formatTime(appointment.start_time);
               const endTime = formatTime(appointment.end_time);
               const timeRange = `${startTime} - ${endTime}`;
@@ -102,13 +89,12 @@ export const MergedDataProvider = ({ children }) => {
                 patient_id: patient.patient_id, // Add patient_id for unique key
                 patientName: `${patient.f_name} ${patient.l_name}`,
                 job: patient.job,
-                age: calculateAge(patient.dob),
                 patient_type: patient.patient_type, // Get patient_type from patient data
                 date: formattedDate,
-                start_time: startTime, // Include formatted start time
                 timeRange: timeRange, // Include the formatted time range
                 image: patient.image_url, // Include image URL
                 gender: patient.gender, // Include gender from patient data
+                start_time: startTime, // Include start_time from appointment data
                 diagnosis: appointment.diagnosis, // Include diagnosis from appointment data
                 status: appointment.status, // Include status from appointment data
                 treatment: appointment.treatment, // Include treatment from appointment data

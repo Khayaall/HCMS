@@ -20,7 +20,11 @@ import P_appointment from "./Pages/D_Appointment/P_appointment";
 import A_appointment from "./Pages/D_Appointment/A-appointment";
 import Home from "./Pages/Home/Home";
 import { useAuth } from "../AuthContext";
-import { MergedDataProvider } from "./Components/D_PatientList/AppointmentsWithPatients";
+import { MergedDataProvider } from "./Components/APIs/AppointmentsWithPatients";
+import D_patientDetails from "./Pages/D_patientDetails/D_patientDetails";
+import P_Booking from "./Pages/P_Appointment/P_Booking";
+import { PatientDataProvider } from "./Components/APIs/PatientInfo";
+import { DoctorsDataProvider } from "./Components/APIs/getAllDr";
 
 const App = () => {
   const { isLoggedIn } = useAuth();
@@ -29,13 +33,11 @@ const App = () => {
     <Router>
       <div className="app">
         {!isLoggedIn ? (
-          <>
-            <Routes>
-              <Route path="/login" element={<Sign_in />} />
-              <Route path="/signup" element={<Sign_up />} />
-              <Route path="/" element={<Home />} />
-            </Routes>
-          </>
+          <Routes>
+            <Route path="/login" element={<Sign_in />} />
+            <Route path="/signup" element={<Sign_up />} />
+            <Route path="/" element={<Home />} />
+          </Routes>
         ) : (
           <>
             <div className="container">
@@ -47,7 +49,14 @@ const App = () => {
               </div>
               <div className="data">
                 <Routes>
-                  <Route path="/overview" element={<P_Overview />} />
+                  <Route
+                    path="/overview"
+                    element={
+                      <MergedDataProvider>
+                        <D_Overview />
+                      </MergedDataProvider>
+                    }
+                  />
                 </Routes>
                 <Routes>
                   <Route
@@ -60,10 +69,35 @@ const App = () => {
                   />
                 </Routes>
                 <Routes>
-                  <Route path="/mypatient" element={<D_PatientList />} />
+                  <Route
+                    path="/mypatient"
+                    element={
+                      <MergedDataProvider>
+                        <D_PatientList />
+                      </MergedDataProvider>
+                    }
+                  />
                 </Routes>
                 <Routes>
                   <Route path="/settings" element={<D_ProfilePage />} />
+                </Routes>
+                <Routes>
+                  <Route
+                    path="/doctor/patientDetails/:patientId"
+                    element={<D_patientDetails />}
+                  />
+                </Routes>
+                <Routes>
+                  <Route
+                    path="/patientbooking"
+                    element={
+                      <DoctorsDataProvider>
+                        <PatientDataProvider>
+                          <P_Booking />
+                        </PatientDataProvider>
+                      </DoctorsDataProvider>
+                    }
+                  />
                 </Routes>
               </div>
             </div>

@@ -19,9 +19,16 @@ require("dotenv").config();
 //   });
 // Use a connection pool for better connection management
 
+// const pool = new Pool({
+//   connectionString: process.env.POSTGRES_URL,
+//   ssl: {
+//     rejectUnauthorized: false,
+//   },
+// });
+
 const pool = new Pool({
   connectionString:
-  process.env.POSTGRES_URL,
+    "postgresql://neondb_owner:tD4lsLQwMEk2@ep-bitter-bread-a58wbm8l.us-east-2.aws.neon.tech/neondb?sslmode=require",
   ssl:
     process.env.NODE_ENV === "production"
       ? { rejectUnauthorized: false }
