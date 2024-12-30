@@ -56,7 +56,7 @@ const App = () => {
                   />
                 </Routes>
                 <Routes>
-                  <Route path="/mypatient" element={<D_PatientList />} />
+                  <Route path="/mypatient" element={<MergedDataProvider><D_PatientList /></MergedDataProvider>} />
                 </Routes>
                 <Routes>
                   <Route path="/settings" element={<D_ProfilePage />} />
