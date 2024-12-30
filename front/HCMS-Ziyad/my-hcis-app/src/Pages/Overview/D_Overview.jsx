@@ -101,7 +101,7 @@ const D_Overview = () => {
             </p>
           </div>
           <div className="card-txt">
-            <h1>{doctorStats.total_appointments}k</h1>
+            <h1>{doctorStats.total_appointments}</h1>
             <h5>Appointments</h5>
           </div>
         </div>
@@ -112,7 +112,7 @@ const D_Overview = () => {
             </p>
           </div>
           <div className="card-txt">
-            <h1>{doctorStats.total_patients}k</h1>
+            <h1>{doctorStats.total_patients}</h1>
             <h5>Total Patient</h5>
           </div>
         </div>
@@ -123,7 +123,7 @@ const D_Overview = () => {
             </p>
           </div>
           <div className="card-txt">
-            <h1>{doctorStats.total_reviews}k</h1>
+            <h1>{doctorStats.total_reviews}</h1>
             <h5>Review</h5>
           </div>
         </div>
@@ -134,7 +134,7 @@ const D_Overview = () => {
             </p>
           </div>
           <div className="card-txt">
-            <h1>{doctorStats.total_prescriptions}k</h1>
+            <h1>{doctorStats.total_prescriptions}</h1>
             <h5>Prescription</h5>
           </div>
         </div>
