@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./App.css";
 import Navbar from "./Navbar/Navbar";
 import Sidebar from "./Navbar/Sidebar";
@@ -6,7 +6,6 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate,
 } from "react-router-dom";
 import D_ProfilePage from "./Pages/Profile_Page/D_ProfilePage";
 import D_PatientList from "./Pages/D_patientList/D_PatientList";
@@ -21,6 +20,8 @@ import D_patientDetails from "./Pages/D_patientDetails/D_patientDetails";
 import P_Booking from "./Pages/P_Appointment/P_Booking";
 import { PatientDataProvider } from "./Components/APIs/PatientInfo";
 import { DoctorsDataProvider } from "./Components/APIs/getAllDr";
+import { AppointmentsDataProvider } from "./Components/APIs/PAppointments"; // Correct import
+import P_myAppointments from "./Pages/P_myAppointments/P_myAppointments";
 
 const App = () => {
   const { isLoggedIn } = useAuth();
@@ -53,48 +54,52 @@ const App = () => {
                       </MergedDataProvider>
                     }
                   />
+                <Route
+                  path="/appointment"
+                  element={
+                    <MergedDataProvider>
+                      <D_Appointment />
+                    </MergedDataProvider>
+                  }
+                />
+                <Route
+                  path="/mypatient"
+                  element={
+                    <MergedDataProvider>
+                      <D_PatientList />
+                    </MergedDataProvider>
+                  }
+                />
+                <Route path="/settings" element={<D_ProfilePage />} />
+                <Route
+                  path="/doctor/patientDetails/:patientId"
+                  element={<D_patientDetails />}
+                />
+                <Route
+                  path="/patientbooking"
+                  element={
+                    <DoctorsDataProvider>
+                      <PatientDataProvider>
+                        <P_Booking />
+                      </PatientDataProvider>
+                    </DoctorsDataProvider>
+                  }
+                />
+                <Route
+                  path="/patientmyappointments"
+                  element={
+                    <AppointmentsDataProvider>
+                      <P_myAppointments />
+                    </AppointmentsDataProvider>
+                  }
+                />
+                <Route
+                  
+                
+                />
                 </Routes>
-                <Routes>
-                  <Route
-                    path="/appointment"
-                    element={
-                      <MergedDataProvider>
-                        <D_Appointment />
-                      </MergedDataProvider>
-                    }
-                  />
-                </Routes>
-                <Routes>
-                  <Route
-                    path="/mypatient"
-                    element={
-                      <MergedDataProvider>
-                        <D_PatientList />
-                      </MergedDataProvider>
-                    }
-                  />
-                </Routes>
-                <Routes>
-                  <Route path="/settings" element={<D_ProfilePage />} />
-                </Routes>
-                <Routes>
-                  <Route
-                    path="/doctor/patientDetails/:patientId"
-                    element={<D_patientDetails />}
-                  />
-                </Routes>
-                <Routes>
-                  <Route
-                    path="/patientbooking"
-                    element={
-                      <DoctorsDataProvider>
-                        <PatientDataProvider>
-                          <P_Booking />
-                        </PatientDataProvider>
-                      </DoctorsDataProvider>
-                    }
-                  />
-                </Routes>
+
+
               </div>
             </div>
           </>
