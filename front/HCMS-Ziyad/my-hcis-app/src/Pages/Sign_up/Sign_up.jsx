@@ -17,6 +17,7 @@ const Sign_up = () => {
     doctorId: "",
     patientType: "",
     termsAccepted: false,
+    doctorSpeciality: "",
   });
 
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const Sign_up = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("handleSubmit called");
-    const { email, password, confirmPassword, role, firstName, lastName, doctorId,patientType } = formData;
+    const { email, password, confirmPassword, role, firstName, lastName, doctorId,patientType ,doctorSpeciality} = formData;
   
     if (password !== confirmPassword) {
       alert("Passwords do not match");
@@ -49,6 +50,7 @@ const Sign_up = () => {
   
     if (role === 'doctor') {
       requestBody.d_id = doctorId;
+      requestBody.speciality = doctorSpeciality;
     }
     if (role === 'patient') {
       requestBody.patient_type = patientType;
@@ -173,6 +175,20 @@ const Sign_up = () => {
               <option value="pediatric">Pediatric</option>
             </select>
           )}
+         {(formData.patientType === 'obstetrics' || formData.patientType === 'cancer' || formData.patientType === 'pregnency') && (
+              <select
+                name="patientType"
+                value={formData.patientType}
+                onChange={handleChange}
+                required
+              >
+                <option value="" disabled>
+                  Patient Type
+                </option>
+                <option value="cancer">Cancer</option>
+                <option value="pregnency">Pregnancy</option>
+              </select>
+            )}
 
           {formData.role === 'doctor' && (
             <input
@@ -183,6 +199,21 @@ const Sign_up = () => {
               placeholder="Doctor ID"
               required
             />
+          )}
+          {formData.role === 'doctor' && (
+            <select
+              name="doctorSpeciality"
+              value={formData.doctorSpeciality}
+              onChange={handleChange}
+              required
+            >
+              <option value="" disabled>
+                Doctor Speciality
+              </option>
+              <option value="obstetrics">Obstetrics</option>
+              <option value="cancer">Cancer</option>
+              <option value="pediatric">Pediatric</option>
+            </select>
           )}
             
             <input
