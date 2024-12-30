@@ -343,7 +343,7 @@ doctor_routes.post('/treatment_plan/:patient_id', async (req, res) => {
     const p_id = req.params.patient_id;
     const d_id = req.session.authorization.id;
     patient_type_result = await pool.query("SELECT patient_type FROM patient WHERE patient_id = $1", [p_id]);
-    let fields = ['session_date', 'cancer_stage', 'dosage', 'age', 'blood_pressure', 'heart_rate'];
+    let fields = ['session_date', 'cancer_stage', 'dosage', 'age', 'blood_pressure', 'heart_rate','treatment_type'];
     let query = 'INSERT INTO cancer_treatment_plan (patient_id, doctor_id, ';
     if(patient_type_result.rows[0].patient_type.toLowerCase() === 'infant') {
         console.log('Pediatric patient');
@@ -384,8 +384,8 @@ doctor_routes.put('/edit_treatment_plan/:patient_id', async (req, res) => {
     const patient_id = req.params.patient_id;
     const doctor_id = req.session.authorization.id;
     patient_type_result = await pool.query("SELECT patient_type FROM patient WHERE patient_id = $1", [p_id]);
-    const fields = ['session_date', 'cancer_stage', 'dosage', 'age', 'blood_pressure', 'heart_rate'];
-    let query = 'UPDATE treatment_plan SET ';
+    const fields = ['session_date', 'cancer_stage', 'dosage', 'age', 'blood_pressure', 'heart_rate','treatment_type'];
+    let query = 'UPDATE cancer_treatment_plan SET ';
     if(patient_type_result.rows[0].patient_type.toLowerCase() === 'infant') {
         fields = ['vaccination_date', 'vaccine_type', 'temprature', 'weight', 'age' , 'immune_system_status', 'heart_rate' , 'vaccination_instructions'];
         query = 'UPDATE infant SET ';
@@ -423,7 +423,7 @@ doctor_routes.get('/get_cancer_treatment_plan/:patient_id', async (req, res) => 
 
     try {
         const result = await pool.query(
-            'SELECT * FROM treatment_plan WHERE patient_id = $1 AND doctor_id = $2',
+            'SELECT * FROM cancer_treatment_plan WHERE patient_id = $1 AND doctor_id = $2',
             [patient_id, doctor_id]
         );
         res.send(result.rows);
