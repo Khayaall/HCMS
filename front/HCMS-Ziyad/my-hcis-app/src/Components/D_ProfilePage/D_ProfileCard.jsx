@@ -13,17 +13,23 @@ const D_ProfileCard = (props) => {
     bio: props.bio || "",
     college: props.college || "",
     degree: props.degree || "",
-    ratings: props.ratings,
-    trust: props.trust,
+    ratings: props.ratings !== undefined ? props.ratings : 0, // Provide default value
+    trust: props.trust !== undefined ? props.trust : 0, // Provide default value
   });
-  
+
   const handleSave = (updatedProfile) => {
     setProfile(updatedProfile);
   };
 
   const generateStars = (rating) => {
-    const fullStars = Math.floor(rating);
-    const halfStar = rating % 1 !== 0;
+    if (typeof rating !== 'number' || isNaN(rating)) {
+      console.error("Invalid rating value:", rating);
+      return null;
+    }
+
+    const validRating = Math.max(0, Math.min(5, rating)); // Ensure rating is between 0 and 5
+    const fullStars = Math.floor(validRating);
+    const halfStar = validRating % 1 !== 0;
     const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
 
     return (
