@@ -10,7 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import PatientTable from "../../Components/D_PatientList/PatientTable";
 import { NavLink } from "react-router-dom";
-import { MergedDataContext } from "../../Components/D_PatientList/AppointmentsWithPatients";
+import { MergedDataContext } from "../../Components/APIs/AppointmentsWithPatients";
 
 const D_Overview = () => {
   const [doctor, setDoctor] = useState([]);

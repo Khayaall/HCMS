@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import "./P_appointment.css";
+import "./P_booking.css";
 import FilterDropdown from "../../Components/D_PatientList/FilterDropdown";
 import ArrowButton from "../../Components/D_PatientList/ArrowButton";
 import DoctorList from "../../Components/D_PatientList/DocList";
@@ -10,13 +10,13 @@ import { PatientDataContext } from "../../Components/APIs/PatientInfo";
 const Today = new Date();
 Today.setHours(0, 0, 0, 0); // Ensure Today's date has no time portion
 
-const P_Appointment = () => {
+const P_Booking = () => {
   const [date, setDate] = useState(new Date(Today)); // State to manage date
   const [layout, setLayout] = useState("list"); // State to manage layout type
   const [filter, setFilter] = useState(""); // State to manage filter
   const { patient_type } = useContext(PatientDataContext) || {}; // Get patient type from context
   const [selectedButton, setSelectedButton] = useState(
-    patient_type === "Ob/gyn" ? "Ob/gyn" : patient_type 
+    patient_type === "Ob/gyn" ? "Ob/gyn" : patient_type
   ); // Automatically select button based on patient type
   const doctorsData = useContext(DoctorsDataContext); // Get doctors data from context
   const { patientData } = useContext(PatientDataContext); // Get patient data from context
@@ -80,13 +80,17 @@ const P_Appointment = () => {
             Cancer
           </button> */}
           <button
-            className={`Obstetrics-button ${selectedButton === "Ob/gyn" ? "active" : ""}`}
+            className={`Obstetrics-button ${
+              selectedButton === "Ob/gyn" ? "active" : ""
+            }`}
             onClick={() => setSelectedButton("Ob/gyn")}
           >
             Ob/gyn
           </button>
           <button
-            className={`Infant-button ${selectedButton === "Infant" ? "active" : ""}`}
+            className={`Infant-button ${
+              selectedButton === "Infant" ? "active" : ""
+            }`}
             onClick={() => setSelectedButton("Infant")}
           >
             Infant
@@ -127,7 +131,10 @@ const P_Appointment = () => {
       </div>
       {layout === "list" && (
         <div className="cards-container list">
-          <DoctorList doctors={filteredDoctors} formattedDate={formatDate(date)} />
+          <DoctorList
+            doctors={filteredDoctors}
+            formattedDate={formatDate(date)}
+          />
         </div>
       )}
       {layout === "grid" && (
@@ -139,4 +146,4 @@ const P_Appointment = () => {
   );
 };
 
-export default P_Appointment;
+export default P_Booking;

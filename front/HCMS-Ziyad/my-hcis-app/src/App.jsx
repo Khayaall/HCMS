@@ -1,21 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import Navbar from "./Navbar/Navbar";
 import Sidebar from "./Navbar/Sidebar";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import D_ProfilePage from "./Pages/Profile_Page/D_ProfilePage";
 import D_PatientList from "./Pages/D_patientList/D_PatientList";
 import D_Overview from "./Pages/Overview/D_Overview";
 import Sign_in from "./Pages/Sign_in/Sign_in";
 import Sign_up from "./Pages/Sign_up/Sign_up";
 import D_Appointment from "./Pages/D_Appointment/D_appointment";
-import P_Appointment from "./Pages/P_Appointment/P_Appointment";
 import Home from "./Pages/Home/Home";
 import { useAuth } from "../AuthContext";
 import { MergedDataProvider } from "./Components/APIs/AppointmentsWithPatients";
 import D_patientDetails from "./Pages/D_patientDetails/D_patientDetails";
-import { DoctorsDataProvider } from "./Components/APIs/getAllDr";
+import P_Booking from "./Pages/P_Appointment/P_Booking";
 import { PatientDataProvider } from "./Components/APIs/PatientInfo";
+import { DoctorsDataProvider } from "./Components/APIs/getAllDr";
 
 const App = () => {
   const { isLoggedIn } = useAuth();
@@ -55,13 +60,13 @@ const App = () => {
                   <Route
                     path="/appointment"
                     element={
-                      <DoctorsDataProvider>
-                        <PatientDataProvider>
-                          <P_Appointment />
-                        </PatientDataProvider>
-                      </DoctorsDataProvider>
+                      <MergedDataProvider>
+                        <D_Appointment />
+                      </MergedDataProvider>
                     }
                   />
+                </Routes>
+                <Routes>
                   <Route
                     path="/mypatient"
                     element={
@@ -78,6 +83,18 @@ const App = () => {
                   <Route
                     path="/doctor/patientDetails/:patientId"
                     element={<D_patientDetails />}
+                  />
+                </Routes>
+                <Routes>
+                  <Route
+                    path="/PatientBooking"
+                    element={
+                      <DoctorsDataProvider>
+                        <PatientDataProvider>
+                          <P_Booking />
+                        </PatientDataProvider>
+                      </DoctorsDataProvider>
+                    }
                   />
                 </Routes>
               </div>
