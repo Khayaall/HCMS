@@ -10,8 +10,20 @@ const P_Booking = () => {
   const [layout, setLayout] = useState("list"); // State to manage layout type
   const [filter, setFilter] = useState(""); // State to manage filter
   const { patient_type } = useContext(PatientDataContext) || {}; // Get patient type from context
-  const [selectedButton, setSelectedButton] = useState(patient_type === "obstetrics" ? "Ob/gyn" : patient_type === "infant" ? "Infant": "Ob/gyn"); // Automatically select button based on patient type
-  const [type,setType] = useState(selectedButton === "Ob/gyn" ? "obstetrics" : selectedButton === "Infant" ? "infant" : "obstetrics"); // Automatically select type based on selected button
+  const [selectedButton, setSelectedButton] = useState(
+    patient_type === "obstetrics"
+      ? "Ob/gyn"
+      : patient_type === "infant"
+      ? "Infant"
+      : "Ob/gyn"
+  ); // Automatically select button based on patient type
+  const [type, setType] = useState(
+    selectedButton === "Ob/gyn"
+      ? "obstetrics"
+      : selectedButton === "Infant"
+      ? "infant"
+      : "obstetrics"
+  ); // Automatically select type based on selected button
   const [doctorsData, setDoctorsData] = useState([]); // State to manage doctors data
   const { patientData } = useContext(PatientDataContext); // Get patient data from context
   const [filteredDoctors, setFilteredDoctors] = useState([]); // State to manage filtered doctors
@@ -24,37 +36,39 @@ const P_Booking = () => {
       const token = localStorage.getItem("token");
       const id = localStorage.getItem("id");
       const role = localStorage.getItem("role").toLowerCase();
-  
+
       if (!token || !id || !role) {
         console.error("No token, id, or role found, please log in");
         return;
       }
-      
+
       // Append selectedButton as a query parameter
-      const response = await fetch(`http://localhost:5000/patient/browse-selected-doctors/${type}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          'authorization': `Bearer ${token}`,
-          'User-Id': id,
-          'User-Role': role
+      const response = await fetch(
+        `http://localhost:5000/patient/browse-selected-doctors/${type}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${token}`,
+            "User-Id": id,
+            "User-Role": role,
+          },
         }
-      });
-  
+      );
+
       console.log("Response Status:", response.status);
       console.log("Response Headers:", response.headers);
-  
+
       if (!response.ok) {
         const errorText = await response.text();
         console.error("Response Error Text:", errorText);
-        throw new Error('Failed to fetch doctors');
+        throw new Error("Failed to fetch doctors");
       }
-  
+
       const data = await response.json();
       console.log("Fetched Doctors Data:", data); // Log the fetched data
       setDoctorsData(data);
       console.log("Doctors Data State:", data); // Log the state after setting it
-  
     } catch (error) {
       console.error("Error fetching doctors:", error);
     }
@@ -72,13 +86,21 @@ const P_Booking = () => {
     if (!doctors || doctors.length === 0) return [];
     switch (filter) {
       case "name-asc":
-        return doctors.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+        return doctors.sort((a, b) =>
+          (a.name || "").localeCompare(b.name || "")
+        );
       case "name-desc":
-        return doctors.sort((a, b) => (b.name || "").localeCompare(a.name || ""));
+        return doctors.sort((a, b) =>
+          (b.name || "").localeCompare(a.name || "")
+        );
       case "specialty":
-        return doctors.sort((a, b) => (a.specialty || "").localeCompare(b.specialty || ""));
+        return doctors.sort((a, b) =>
+          (a.specialty || "").localeCompare(b.specialty || "")
+        );
       case "experience":
-        return doctors.sort((a, b) => (b.experience || 0) - (a.experience || 0));
+        return doctors.sort(
+          (a, b) => (b.experience || 0) - (a.experience || 0)
+        );
       default:
         return doctors;
     }
@@ -94,7 +116,7 @@ const P_Booking = () => {
 
   return (
     <div className="appointment-container">
-      <div className="appointment-header">
+      <div className="booking-header">
         <div className="appointment-title">
           <h2>Appointment</h2>
           <p>
@@ -103,13 +125,17 @@ const P_Booking = () => {
         </div>
         <div className="appointment-buttons">
           <button
-            className={`Obstetrics-button ${selectedButton === "Ob/gyn" ? "active" : ""}`}
+            className={`Obstetrics-button ${
+              selectedButton === "Ob/gyn" ? "active" : ""
+            }`}
             onClick={() => setSelectedButton("Ob/gyn")}
           >
             Ob/gyn
           </button>
           <button
-            className={`Infant-button ${selectedButton === "Infant" ? "active" : ""}`}
+            className={`Infant-button ${
+              selectedButton === "Infant" ? "active" : ""
+            }`}
             onClick={() => setSelectedButton("Infant")}
           >
             Infant
