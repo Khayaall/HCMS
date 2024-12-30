@@ -43,7 +43,14 @@ const App = () => {
               </div>
               <div className="data">
                 <Routes>
-                  <Route path="/overview" element={<D_Overview />} />
+                  <Route
+                    path="/overview"
+                    element={
+                      <MergedDataProvider>
+                        <D_Overview />
+                      </MergedDataProvider>
+                    }
+                  />
                 </Routes>
                 <Routes>
                   <Route
@@ -56,7 +63,14 @@ const App = () => {
                   />
                 </Routes>
                 <Routes>
-                  <Route path="/mypatient" element={<MergedDataProvider><D_PatientList /></MergedDataProvider>} />
+                  <Route
+                    path="/mypatient"
+                    element={
+                      <MergedDataProvider>
+                        <D_PatientList />
+                      </MergedDataProvider>
+                    }
+                  />
                 </Routes>
                 <Routes>
                   <Route path="/settings" element={<D_ProfilePage />} />
