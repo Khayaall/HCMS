@@ -113,9 +113,10 @@ const Sign_in = () => {
             <button
               className={`${styles.roleButton} ${
                 role === "Admin" ? styles.active : ""
+
               }`}
               onClick={() => {
-                handleRoleChange("admin");
+                handleRoleChange("Admin");
                 setType(true);
               }}
             >
