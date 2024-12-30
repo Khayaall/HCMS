@@ -1,19 +1,25 @@
-import React, { useState, useEffect, useContext } from "react";
-import "./d_appointment.css";
+import React, { useState, useContext } from "react";
+import "./P_appointment.css";
 import FilterDropdown from "../../Components/D_PatientList/FilterDropdown";
 import ArrowButton from "../../Components/D_PatientList/ArrowButton";
-import PatientList from "../../Components/D_PatientList/patientListCard";
-import PatientGrid from "../../Components/D_PatientList/patientGridCard";
-import { MergedDataContext } from "../../Components/APIs/AppointmentsWithPatients";
+import DoctorList from "../../Components/D_PatientList/DocList";
+import DoctorGrid from "../../Components/D_PatientList/DocGrid";
+import { DoctorsDataContext } from "../../Components/APIs/getAllDr";
+import { PatientDataContext } from "../../Components/APIs/PatientInfo";
 
 const Today = new Date();
 Today.setHours(0, 0, 0, 0); // Ensure Today's date has no time portion
 
-const D_Appointment = () => {
+const P_Appointment = () => {
   const [date, setDate] = useState(new Date(Today)); // State to manage date
   const [layout, setLayout] = useState("list"); // State to manage layout type
   const [filter, setFilter] = useState(""); // State to manage filter
-  const mergedData = useContext(MergedDataContext); // Get merged data from context
+  const { patient_type } = useContext(PatientDataContext) || {}; // Get patient type from context
+  const [selectedButton, setSelectedButton] = useState(
+    patient_type === "Ob/gyn" ? "Ob/gyn" : patient_type 
+  ); // Automatically select button based on patient type
+  const doctorsData = useContext(DoctorsDataContext); // Get doctors data from context
+  const { patientData } = useContext(PatientDataContext); // Get patient data from context
 
   const handleDateChange = (days) => {
     setDate((prevDate) => {
@@ -24,6 +30,7 @@ const D_Appointment = () => {
     });
   };
 
+  console.log("AAAAAAAAAAAAAA:", patient_type);
   const formatDate = (date) => {
     return date.toLocaleDateString("en-US", {
       year: "numeric",
@@ -36,41 +43,55 @@ const D_Appointment = () => {
     setLayout(layoutType);
   };
 
-  const applyFilter = (patients) => {
+  const applyFilter = (doctors) => {
     switch (filter) {
       case "name-asc":
-        return patients.sort((a, b) => a.patientName.localeCompare(b.patientName));
+        return doctors.sort((a, b) => a.name.localeCompare(b.name));
       case "name-desc":
-        return patients.sort((a, b) => b.patientName.localeCompare(a.patientName));
-      case "date":
-        return patients.sort((a, b) => new Date(a.date) - new Date(b.date));
-      case "disease":
-        return patients.sort((a, b) => a.disease.localeCompare(b.disease));
-      case "status":
-        return patients.sort((a, b) => a.status.localeCompare(b.status));
-      case "gender":
-        return patients.sort((a, b) => a.gender.localeCompare(b.gender));
+        return doctors.sort((a, b) => b.name.localeCompare(a.name));
+      case "specialty":
+        return doctors.sort((a, b) => a.specialty.localeCompare(b.specialty));
+      case "experience":
+        return doctors.sort((a, b) => b.experience - a.experience);
       default:
-        return patients;
+        return doctors;
     }
   };
 
-  const filteredPatients = applyFilter(
-    mergedData.filter((patient) => {
-      const appointmentDate = new Date(patient.date).toDateString();
-      return appointmentDate === date.toDateString();
-    })
-  );
+  const filteredDoctors = applyFilter(doctorsData);
 
-  console.log("Filtered Patients:", filteredPatients);
+  console.log("Filtered Doctors:", filteredDoctors);
+  console.log("Patient Data:", patientData);
 
   return (
     <div className="appointment-container">
       <div className="appointment-header">
-        <h2>Appointment</h2>
-        <p>
-          <span className="bold-white">Showing:</span> All upcoming patients
-        </p>
+        <div className="appointment-title">
+          <h2>Appointment</h2>
+          <p>
+            <span className="bold-white">Showing:</span> All available doctors
+          </p>
+        </div>
+        <div className="appointment-buttons">
+          {/* <button
+            className={`Cancer-button ${selectedButton === "Cancer" ? "active" : ""}`}
+            onClick={() => setSelectedButton("Cancer")}
+          >
+            Cancer
+          </button> */}
+          <button
+            className={`Obstetrics-button ${selectedButton === "Ob/gyn" ? "active" : ""}`}
+            onClick={() => setSelectedButton("Ob/gyn")}
+          >
+            Ob/gyn
+          </button>
+          <button
+            className={`Infant-button ${selectedButton === "Infant" ? "active" : ""}`}
+            onClick={() => setSelectedButton("Infant")}
+          >
+            Infant
+          </button>
+        </div>
       </div>
       <div className="layout-toggle-buttons">
         <button
@@ -106,16 +127,16 @@ const D_Appointment = () => {
       </div>
       {layout === "list" && (
         <div className="cards-container list">
-          <PatientList patients={filteredPatients} formattedDate={formatDate(date)} />
+          <DoctorList doctors={filteredDoctors} formattedDate={formatDate(date)} />
         </div>
       )}
       {layout === "grid" && (
         <div className="cards-container grid">
-          <PatientGrid patients={filteredPatients} />
+          <DoctorGrid doctors={filteredDoctors} />
         </div>
       )}
     </div>
   );
 };
 
-export default D_Appointment;
+export default P_Appointment;

@@ -1,0 +1,121 @@
+.appointment-container {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+}
+
+.appointment-header  {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.appointment-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.appointment-buttons button {
+  padding: .8rem 1.5rem;
+  border: 1px solid var(--purple);
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: transparent;
+  color: white;
+  transition: background-color 0.2s ease-in-out;
+
+}
+
+.appointment-buttons button:focus {
+  outline: 1px solid var(--purple); /* Remove focus outline */
+  border: 1px solid var(--purple); /* Ensure no border is shown */
+}
+
+.appointment-buttons button.active {
+  background-color: var(--purple);
+}
+
+.appointment-buttons button:hover {
+  background-color: var(--primary-color-light); /* Change to a lighter shade of your primary color */
+}
+
+.appointment-container h2 {
+  margin: 1rem 0;
+}
+
+.appointment-container p {
+  margin: 0.5rem 0;
+}
+
+.bold-white {
+  font-weight: bold;
+  color: white;
+}
+
+.appointment-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+.layout-toggle-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  align-self: end;
+}
+
+.layout-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: var(--grey);
+  color: white;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.layout-button.active {
+  color: #747bff;
+}
+
+.layout-button:hover {
+  background-color: var(--primary-color-light); /* Change to a lighter shade of your primary color */
+}
+
+.layout-button:focus {
+  outline: none; /* Remove focus outline */
+  border: none; /* Ensure no border is shown */
+}
+
+.arrow-button {
+  border: 1px solid var(--sec-dark);
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin: 0 0.2rem;
+  background-color: transparent; /* Make background transparent */
+  color: inherit; /* Inherit color from parent */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+
+.arrow-button:hover {
+  color: #fff;
+  transform: scale(1.1); /* Pop-out effect */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.date-display {
+  font-size: 18px;
+  margin: 0.5rem 0;
+  margin-right: 0.8rem;
+}
+
+.filter-dropdown-left {
+  margin-left: auto; /* Adjust this value as needed */
+}
