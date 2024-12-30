@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import CustomDropdown from "../../Components/D_PatientList/CustomDropdown";
 import FilterDropdown from "../../Components/D_PatientList/FilterDropdown";
 import PatientTable from "../../Components/D_PatientList/PatientTable";
-import "./D_PatientList.css"; // Make sure to import the CSS file
-import patientsData from "../../Components/D_PatientList/Patients.json"; // Import the JSON data
+import { MergedDataContext } from "../../Components/D_PatientList/AppointmentsWithPatients"; // Adjust the import path if needed
+import "./D_PatientList.css";
 
 const D_PatientList = () => {
+  const mergedData = useContext(MergedDataContext); // Consume the context
   const [number, setNumber] = useState(10); // Manage rows per page
   const [filter, setFilter] = useState("");
-  const [filteredPatients, setFilteredPatients] = useState(patientsData);
+  const [filteredPatients, setFilteredPatients] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    setFilteredPatients(mergedData);
+  }, [mergedData]);
 
   const handleFilterChange = (newFilter) => {
     setFilter(newFilter);
@@ -17,28 +22,25 @@ const D_PatientList = () => {
   };
 
   const applyFilter = (filter) => {
-    let filteredData = [...patientsData];
+    let filteredData = [...mergedData];
     switch (filter) {
       case "name-asc":
-        filteredData.sort((a, b) => a.name.localeCompare(b.name));
+        filteredData.sort((a, b) => a.patientName.localeCompare(b.patientName));
         break;
       case "name-desc":
-        filteredData.sort((a, b) => b.name.localeCompare(a.name));
+        filteredData.sort((a, b) => b.patientName.localeCompare(a.patientName));
         break;
       case "date":
         filteredData.sort((a, b) => new Date(a.date) - new Date(b.date));
         break;
-      case "disease":
-        filteredData.sort((a, b) => a.disease.localeCompare(b.disease));
+      case "job":
+        filteredData.sort((a, b) => a.job.localeCompare(b.job));
         break;
-      case "status":
-        filteredData.sort((a, b) => a.status.localeCompare(b.status));
-        break;
-      case "gender":
-        filteredData.sort((a, b) => a.gender.localeCompare(b.gender));
+      case "patient_type":
+        filteredData.sort((a, b) => a.patient_type.localeCompare(b.patient_type));
         break;
       default:
-        filteredData = patientsData;
+        filteredData = mergedData;
     }
     setFilteredPatients(filteredData);
   };

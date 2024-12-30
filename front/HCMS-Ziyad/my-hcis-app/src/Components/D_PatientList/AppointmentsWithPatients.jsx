@@ -82,7 +82,11 @@ export const MergedDataProvider = ({ children }) => {
               patient_type: patient.patient_type, // Get patient_type from patient data
               date: formattedDate,
               timeRange: timeRange, // Include the formatted time range
-              image: patient.image_url // Include image URL
+              image: patient.image_url, // Include image URL
+              gender: patient.gender, // Include gender from patient data
+              diagnosis: appointment.diagnosis, // Include diagnosis from appointment data
+              status: appointment.status, // Include status from appointment data
+              treatment: appointment.treatment // Include treatment from appointment data
             };
           }
           return null; // Skip if patient not found
