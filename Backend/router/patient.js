@@ -159,7 +159,7 @@ patient_routes.get('/doctors', async (req, res) => {
     }
 });
 
-patient_routes.get('/trea')
+patient_routes.get('/treatment-plan')
 
 patient_routes.put('/edit-profile', async (req, res) => {
     const actual_patient_id = req.session.authorization.id;

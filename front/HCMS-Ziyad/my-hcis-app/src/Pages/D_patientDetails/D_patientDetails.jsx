@@ -39,32 +39,42 @@ const D_patientDetails = () => {
   const fetchCancer = async () => {
     try {
       const resp = await fetch(
-        `http://localhost:5000/doctor/edit_treatment_plan/${patientId}`,
+        `http://localhost:5000/doctor/treatment_plan/${patientId}`,
         {
           method: "POST",
           headers: {
             authorization: `Bearer ${token}`,
             "User-Id": id,
             "User-Role": role,
+            "Content-Type": "application/json",
           },
+          body: JSON.stringify({
+            session_date: "2024-10-10",
+            cancer_stage: "stage 2",
+            dosage: "60mg",
+            age: "45",
+            blood_pressure: "120/90",
+            heart_rate: "76",
+          }),
         }
       );
-      if (!response.ok) {
+      console.log(resp);
+      if (!resp.ok) {
         throw new Error("Failed to fetch cancer details");
       }
-      const cancerr = await resp.json();
-      setCancer(cancerr);
-      console.log(cancerr);
     } catch (error) {
-      console.error("Error fetching doctor stats:", error);
-      throw new Error("Failed to fetch doctor stats");
+      console.error("Error fetching cancer:", error);
+      throw new Error("Failed to fetch cancer details");
     }
   };
+  // const zby = {
+  //   session_date,
+  //   cancer_stage,
 
   useEffect(() => {
     fetchPatient();
     fetchCancer();
-  }, []);
+  }, [patientId]);
 
   return (
     <div className="D-patientDetails">
