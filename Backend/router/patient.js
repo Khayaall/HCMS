@@ -67,9 +67,9 @@ patient_routes.get('/browse-doctors', async (req, res) => {
     }
 });
 
-patient_routes.get('/browse-selected-doctors', async (req, res) => {
+patient_routes.get('/browse-selected-doctors/:type', async (req, res) => {
     try{
-    const {type} = req.body.toLowerCase();
+    const type = req.params.type;
     const type_doctors = await pool.query("SELECT * FROM doctor WHERE specialty = $1;",[type]);
     return res.status(200).send(type_doctors.rows)
     }catch(error){
@@ -148,6 +148,18 @@ patient_routes.get('/statistics',async (req, res) => {
         return res.status(500).send('An error occurred while fetching patient\'s the statistics');
     }
 });
+
+patient_routes.get('/doctors', async (req, res) => {
+    try{
+        const doctors = await pool.query("SELECT * FROM doctor");
+        return res.status(200).send(doctors.rows);
+    }catch(error){
+        console.error('Error fetching all doctors:', error);
+        return res.status(500).send('An error occurred while fetching all doctors');
+    }
+});
+
+patient_routes.get('/treatment-plan')
 
 patient_routes.put('/edit-profile', async (req, res) => {
     const actual_patient_id = req.session.authorization.id;
