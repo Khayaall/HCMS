@@ -65,8 +65,7 @@
 .list-img img,
 .today-img img {
   width: 100%;
-  aspect-ratio: 1;
-  border-radius: 20px;
+  border: 50%;
 }
 .list-img,
 .today-img {
