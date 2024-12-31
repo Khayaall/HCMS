@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import "./patientListCard.css";
+import { NavLink } from "react-router-dom";
 
 const PatientListCard = ({ patient }) => {
+  const [hidden, setHidden] = useState(true);
   const getStatus = (date) => {
     const appointmentDate = new Date(date);
     const today = new Date();
-    return appointmentDate.toDateString() === today.toDateString() ? "Today" : "Upcoming";
+    return appointmentDate.toDateString() === today.toDateString()
+      ? "Today"
+      : "Upcoming";
   };
 
   return (
@@ -28,7 +32,15 @@ const PatientListCard = ({ patient }) => {
           </p>
         </div>
         <div className="patientlistcard-actions">
-          <button className="patientlistcard-confirm">View</button>
+          <NavLink to={`/doctor/patientDetails/${patient.patient_id}`}>
+            <button
+              className="patientlistcard-confirm"
+              onMouseEnter={() => setHidden(false)}
+              onMouseLeave={() => setHidden(true)}
+            >
+              View
+            </button>
+          </NavLink>
           <p className="patientlistcard-status">
             {getStatus(patient.date)} • {patient.timeRange}
           </p>
@@ -50,7 +62,9 @@ const PatientList = ({ patients, formattedDate }) => {
     return patientDate === formattedDate;
   });
 
-  const visiblePatients = showAll ? filteredPatients : filteredPatients.slice(0, 4);
+  const visiblePatients = showAll
+    ? filteredPatients
+    : filteredPatients.slice(0, 4);
 
   return (
     <>

@@ -64,60 +64,14 @@ const A_Overview = () => {
     <div className="overview-page">
       <div className="overview-title">
         <h2>
-          Welcome, Dr. {doctor.f_name} {doctor.l_name}
+          Welcome, Admin. {doctor.f_name} {doctor.l_name}
         </h2>
         <p>Have a nice day at great work </p>
-      </div>
-      <div className="overview-cards">
-        <div className="card">
-          <div className="card-logo">
-            <p>
-              <FontAwesomeIcon icon={faCalendar} size="2xl" />
-            </p>
-          </div>
-          <div className="card-txt">
-            <h1>10.1k</h1>
-            <h5>Appointments</h5>
-          </div>
-        </div>
-        <div className="card">
-          <div className="card-logo">
-            <p>
-              <FontAwesomeIcon icon={faUser} size="2xl" />
-            </p>
-          </div>
-          <div className="card-txt">
-            <h1>5.37k</h1>
-            <h5>Total Patient</h5>
-          </div>
-        </div>
-        <div className="card">
-          <div className="card-logo">
-            <p>
-              <FontAwesomeIcon icon={faFaceSmile} size="2xl" />
-            </p>
-          </div>
-          <div className="card-txt">
-            <h1>2.7k</h1>
-            <h5>Review</h5>
-          </div>
-        </div>
-        <div className="card">
-          <div className="card-logo">
-            <p>
-              <FontAwesomeIcon icon={faClipboardList} size="2xl" />
-            </p>
-          </div>
-          <div className="card-txt">
-            <h1>24.4k</h1>
-            <h5>Prescription</h5>
-          </div>
-        </div>
       </div>
       <div className="overview-app">
         <div className="reschedule">
           <div className="reschedule-txt">
-            <h3>Remaining Appointments</h3>
+            <h3>Approved Doctor</h3>
             <NavLink to="/appointment">
               View All <FontAwesomeIcon icon={faChevronRight} />
             </NavLink>
@@ -155,36 +109,48 @@ const A_Overview = () => {
           </div>
         </div>
         <div className="statistics"></div>
-        <div className="today-appointments">
-          <h3>Today Appointments</h3>
-          <div className="today-list">
-            {today.length > 4
-              ? setToday(today.splice(0, 4))
-              : today.map((today) => {
-                  const { id, name, job_title, image, appointment_time } =
-                    today;
-                  return (
-                    <ul key={id}>
-                      <li>
-                        <div className="today-img">
-                          <img src={image} alt="" />
-                        </div>
-                        <div className="today-txt">
-                          <h5>{name}</h5>
-                          <p>{job_title}</p>
-                        </div>
-                        <div>
-                          <p>{appointment_time}</p>
-                        </div>
-                      </li>
-                    </ul>
-                  );
-                })}
+        <div className="reschedule">
+          <div className="reschedule-txt">
+            <h3>Approved Receptionist</h3>
+            <NavLink to="/appointment">
+              View All <FontAwesomeIcon icon={faChevronRight} />
+            </NavLink>
+          </div>
+          <div className="reschedule-list">
+            {patient.map((patients) => {
+              const {
+                id,
+                name,
+                age,
+                image,
+                appointment_date,
+                gender,
+                appointment_time,
+              } = patients;
+              return (
+                <ul key={id}>
+                  <li>
+                    <div className="list-img">
+                      <img src={image} alt="" />
+                    </div>
+                    <div className="list-txt">
+                      <h5>{name}</h5>
+                      <p>
+                        {age} {gender}, {appointment_date}
+                      </p>
+                    </div>
+                    <div>
+                      <p>{appointment_time}</p>
+                    </div>
+                  </li>
+                </ul>
+              );
+            })}
           </div>
         </div>
       </div>
 
-      <div className="overview-patients">
+      {/* <div className="overview-patients">
         <div className="patients-txt">
           <h3>Recent Patients</h3>
           <NavLink to="/mypatient" onClick={() => window.scrollTo(0, 0)}>
@@ -192,7 +158,7 @@ const A_Overview = () => {
           </NavLink>
         </div>
         <PatientTable patients={fewRecent} />
-      </div>
+      </div> */}
     </div>
   );
 };

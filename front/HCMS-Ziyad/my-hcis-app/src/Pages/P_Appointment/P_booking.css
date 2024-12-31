@@ -4,16 +4,46 @@
   align-items: left;
   justify-content: center;
 }
-.appointment-header {
+
+.booking-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 1rem;
-  flex-direction: column;
+}
+
+.appointment-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.appointment-buttons button {
+  padding: 0.8rem 1.5rem;
+  border: 1px solid var(--purple);
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: transparent;
+  color: white;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.appointment-buttons button:focus {
+  outline: 1px solid var(--purple); /* Remove focus outline */
+  border: 1px solid var(--purple); /* Ensure no border is shown */
+}
+
+.appointment-buttons button.active {
+  background-color: var(--purple);
+}
+
+.appointment-buttons button:hover {
+  background-color: var(
+    --primary-color-light
+  ); /* Change to a lighter shade of your primary color */
 }
 
 .appointment-container h2 {
-  margin-bottom: 1rem;
+  margin: 1rem 0;
 }
 
 .appointment-container p {
@@ -64,13 +94,14 @@
   outline: none; /* Remove focus outline */
   border: none; /* Ensure no border is shown */
 }
+
 .arrow-button {
-  border: none;
+  border: 1px solid var(--sec-dark);
   padding: 10px;
   cursor: pointer;
   border-radius: 4px;
   margin: 0 0.2rem;
-  background-color: var(--grey); /* Make background transparent */
+  background-color: transparent; /* Make background transparent */
   color: inherit; /* Inherit color from parent */
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }

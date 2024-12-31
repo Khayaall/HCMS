@@ -4,7 +4,7 @@ import FilterDropdown from "../../Components/D_PatientList/FilterDropdown";
 import ArrowButton from "../../Components/D_PatientList/ArrowButton";
 import PatientList from "../../Components/D_PatientList/patientListCard";
 import PatientGrid from "../../Components/D_PatientList/patientGridCard";
-import { MergedDataContext } from "../../Components/D_PatientList/AppointmentsWithPatients";
+import { MergedDataContext } from "../../Components/APIs/AppointmentsWithPatients";
 
 const Today = new Date();
 Today.setHours(0, 0, 0, 0); // Ensure Today's date has no time portion
