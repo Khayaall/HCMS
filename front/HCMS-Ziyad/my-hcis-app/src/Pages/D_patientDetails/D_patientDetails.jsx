@@ -6,7 +6,9 @@ import PatientDetailsTable from "../../Components/PatientDetails/PatientDetailsT
 const D_patientDetails = () => {
   const { patientId } = useParams();
   const [patient, setPatient] = useState({});
-  const [cancerData, setCancerData] = useState({});
+  const [patientType, setPatientType] = useState(""); // State to store patient type
+  const [cancerData, setCancerData] = useState([]);
+  const [infantData, setInfantData] = useState([]);
   const [editingData, setEditingData] = useState(null);
   const [newCancerData, setNewCancerData] = useState({
     session_date: "",
@@ -16,6 +18,16 @@ const D_patientDetails = () => {
     blood_pressure: "",
     heart_rate: "",
     treatment_type: "",
+  });
+  const [newInfantData, setNewInfantData] = useState({
+    vaccination_date: "",
+    vaccine_type: "",
+    temprature: "",
+    weight: "",
+    age: "",
+    immune_system_status: "",
+    heart_rate: "",
+    vaccination_instructions: "",
   });
 
   const token = localStorage.getItem("token");
@@ -40,7 +52,8 @@ const D_patientDetails = () => {
       }
       const patients = await response.json();
       setPatient(patients);
-      console.log(patients);
+      setPatientType(patients.patient_type);
+      console.log("patientsssss" + patients);
     } catch (error) {
       console.error("Error fetching doctor stats:", error);
       throw new Error("Failed to fetch doctor stats");
@@ -88,6 +101,8 @@ const D_patientDetails = () => {
         throw new Error("Failed to fetch cancerrrr");
       }
       const cancerData = await response.json();
+      {
+      }
       setCancerData(cancerData);
       console.log(cancerData);
     } catch (error) {
@@ -95,9 +110,35 @@ const D_patientDetails = () => {
       throw new Error("Failed to fetch cancer details");
     }
   };
+  const fetchInfantData = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/doctor/infant_treatment_plan/${patientId}`,
+        {
+          method: "GET",
+          headers: {
+            authorization: `Bearer ${token}`,
+            "User-Id": id,
+            "User-Role": role,
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch infant treatment plan");
+      }
+      const infantData = await response.json();
+      setInfantData(infantData);
+      console.log("alllloiejfoiwjfewoi" + infantData);
+    } catch (error) {
+      console.error("Error fetching infant data:", error);
+    }
+  };
 
-  const handleModifyClick = (cancerId) => {
-    const dataToEdit = cancerData.find((data) => data.id === cancerId);
+  const handleModifyClick = (dataId) => {
+    const dataToEdit =
+      patientType === "obstetrics"
+        ? cancerData.find((data) => data.id === dataId)
+        : infantData.find((data) => data.id === dataId);
     setEditingData(dataToEdit);
   };
   const handleSaveClick = async (updatedData) => {
@@ -118,11 +159,19 @@ const D_patientDetails = () => {
       if (!response.ok) {
         throw new Error("Failed to update cancer details");
       }
-      setCancerData((prevData) =>
-        prevData.map((data) =>
-          data.id === updatedData.id ? updatedData : data
-        )
-      );
+      if (patientType === "obstetrics") {
+        setCancerData((prevData) =>
+          prevData.map((data) =>
+            data.id === updatedData.id ? updatedData : data
+          )
+        );
+      } else {
+        setInfantData((prevData) =>
+          prevData.map((data) =>
+            data.id === updatedData.id ? updatedData : data
+          )
+        );
+      }
       setEditingData(null);
     } catch (error) {
       console.error("Error updating cancer details:", error);
@@ -142,29 +191,52 @@ const D_patientDetails = () => {
   };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNewCancerData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    if (patientType === "obstetrics") {
+      setNewCancerData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    } else {
+      setNewInfantData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetchCancer(newCancerData);
-    setNewCancerData({
-      session_date: "",
-      cancer_stage: "",
-      dosage: "",
-      age: "",
-      blood_pressure: "",
-      heart_rate: "",
-      treatment_type: "",
-    });
+    if (patientType === "obstetrics") {
+      fetchCancer(newCancerData);
+      setNewCancerData({
+        session_date: "",
+        cancer_stage: "",
+        dosage: "",
+        age: "",
+        blood_pressure: "",
+        heart_rate: "",
+        treatment_type: "",
+      });
+    } else {
+      fetchCancer(newInfantData);
+      setNewInfantData({
+        vaccination_date: "",
+        vaccine_type: "",
+        temprature: "",
+        weight: "",
+        age: "",
+        immune_system_status: "",
+        heart_rate: "",
+        vaccination_instructions: "",
+      });
+    }
   };
 
   useEffect(() => {
     fetchPatient();
     // fetchCancer();
     fetchCancerData();
+    fetchInfantData();
     // fetchEditCancer();
   }, [patientId]);
   if (!patient) {
@@ -183,77 +255,152 @@ const D_patientDetails = () => {
             <h3>{patient.f_name + " " + patient.l_name}</h3>
           </div>
         </div>
-        <PatientDetailsTable
-          patientDetails={cancerData}
-          formatDate={formatDate}
-          onModifyClick={handleModifyClick}
-          onSaveClick={handleSaveClick}
-          editingData={editingData}
-          setEditingData={setEditingData}
-        />
-        <div className="patient-input">
-          <h2>Add New Cancer Treatment Plan</h2>
-          <form onSubmit={handleSubmit}>
-            <div className="patient-inputs">
-              <input
-                type="date"
-                name="session_date"
-                value={newCancerData.session_date}
-                onChange={handleInputChange}
-                required
-              />
-              <input
-                type="text"
-                name="cancer_stage"
-                placeholder="Cancer Stage"
-                value={newCancerData.cancer_stage}
-                onChange={handleInputChange}
-                required
-              />
-              <input
-                type="text"
-                name="dosage"
-                placeholder="Dosage"
-                value={newCancerData.dosage}
-                onChange={handleInputChange}
-                required
-              />
-              <input
-                type="number"
-                name="age"
-                placeholder="Age"
-                value={newCancerData.age}
-                onChange={handleInputChange}
-                required
-              />
-              <input
-                type="text"
-                name="blood_pressure"
-                placeholder="Blood Pressure"
-                value={newCancerData.blood_pressure}
-                onChange={handleInputChange}
-                required
-              />
-              <input
-                type="number"
-                name="heart_rate"
-                placeholder="Heart Rate"
-                value={newCancerData.heart_rate}
-                onChange={handleInputChange}
-                required
-              />
-              <input
-                type="text"
-                name="treatment_type"
-                placeholder="Treatment Type"
-                value={newCancerData.treatment_type}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <button type="submit">Add Treatment Plan</button>
-          </form>
-        </div>
+      </div>
+      <PatientDetailsTable
+        patientDetails={patientType === "obstetrics" ? cancerData : infantData}
+        formatDate={formatDate}
+        onModifyClick={handleModifyClick}
+        onSaveClick={handleSaveClick}
+        editingData={editingData}
+        setEditingData={setEditingData}
+        patientType={patientType} // Pass patientType to the table
+      />
+
+      <div className="patient-input">
+        <h2>
+          Add New {patientType === "obstetrics" ? "obstetrics" : "Infant"}{" "}
+          Treatment Plan
+        </h2>
+        <form onSubmit={handleSubmit}>
+          <div className="patient-inputs">
+            {patientType === "obstetrics" ? (
+              <>
+                <input
+                  type="date"
+                  name="session_date"
+                  value={newCancerData.session_date}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="cancer_stage"
+                  placeholder="Cancer Stage"
+                  value={newCancerData.cancer_stage}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="dosage"
+                  placeholder="Dosage"
+                  value={newCancerData.dosage}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="number"
+                  name="age"
+                  placeholder="Age"
+                  value={newCancerData.age}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="blood_pressure"
+                  placeholder="Blood Pressure"
+                  value={newCancerData.blood_pressure}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="number"
+                  name="heart_rate"
+                  placeholder="Heart Rate"
+                  value={newCancerData.heart_rate}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="treatment_type"
+                  placeholder="Treatment Type"
+                  value={newCancerData.treatment_type}
+                  onChange={handleInputChange}
+                  required
+                />
+              </>
+            ) : (
+              <>
+                <input
+                  type="date"
+                  name="vaccination_date"
+                  value={newInfantData.vaccination_date}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="vaccine_type"
+                  placeholder="Vaccine Type"
+                  value={newInfantData.vaccine_type}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="weight"
+                  placeholder="Weight"
+                  value={newInfantData.weight}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="temprature"
+                  placeholder="Temperature"
+                  value={newInfantData.temprature}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="number"
+                  name="age"
+                  placeholder="Age"
+                  value={newInfantData.age}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="vaccination_instructions"
+                  placeholder="Vaccination Instructions"
+                  value={newInfantData.vaccination_instructions}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="immune_system_status"
+                  placeholder="Immune System Status"
+                  value={newInfantData.immune_system_status}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="number"
+                  name="heart_rate"
+                  placeholder="Heart Rate"
+                  value={newInfantData.heart_rate}
+                  onChange={handleInputChange}
+                  required
+                />
+              </>
+            )}
+          </div>
+          <button type="submit">Add Treatment Plan</button>
+        </form>
       </div>
     </div>
   );

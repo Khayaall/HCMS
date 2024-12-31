@@ -36,8 +36,7 @@ const Sign_in = () => {
     if (role.toLowerCase() === "admin") {
       requestBody.a_id = id;
     }
-    if (role.toLowerCase() === 'receptionist')
-    {
+    if (role.toLowerCase() === "receptionist") {
       requestBody.r_id = id;
     }
 
@@ -61,7 +60,7 @@ const Sign_in = () => {
 
         // Handle successful response
         console.log("Login successful");
-        login();
+        login(data.role);
         navigate("/overview");
       } else {
         // Handle error response
@@ -117,7 +116,6 @@ const Sign_in = () => {
             <button
               className={`${styles.roleButton} ${
                 role === "Admin" ? styles.active : ""
-
               }`}
               onClick={() => {
                 handleRoleChange("Admin");
@@ -128,7 +126,7 @@ const Sign_in = () => {
             </button>
           </div>
           <form onSubmit={handleSubmit}>
-          {role === 'Patient' && (
+            {role === "Patient" && (
               <input
                 type="email"
                 placeholder="Enter your email"
@@ -139,14 +137,16 @@ const Sign_in = () => {
               />
             )}
             <div className={styles.flexInput}>
-              {role != 'Patient' &&(<input
-                type="text"
-                placeholder="ID"
-                className={styles.inputSmall}
-                value={id}
-                onChange={(e) => setId(e.target.value)}
-                required
-              />)}
+              {role != "Patient" && (
+                <input
+                  type="text"
+                  placeholder="ID"
+                  className={styles.inputSmall}
+                  value={id}
+                  onChange={(e) => setId(e.target.value)}
+                  required
+                />
+              )}
               <input
                 type="password"
                 placeholder="Password"

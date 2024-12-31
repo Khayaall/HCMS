@@ -75,7 +75,7 @@ const App = () => {
                   />
                 </Routes>
                 <Routes>
-                  <Route path="/settings" element={<D_ProfilePage />} />
+                  <Route path="/dProfile" element={<D_ProfilePage />} />
                 </Routes>
                 <Routes>
                   <Route
@@ -85,7 +85,7 @@ const App = () => {
                 </Routes>
                 <Routes>
                   <Route
-                    path="/patientbooking"
+                    path="/patientBooking"
                     element={
                       <DoctorsDataProvider>
                         <PatientDataProvider>

@@ -4,14 +4,18 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [role, setRole] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    const storedRole = localStorage.getItem("role");
     setIsLoggedIn(!!token);
+    setRole(storedRole || "");
   }, []);
 
-  const login = () => {
+  const login = (userRole) => {
     setIsLoggedIn(true);
+    setRole(userRole);
   };
 
   const logout = () => {
@@ -19,10 +23,11 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("id");
     localStorage.removeItem("role");
     setIsLoggedIn(false);
+    setRole("");
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, role, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
