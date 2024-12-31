@@ -1,44 +1,70 @@
-import React from "react";
+import React, { useState } from "react";
 import "./patientListCard.css";
-import patients from "./Patients.json";
 
 const PatientListCard = ({ patient }) => {
-    const getStatus = (date) => {
-        const appointmentDate = new Date(date);
-        const today = new Date();
-        return appointmentDate.toDateString() === today.toDateString() ? "Today" : "Upcoming";
-    };
+  const getStatus = (date) => {
+    const appointmentDate = new Date(date);
+    const today = new Date();
+    return appointmentDate.toDateString() === today.toDateString() ? "Today" : "Upcoming";
+  };
+
   return (
     <div className="patientlistcard-card">
-      <div className="patientlistcard-profile-image" style={{ backgroundColor: "#FFD700" }}>
-        <img src={patient.image} alt={patient.name} />
+      <div
+        className="patientlistcard-profile-image"
+        style={{ backgroundColor: "#FFD700" }}
+      >
+        <img src={patient.image} alt={patient.patientName} />
       </div>
       <div className="patientlistcard-content">
         <div className="patientlistcard-details">
-          <h3 className="patientlistcard-name">{patient.name}</h3>
+          <h3 className="patientlistcard-name">{patient.patientName}</h3>
           <div className="patientlistcard-info">
-            <p>🩺patient job</p>
-            <p className="patientlistcard-time">🕒:{patient.date}</p>
+            <p>🩺{patient.job}</p>
+            <p className="patientlistcard-time">🕒{patient.date}</p>
           </div>
           <p className="patientlistcard-description">
-            Disease: blaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+            Patient: {patient.patient_type}
           </p>
         </div>
         <div className="patientlistcard-actions">
           <button className="patientlistcard-confirm">View</button>
-          <p className="patientlistcard-status">{getStatus(patient.date)} • {patient.payment}</p>
+          <p className="patientlistcard-status">
+            {getStatus(patient.date)} • {patient.timeRange}
+          </p>
         </div>
       </div>
     </div>
   );
 };
 
-const PatientList = () => {
+const PatientList = ({ patients, formattedDate }) => {
+  const [showAll, setShowAll] = useState(false);
+
+  const filteredPatients = patients.filter((patient) => {
+    const patientDate = new Date(patient.date).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+    return patientDate === formattedDate;
+  });
+
+  const visiblePatients = showAll ? filteredPatients : filteredPatients.slice(0, 4);
+
   return (
     <>
-      {patients.slice(0, 4).map((patient) => (
-        <PatientListCard key={patient.id} patient={patient} />
+      {visiblePatients.map((patient) => (
+        <PatientListCard key={patient.patient_id} patient={patient} />
       ))}
+      {filteredPatients.length > 4 && (
+        <button
+          className="see-more-button"
+          onClick={() => setShowAll(!showAll)}
+        >
+          {showAll ? "Show Less" : "+ See More"}
+        </button>
+      )}
     </>
   );
 };

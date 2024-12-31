@@ -1,89 +1,99 @@
 .patientlistcard-card {
-    display: flex;
-    background-color: #2e2e3e;
-    border-radius: 10px;
-    color: #fff;
-    padding: 16px;
-    align-items: center;
-    margin: .8rem 0;
-    transition: transform 0.2s, box-shadow 0.2s; /* Add transition for smooth effect */
+  display: flex;
+  background-color: #2e2e3e;
+  border-radius: 10px;
+  color: #fff;
+  padding: 16px;
+  align-items: center;
+  margin: 0.8rem 0;
+  transition: transform 0.2s, box-shadow 0.2s; /* Add transition for smooth effect */
 }
 
 .patientlistcard-card:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add box shadow on hover */
-    transform: translateY(-4px); /* Slightly lift the card on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add box shadow on hover */
+  transform: translateY(-4px); /* Slightly lift the card on hover */
 }
 
 .patientlistcard-profile-image {
-    width: 90px;
-    height: 85px;
-    border-radius: 4px;
-    font-size: 24px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #333;
-    margin-right: 16px;
+  width: 100px;
+  height: 100px;
+  border-radius: 16px;
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  margin-right: 16px;
+  overflow: hidden; /* Ensure the image does not overflow */
+  background-color: #ffd700; /* Add background color */
+  /* Adjust margin to align with content */
+}
+
+.patientlistcard-profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure the image covers the container without distortion */
 }
 
 .patientlistcard-content {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-left: 0.5rem; /* Add margin to separate content from image */
 }
 
 .patientlistcard-details {
-    flex: 1;
+  flex: 1;
 }
 
 .patientlistcard-name {
-    margin-top: .7rem;
-    font-size: 18px;
+  margin-top: 0.7rem;
+  font-size: 18px;
 }
 
 .patientlistcard-info {
-    display: flex;
-    flex-direction: row;
-    gap: 3rem; /* Add gap between items */
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 3rem; /* Add gap between items */
+  align-items: center;
 }
 
 .patientlistcard-info p {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 .patientlistcard-time {
-    color: #aaa;
-    font-size: 14px;
+  color: #aaa;
+  font-size: 14px;
 }
 
 .patientlistcard-description {
-    margin: 8px 0;
-    font-size: 14px;
-    color: #bbb;
+  margin: 8px 0;
+  font-size: 14px;
+  color: #bbb;
 }
 
 .patientlistcard-actions {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 button.patientlistcard-confirm {
-    margin-top: .6rem;
-    margin-bottom: .6rem;
-    padding: 10px 14px;
-    border-radius: 4px;
-    font-size: 14px;
-    border: none;
-    cursor: pointer;
-    background-color: #ffb800;
-    color: #333;
+  margin-top: 0.6rem;
+  margin-bottom: 0.6rem;
+  padding: 10px 14px;
+  border-radius: 4px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  background-color: #ffb800;
+  color: #333;
 }
 
 .patientlistcard-status {
-    margin-top: 8px;
-    font-size: 12px;
-    color: #ffa500;
+  margin-top: 1rem;
+  font-size: 12px;
+  color: #ffa500;
 }

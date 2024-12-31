@@ -10,29 +10,29 @@ const PatientTable = ({ patients }) => {
           <th>Patient ID</th>
           <th>Date</th>
           <th>Gender</th>
-          <th>Disease</th>
+          <th>Diagnosis</th>
           <th>Status</th>
-          <th>Payment</th>
+          <th>Treatment</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        {patients.map((patient) => (
-          <tr key={patient.id} className="patient-tr">
+        {patients.map((patient, index) => (
+          <tr key={`${patient.patient_id}-${index}`} className="patient-tr">
             <td className="patient-name">
               <img
                 src={patient.image}
-                alt={patient.name}
+                alt={patient.patientName}
                 className="patient-img"
               />
-              {patient.name}
+              {patient.patientName}
             </td>
-            <td>{patient.patientID}</td>
+            <td>{patient.patient_id}</td>
             <td>{patient.date}</td>
             <td>{patient.gender}</td>
-            <td>{patient.disease}</td>
+            <td>{patient.diagnosis}</td>
             <td>{patient.status}</td>
-            <td>{patient.payment}</td>
+            <td>{patient.treatment}</td>
             <td>
               <button className="action-button">⋮</button>
             </td>

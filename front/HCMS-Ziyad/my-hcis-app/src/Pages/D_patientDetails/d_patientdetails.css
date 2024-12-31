@@ -1,0 +1,53 @@
+.D-patientDetails {
+  margin-top: 1%;
+}
+
+.patientDetails-container {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center;
+  align-items: center; */
+}
+.patient-info {
+  display: flex;
+  align-items: center;
+  margin-top: 1%;
+  border-radius: 16px;
+  padding: 1% 0.4%;
+  width: 18%;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.patient-info:hover {
+  background-color: var(--purple);
+}
+.patient-info > h3 {
+  /* margin: 3% 0; */
+  margin-bottom: 7%;
+  width: fit-content;
+}
+.patient-info-img img {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+.patient-info-img {
+  width: 20%;
+  margin-right: 8%;
+  border: none;
+}
+.patient-input {
+  margin-top: 5%;
+}
+.patient-input > form {
+  display: flex;
+  flex-direction: column;
+}
+.patient-inputs {
+  display: flex;
+  gap: 0.4%;
+  margin-bottom: 1%;
+}
+.patient-inputs > input {
+  width: 13%;
+}

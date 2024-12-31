@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMagnifyingGlass,
@@ -9,15 +9,66 @@ import {
   faPowerOff,
 } from "@fortawesome/free-solid-svg-icons";
 import { faCircleQuestion, faUser } from "@fortawesome/free-regular-svg-icons";
-// import dr_profile from "../assets/dr_profile.jpg";
 import "./bar.css";
 import EditProfileModal from "../Components/D_ProfilePage/EditProfileModal";
-import { data } from "./data";
+import { useAuth } from "../../AuthContext";
 
 const Navbar = () => {
-  const [user, setUser] = useState(data);
-  const [toggle, setToggle] = useState(false);
+  const [barToggle, setBarToggle] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false); // State to manage EditProfileModal visibility
+  const navigate = useNavigate();
+  const { logout, role } = useAuth();
+  const [profile, setProfile] = useState({
+    image_url: "",
+    f_name: "",
+    l_name: "",
+    specialty: "",
+  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
+  const token = localStorage.getItem("token");
+  const id = localStorage.getItem("id");
+
+  const fetchProfile = async () => {
+    if (!token || !id || !role) {
+      console.error("No token, id, or role found, please log in");
+      setError("No token, id, or role found, please log in");
+      setLoading(false);
+      return;
+    }
+    try {
+      const response = await fetch(`http://localhost:5000/${role}`, {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${token}`,
+          "User-Id": id,
+          "User-Role": role,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch ${role} data`);
+      }
+
+      const profileData = await response.json();
+      setProfile(profileData);
+      console.log(`${role} data:`, profileData);
+    } catch (error) {
+      console.error(`Error fetching ${role} data:`, error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProfile();
+  }, [role]);
 
   const ProfileMenu = () => {
     return (
@@ -36,7 +87,7 @@ const Navbar = () => {
                 <p>Settings</p>
               </NavLink>
             </li>
-            <li>
+            <li onClick={handleLogout}>
               <NavLink to="#">
                 <FontAwesomeIcon className="icon" icon={faPowerOff} />
                 <p>Logout</p>
@@ -48,9 +99,7 @@ const Navbar = () => {
     );
   };
 
-  useEffect(() => {
-    setUser(user.filter((profile) => profile.id === 1));
-  }, []);
+  const { f_name, l_name, specialty, patient_type, image_url } = profile;
 
   return (
     <div className="navbar">
@@ -63,7 +112,7 @@ const Navbar = () => {
               size="lg"
             />
           </p>
-          <input type="text" placeholder="Search Appointment, Patinet ..." />
+          <input type="text" placeholder="Search Appointment, Patient ..." />
         </div>
         <div className="nav-icons">
           <p>
@@ -76,21 +125,22 @@ const Navbar = () => {
           <p>
             <FontAwesomeIcon className="icon" icon={faMoon} size="lg" />
           </p>
-
-          {user.map((users) => {
-            const { id, firstName, lastName, specialty, image } = users;
-            return (
-              <div
-                className="profile-icon"
-                onClick={() => setToggle(!toggle)}
-                key={id}
-              >
+          <div
+            className="profile-icon"
+            onClick={() => setBarToggle(!barToggle)}
+          >
+            {loading ? (
+              <p>Loading...</p>
+            ) : error ? (
+              <p>{error}</p>
+            ) : (
+              <>
                 <div className="profile-img">
-                  <img src={image} alt="" />
+                  <img src={image_url} alt="Profile" />
                 </div>
                 <div className="profile-txt">
-                  <h5>{firstName + " " + lastName}</h5>
-                  <h6>{specialty}</h6>
+                  <h5>{f_name + " " + l_name}</h5>
+                  <h6>{role === "doctor" ? specialty : patient_type}</h6>
                 </div>
                 <p>
                   <FontAwesomeIcon
@@ -100,20 +150,20 @@ const Navbar = () => {
                     style={{ color: "#c7c0bd" }}
                   />
                 </p>
-                {toggle && <ProfileMenu />}
-              </div>
-            );
-          })}
+              </>
+            )}
+            {barToggle && <ProfileMenu />}
+          </div>
         </div>
       </div>
       {isModalOpen && (
         <EditProfileModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          profile={user[0]} // Pass the profile data
+          profile={profile} // Pass the profile data
           onSave={(updatedProfile) => {
             // Handle the save action
-            setUser([updatedProfile]);
+            setProfile(updatedProfile);
           }}
         />
       )}

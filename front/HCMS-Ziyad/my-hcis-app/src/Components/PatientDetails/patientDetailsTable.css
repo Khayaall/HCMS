@@ -1,0 +1,87 @@
+.patient-records {
+  width: 100%;
+  margin-top: 20px;
+  border: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Add gap between records */
+}
+
+.patient-record-container {
+  width: 100%; /* Ensure full width on smaller screens */
+  max-width: 45%; /* Limit width to 45% on larger screens */
+  border-radius: 12px;
+  background-color: var(--sec-dark);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-sizing: border-box; /* Include padding and border in width */
+}
+
+.patient-record-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1% 2%;
+  background-color: var(--sec-dark);
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-sizing: border-box; /* Include padding and border in width */
+}
+.patient-record-header h3 {
+  width: 80%;
+}
+
+.patient-record-container:hover,
+.patient-record-container:hover .patient-record-header {
+  color: var(--white);
+  background: #323548;
+}
+
+.patient-record {
+  padding: 3% 2%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+}
+.editing-records {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.input_data {
+  width: 80%;
+}
+.record-top-row,
+.record-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: wrap; /* Allow wrapping of content */
+}
+
+.single-records {
+  width: 100%; /* Full width on smaller screens */
+  max-width: 28%; /* Limit width to 25% on larger screens */
+  box-sizing: border-box; /* Include padding and border in width */
+  padding: 5px; /* Add padding for better spacing */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .patient-record-container {
+    max-width: 100%; /* Full width on smaller screens */
+  }
+
+  .single-records {
+    max-width: 100%; /* Full width on smaller screens */
+  }
+}

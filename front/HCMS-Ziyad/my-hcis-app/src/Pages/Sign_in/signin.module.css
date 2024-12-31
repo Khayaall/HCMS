@@ -39,7 +39,7 @@
 }
 .loginBox {
   padding: 18%;
-  width: 26%;
+  width: 30%;
 }
 
 .login-box h2 {
@@ -52,6 +52,7 @@
   display: flex;
   justify-content: space-around;
   margin: 5% 0;
+  gap: 2%;
 }
 
 .roleButton {

@@ -6,7 +6,7 @@ const session = require('express-session')
 
 public_users.post('/signup', async (req, res) => {
     try {
-        const { email, password, role, f_name, l_name } = req.body;
+        const { email, password, role, f_name, l_name , speciality} = req.body;
         if (!email || !password || !role || !f_name || !l_name) {
             return res.status(400).send("Please fill in all the fields");
         }
@@ -27,7 +27,7 @@ public_users.post('/signup', async (req, res) => {
             }
             else
             {
-                const newUser = await pool.query("INSERT INTO doctor (f_name, l_name, email, password, account_status, doctor_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *", [f_name, l_name, email, password, 'pending', d_id]);
+                const newUser = await pool.query("INSERT INTO doctor (f_name, l_name, email, password, account_status, doctor_id, specialty) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *", [f_name, l_name, email, password, 'pending', d_id, speciality]);
                 return res.json("doctor added waiting for admin approval");
             }
         }
@@ -119,7 +119,7 @@ public_users.post('/login', async (req, res) => {
                 return res.status(400).send("Invalid Credentials");
             }
         } 
-        else if (role === 'admin') {
+        else if (role.toLowerCase() === 'admin') {
             const { a_id, password } = req.body;
             if (!a_id || !password) {
                 return res.status(400).send("Please fill in all the fields.");

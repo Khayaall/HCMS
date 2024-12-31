@@ -9,7 +9,7 @@ create table admin
     password varchar(100) not null,
     phone    varchar(15),
     dob      date,
-    gender   char,
+    gender   varchar(10),
     address  text
 );
 
@@ -27,7 +27,7 @@ create table doctor
     password       varchar(100) not null,
     dob            date,
     phone          varchar(15),
-    gender         char(10),
+    gender         varchar(10),
     experience     text,
     address        text,
     specialty      varchar(100),
@@ -54,7 +54,7 @@ create table patient
     password     varchar(100) not null,
     phone        varchar(15),
     dob          date,
-    gender       char(10),
+    gender       varchar(10),
     address      text,
     job          text,
     image_url    text
@@ -74,7 +74,7 @@ create table receptionist
     password        varchar(100) not null,
     phone           varchar(15),
     dob             date,
-    gender          char,
+    gender          varchar(10),
     address         text,
     account_status  varchar(50)  not null
 );
@@ -173,6 +173,8 @@ create table obstetrics_medical_record
     record_id               serial
         primary key,
     patient_id              integer
+        constraint unique_patient_id
+            unique
         references patient
             on delete cascade,
     patient_type            varchar(50),
@@ -194,12 +196,61 @@ alter table obstetrics_medical_record
 
 create table patient_ultraimages
 (
-    patient_id integer
+    patient_id      integer
         constraint patient_patient_id_fk
             references patient,
-    ultraimage text
+    ultraimage      text,
+    pregnancy_stage text,
+    age             integer,
+    weight          text,
+    pressure        text,
+    heart_rate      integer,
+    doctor_id       text
+        constraint patient_ultraimages_doctor_doctor_id_fk
+            references doctor
 );
 
 alter table patient_ultraimages
+    owner to postgres;
+
+create table cancer_treatment_plan
+(
+    session_date   date,
+    cancer_stage   text,
+    treatment_type text,
+    dosage         text,
+    age            integer,
+    blood_pressure text,
+    heart_rate     integer,
+    patient_id     integer
+        constraint cancer_treatment_plan_patient_patient_id_fk
+            references patient,
+    doctor_id      text
+        constraint cancer_treatment_plan_doctor_doctor_id_fk
+            references doctor
+);
+
+alter table cancer_treatment_plan
+    owner to postgres;
+
+create table infant
+(
+    patient_id               integer
+        constraint infant_patient_patient_id_fk
+            references patient,
+    doctor_id                text
+        constraint infant_doctor_doctor_id_fk
+            references doctor,
+    vaccination_date         date,
+    vaccine_type             text,
+    weight                   text,
+    temprature               text,
+    age                      integer,
+    vaccination_instructions text,
+    immune_system_status     text,
+    heart_rate               integer
+);
+
+alter table infant
     owner to postgres;
 

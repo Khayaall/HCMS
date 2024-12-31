@@ -1,20 +1,21 @@
 .patientGridCard-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Fixed width columns */
+    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); /* Fixed width columns */
+    align-items: start;
     justify-content: left; /* Center the grid items */
-    gap: 1rem; /* Gap between cards */
 }
 
 .patientGridCard-card {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* 2 columns: image, content */
+    grid-template-rows: auto auto; /* 2 rows: content, actions */
     background-color: #2e2e3e;
     border-radius: 10px;
     color: #fff;
     padding: 16px;
     margin: .8rem;
     transition: transform 0.2s, box-shadow 0.2s; /* Add transition for smooth effect */
-    width: 300px; /* Fixed width */
+    width: 330px; /* Fixed width */
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
@@ -24,14 +25,15 @@
 }
 
 .patientGridCard-profile-image {
-    width: 100%;
-    height: 120px; /* Smaller height for the image */
-    border-radius: 8px;
+    grid-row: 1 / 2; /* Place image in the first row */
+    grid-column: 1 / 2; /* Place image in the first column */
+    width: 85px; /* Smaller width for the image */
+    height: 85px; /* Smaller height for the image */
+    border-radius: 50%;
     overflow: hidden; /* Ensure the image does not overflow the container */
     display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 16px;
+    object-fit: cover;
+    margin-top: 1rem;
 }
 
 .patientGridCard-profile-image img {
@@ -41,10 +43,14 @@
 }
 
 .patientGridCard-content {
+    grid-row: 1 / 2; /* Place content in the first row */
+    grid-column: 2 / 3; /* Place content in the second column */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
+    margin-top: 1rem;
+    margin-left: 1rem; /* Add margin to separate content from image */
 }
 
 .patientGridCard-details {
@@ -53,17 +59,21 @@
 
 .patientGridCard-name {
     margin: 0;
-    font-size: 16px; /* Smaller font size */
+    font-size: 18px; /* Smaller font size */
 }
 
 .patientGridCard-info {
     display: flex;
     flex-direction: row;
-    gap: 1rem; /* Add gap between items */
-    align-items: center;
+    gap: .5rem; /* Add gap between items */
+    align-items: left;
+    margin-top: .5rem;
+    margin-left: -.25rem;
 }
 
 .patientGridCard-info p {
+    margin-top: .5rem;
+    
     font-size: 14px; /* Smaller font size */
 }
 
@@ -74,14 +84,18 @@
 
 .patientGridCard-description {
     margin: 8px 0;
-    font-size: 12px; /* Smaller font size */
+    font-size: 14px; /* Smaller font size */
     color: #bbb;
 }
 
 .patientGridCard-actions {
+    grid-row: 2 / 3; /* Place actions in the second row */
+    grid-column: 1 / 3; /* Span actions across both columns */
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: .5rem;
+    margin-left: .5rem;
 }
 
 button.patientGridCard-confirm {

@@ -1,0 +1,137 @@
+.home {
+  width: 99.1vw;
+}
+.home-background {
+  display: flex;
+  flex-direction: column;
+  background: url("../../assets/home-img1.jpg");
+  background-size: cover;
+}
+.top-background {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 3%;
+  margin-bottom: 8%;
+}
+.top-background > .contact {
+  backdrop-filter: blur(20px);
+  background: rgba(100, 99, 99, 0.2);
+  border-radius: 10px;
+  padding: 0.8%;
+  height: 10%;
+  transition: all 0.2s ease;
+}
+.top-background > .contact a {
+  color: white;
+  font-style: italic;
+  text-decoration: none;
+}
+.top-background > .contact:hover {
+  background: rgba(121, 118, 118, 0.4);
+}
+.top-background > .side-bar {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  align-items: flex-start;
+}
+.top-background .home-logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.home-logo > .logo-img {
+  width: 12%;
+  margin-right: 0.5rem;
+}
+.home-logo > .logo-img img {
+  width: 100%;
+}
+.home-links {
+  width: 100%;
+  margin-top: 4%;
+}
+.home-links-list {
+  list-style: none;
+  /* padding: 0 1rem; */
+  /* justify-items: center; */
+}
+.home-link a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  width: 40%;
+  margin: 2% 0;
+  padding: 0.8rem 0.5rem;
+  color: var(--white);
+  font-weight: 600;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1.2rem;
+  border-radius: 10px;
+
+  transition: all 0.2s ease;
+}
+.home-link p {
+  color: var(--white);
+  padding-left: 14%;
+  transition: all 0.2s ease;
+}
+.home-link a:hover {
+  background: var(--white);
+  color: var(--dark);
+}
+.home-link a:hover p {
+  color: var(--dark);
+}
+.bottom-background {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1% 2%;
+}
+.large-txt {
+  width: 60%;
+  font-size: 5em;
+  text-transform: uppercase;
+  color: var(--white);
+  font-weight: 600;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  mix-blend-mode: exclusion;
+}
+.bottom-background > .clear-cards {
+  display: flex;
+  width: 26%;
+  justify-content: space-around;
+}
+.Glassmorphism-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 3.5%;
+  backdrop-filter: blur(20px);
+  background: rgba(58, 58, 58, 0.2);
+  border-radius: 16px;
+  width: 39%;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.Glassmorphism-card:hover {
+  background: rgba(58, 58, 58, 0.4);
+}
+.Glassmorphism-card > p {
+  margin-bottom: 40%;
+  font-size: 1.5rem;
+  color: var(--white);
+  width: 90%;
+}
+.Glassmorphism-card > a {
+  transform: rotate(45deg);
+  cursor: pointer;
+  color: white;
+}
+.home-statistics {
+  background: var(--white);
+  padding-bottom: 5%;
+}
