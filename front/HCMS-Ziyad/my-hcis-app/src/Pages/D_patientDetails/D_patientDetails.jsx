@@ -7,6 +7,16 @@ const D_patientDetails = () => {
   const { patientId } = useParams();
   const [patient, setPatient] = useState({});
   const [cancerData, setCancerData] = useState({});
+  const [editingData, setEditingData] = useState(null);
+  const [newCancerData, setNewCancerData] = useState({
+    session_date: "",
+    cancer_stage: "",
+    dosage: "",
+    age: "",
+    blood_pressure: "",
+    heart_rate: "",
+    treatment_type: "",
+  });
 
   const token = localStorage.getItem("token");
   const id = localStorage.getItem("id");
@@ -36,7 +46,7 @@ const D_patientDetails = () => {
       throw new Error("Failed to fetch doctor stats");
     }
   };
-  const fetchCancer = async () => {
+  const fetchCancer = async (newData) => {
     try {
       const resp = await fetch(
         `http://localhost:5000/doctor/treatment_plan/${patientId}`,
@@ -48,21 +58,14 @@ const D_patientDetails = () => {
             "User-Role": role,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            session_date: "2024-12-30",
-            cancer_stage: "1",
-            dosage: "40mg",
-            age: "45",
-            blood_pressure: "120/80",
-            heart_rate: "70",
-            treatment_type: "Follow-up Care",
-          }),
+          body: JSON.stringify(newData),
         }
       );
       console.log(resp);
       if (!resp.ok) {
         throw new Error("Failed to fetch cancer details");
       }
+      fetchCancerData();
     } catch (error) {
       console.error("Error fetching cancer:", error);
       throw new Error("Failed to fetch cancer details");
@@ -92,10 +95,15 @@ const D_patientDetails = () => {
       throw new Error("Failed to fetch cancer details");
     }
   };
-  const fetchEditCancer = async () => {
+
+  const handleModifyClick = (cancerId) => {
+    const dataToEdit = cancerData.find((data) => data.id === cancerId);
+    setEditingData(dataToEdit);
+  };
+  const handleSaveClick = async (updatedData) => {
     try {
-      const resp = await fetch(
-        `http://localhost:5000/doctor/edit_treatment_plan/${patientId}`,
+      const response = await fetch(
+        `http://localhost:5000/doctor/edit_treatment_plan/${updatedData.id}`,
         {
           method: "PUT",
           headers: {
@@ -104,31 +112,60 @@ const D_patientDetails = () => {
             "User-Role": role,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            session_date: "2024-12-30",
-            cancer_stage: "1",
-            dosage: "40mg",
-            age: "45",
-            blood_pressure: "120/80",
-            heart_rate: "70",
-            treatment_type: "Follow-up Care",
-          }),
+          body: JSON.stringify(updatedData),
         }
       );
-      console.log(resp);
-      if (!resp.ok) {
-        throw new Error("Failed to fetch cancer details");
+      if (!response.ok) {
+        throw new Error("Failed to update cancer details");
       }
+      setCancerData((prevData) =>
+        prevData.map((data) =>
+          data.id === updatedData.id ? updatedData : data
+        )
+      );
+      setEditingData(null);
     } catch (error) {
-      console.error("Error fetching cancer:", error);
-      throw new Error("Failed to fetch cancer details");
+      console.error("Error updating cancer details:", error);
+      throw new Error("Failed to update cancer details");
     }
+  };
+
+  const formatDate = (isoString) => {
+    const date = new Date(isoString);
+    return date
+      .toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+      })
+      .replace(/(\d+), (\d+)/, "$1, $2");
+  };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewCancerData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetchCancer(newCancerData);
+    setNewCancerData({
+      session_date: "",
+      cancer_stage: "",
+      dosage: "",
+      age: "",
+      blood_pressure: "",
+      heart_rate: "",
+      treatment_type: "",
+    });
   };
 
   useEffect(() => {
     fetchPatient();
     // fetchCancer();
     fetchCancerData();
+    // fetchEditCancer();
   }, [patientId]);
   if (!patient) {
     return <div>Loading...</div>;
@@ -146,11 +183,76 @@ const D_patientDetails = () => {
             <h3>{patient.f_name + " " + patient.l_name}</h3>
           </div>
         </div>
-        <PatientDetailsTable patientDetails={cancerData} />
-        <div className="patient-Input">
-          <p>Fill in the details below</p>
-          <input type="text" placeholder="Patient Name" />
-          <input type="text" placeholder="Patient Age" />
+        <PatientDetailsTable
+          patientDetails={cancerData}
+          formatDate={formatDate}
+          onModifyClick={handleModifyClick}
+          onSaveClick={handleSaveClick}
+          editingData={editingData}
+          setEditingData={setEditingData}
+        />
+        <div className="patient-input">
+          <h2>Add New Cancer Treatment Plan</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="patient-inputs">
+              <input
+                type="date"
+                name="session_date"
+                value={newCancerData.session_date}
+                onChange={handleInputChange}
+                required
+              />
+              <input
+                type="text"
+                name="cancer_stage"
+                placeholder="Cancer Stage"
+                value={newCancerData.cancer_stage}
+                onChange={handleInputChange}
+                required
+              />
+              <input
+                type="text"
+                name="dosage"
+                placeholder="Dosage"
+                value={newCancerData.dosage}
+                onChange={handleInputChange}
+                required
+              />
+              <input
+                type="number"
+                name="age"
+                placeholder="Age"
+                value={newCancerData.age}
+                onChange={handleInputChange}
+                required
+              />
+              <input
+                type="text"
+                name="blood_pressure"
+                placeholder="Blood Pressure"
+                value={newCancerData.blood_pressure}
+                onChange={handleInputChange}
+                required
+              />
+              <input
+                type="number"
+                name="heart_rate"
+                placeholder="Heart Rate"
+                value={newCancerData.heart_rate}
+                onChange={handleInputChange}
+                required
+              />
+              <input
+                type="text"
+                name="treatment_type"
+                placeholder="Treatment Type"
+                value={newCancerData.treatment_type}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <button type="submit">Add Treatment Plan</button>
+          </form>
         </div>
       </div>
     </div>

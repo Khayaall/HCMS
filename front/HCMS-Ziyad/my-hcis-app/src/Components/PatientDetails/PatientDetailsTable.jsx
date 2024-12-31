@@ -1,82 +1,141 @@
-import React from "react";
+import React, { useState } from "react";
 import "./patientDetailsTable.css";
 
-const PatientDetailsTable = ({ patientDetails }) => {
+const PatientDetailsTable = ({
+  patientDetails,
+  formatDate,
+  onModifyClick,
+  onSaveClick,
+  editingData,
+  setEditingData,
+}) => {
+  const [visible, setVisible] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditingData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   return (
-    // <div>
-    //   <table className="patient-details-table">
-    //     <thead>
-    //       <tr>
-    //         <th className="patient-details-header">Patient Name</th>
-    //         <th>Patient ID</th>
-    //         <th>Date</th>
-    //         <th>Gender</th>
-    //         <th>Diagnosis</th>
-    //         <th>Status</th>
-    //         <th>Treatment</th>
-    //         <th>Actions</th>
-    //       </tr>
-    //     </thead>
-    //     <tbody>
-    //       {patients.map((patient, index) => (
-    //         <tr key={`${patient.patient_id}-${index}`} className="patient-tr">
-    //           <td className="patient-details-name">
-    //             <img
-    //               src={patient.image}
-    //               alt={patient.patientName}
-    //               className="patient-img"
-    //             />
-    //             {patient.patientName}
-    //           </td>
-    //           <td>{patient.patient_id}</td>
-    //           <td>{patient.date}</td>
-    //           <td>{patient.gender}</td>
-    //           <td>{patient.diagnosis}</td>
-    //           <td>{patient.status}</td>
-    //           <td>{patient.treatment}</td>
-    //           <td>
-    //             <button className="action-button">⋮</button>
-    //           </td>
-    //         </tr>
-    //       ))}
-    //     </tbody>
-    //   </table>
-    // </div>
     <div className="patient-records">
       {patientDetails.length > 0 ? (
         patientDetails.map((plan, index) => (
           <div key={index} className="patient-record-container">
-            <h3>{plan.session_date}</h3>
-            <div className="patient-record">
-              <div className="record-top-row">
-                <div className="single-records">
-                  <h4>Cancer Stage</h4>
-                  <p>{plan.cancer_stage}</p>
-                </div>
-                <div className="single-records">
-                  <h4>Dosage</h4>
-                  <p>{plan.dosage}</p>
-                </div>
-                <div className="single-records">
-                  <h4>Heart Rate</h4>
-                  <p>{plan.heart_rate}</p>
-                </div>
-              </div>
-              <div className="record-bottom-row">
-                <div className="single-records">
-                  <h4>Treatment Type</h4>
-                  <p>{plan.treatment_type}</p>
-                </div>
-                <div className="single-records">
-                  <h4>Age</h4>
-                  <p>{plan.age}</p>
-                </div>
-                <div className="single-records">
-                  <h4>Blood Pressure</h4>
-                  <p>{plan.blood_pressure}</p>
-                </div>
-              </div>
+            <div className="patient-record-header">
+              <h3 onClick={() => setVisible(!visible)}>
+                {formatDate(plan.session_date)}
+              </h3>
+              <button onClick={() => onModifyClick(plan.id)}>Modify</button>
             </div>
+            {visible && (
+              <div className="patient-record">
+                {editingData && editingData.id === plan.id ? (
+                  <div className="editing-records">
+                    <div className="record-top-row">
+                      <div className="single-records">
+                        <h4>Cancer Stage</h4>
+                        <input
+                          className="input_data"
+                          type="text"
+                          name="cancer_stage"
+                          value={editingData.cancer_stage}
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="single-records">
+                        <h4>Dosage</h4>
+                        <input
+                          className="input_data"
+                          type="text"
+                          name="dosage"
+                          value={editingData.dosage}
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="single-records">
+                        <h4>Heart Rate</h4>
+                        <input
+                          className="input_data"
+                          type="text"
+                          name="heart_rate"
+                          value={editingData.heart_rate}
+                          onChange={handleChange}
+                        />
+                      </div>
+                    </div>
+                    <div className="record-bottom-row">
+                      <div className="single-records">
+                        <h4>Treatment Type</h4>
+                        <input
+                          className="input_data"
+                          type="text"
+                          name="treatment_type"
+                          value={editingData.treatment_type}
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="single-records">
+                        <h4>Age</h4>
+                        <input
+                          className="input_data"
+                          type="text"
+                          name="age"
+                          value={editingData.age}
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="single-records">
+                        <h4>Blood Pressure</h4>
+                        <input
+                          className="input_data"
+                          type="text"
+                          name="blood_pressure"
+                          value={editingData.blood_pressure}
+                          onChange={handleChange}
+                        />
+                      </div>
+                    </div>
+                    <button onClick={() => onSaveClick(editingData)}>
+                      Save
+                    </button>
+                  </div>
+                ) : (
+                  <div className="editing-records">
+                    <div className="record-top-row">
+                      <div className="single-records">
+                        <h4>Cancer Stage</h4>
+                        <p>{plan.cancer_stage}</p>
+                      </div>
+                      <div className="single-records">
+                        <h4>Dosage</h4>
+                        <p>{plan.dosage}</p>
+                      </div>
+                      <div className="single-records">
+                        <h4>Heart Rate</h4>
+                        <p>{plan.heart_rate}</p>
+                      </div>
+                    </div>
+                    <div className="record-bottom-row">
+                      <div className="single-records">
+                        <h4>Treatment Type</h4>
+                        <p>{plan.treatment_type}</p>
+                      </div>
+                      <div className="single-records">
+                        <h4>Age</h4>
+                        <p>{plan.age}</p>
+                      </div>
+                      <div className="single-records">
+                        <h4>Blood Pressure</h4>
+                        <p>{plan.blood_pressure}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         ))
       ) : (

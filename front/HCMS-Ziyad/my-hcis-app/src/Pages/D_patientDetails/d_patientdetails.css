@@ -36,3 +36,18 @@
   margin-right: 8%;
   border: none;
 }
+.patient-input {
+  margin-top: 5%;
+}
+.patient-input > form {
+  display: flex;
+  flex-direction: column;
+}
+.patient-inputs {
+  display: flex;
+  gap: 0.4%;
+  margin-bottom: 1%;
+}
+.patient-inputs > input {
+  width: 13%;
+}

@@ -20,8 +20,10 @@
   object-fit: cover; /* Prevent image from stretching */
 }
 
-h3 {
+.profile-card h3 {
   margin: 10px 0 5px 0; /* Reduce margin between name and specialty */
+  width: 115%;
+  text-align: center;
 }
 
 p {
