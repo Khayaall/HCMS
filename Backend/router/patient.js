@@ -201,14 +201,12 @@ patient_routes.get("/statistics", async (req, res) => {
       "SELECT COUNT(*) from patient_ultraimages WHERE patient_id = $1;",
       [p_id]
     );
-    res
-      .status(200)
-      .send({
-        "Total doctors": total_doctors.rows[0].count,
-        "Total appointments": total_appointments.rows[0].count,
-        "Total reviews": total_reviews.rows[0].count,
-        "Total ultra images": total_ultraimages.rows[0].count,
-      });
+    res.status(200).send({
+      "Total doctors": total_doctors.rows[0].count,
+      "Total appointments": total_appointments.rows[0].count,
+      "Total reviews": total_reviews.rows[0].count,
+      "Total ultra images": total_ultraimages.rows[0].count,
+    });
   } catch (error) {
     console.error("Error viewing statistics:", error);
     return res
@@ -251,7 +249,26 @@ patient_routes.get("/treatment-plan", async (req, res) => {
     console.error("Error fetching treatment plan:", error);
     return res
       .status(500)
-      .send("An error occurred while fetching patient's treatment plan");
+      .send("An error occurred while fetching patient's treatment plan.");
+  }
+});
+
+patient_routes.get("/selected-ratings/:type", async (req, res) => {
+  try {
+    const type = req.params.type;
+    const result = await pool.query(
+      "SELECT d.doctor_id, AVG(rr.rating) AS avg_rating FROM doctor d LEFT JOIN rating_review rr ON d.doctor_id = rr.doctor_id WHERE d.specialty = $1 GROUP BY d.doctor_id;",
+      [type]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).send("No ratings found.");
+    }
+    return res.status(200).send(result.rows);
+  } catch (error) {
+    console.error("Error fetching selected ratings:", error);
+    return res
+      .status(500)
+      .send("An error occurred while fetching selected ratings.");
   }
 });
 
@@ -273,7 +290,7 @@ patient_routes.put("/edit-profile", async (req, res) => {
       if (req.body[field]) {
         await pool.query(
           `UPDATE patient SET ${field} = $1 WHERE patient_id = $2`,
-          [req.body[field].toLowerCase(), actual_patient_id]
+          [req.body[field], actual_patient_id]
         );
         c++;
       }
