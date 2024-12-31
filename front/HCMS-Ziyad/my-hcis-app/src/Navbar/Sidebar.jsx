@@ -58,7 +58,7 @@ const Sidebar = () => {
         return (
           <>
             <li className="links">
-              <NavLink to="/overview">
+              <NavLink to="/pOverview">
                 <p>
                   <FontAwesomeIcon icon={faSlack} />
                 </p>
@@ -74,15 +74,15 @@ const Sidebar = () => {
               </NavLink>
             </li>
             <li className="links">
-              <NavLink to="/profile">
+              <NavLink to="/patientApp">
                 <p>
                   <FontAwesomeIcon icon={faUser} />
                 </p>
-                My Appointments
+                Appointments
               </NavLink>
             </li>
             <li className="links">
-              <NavLink to="/settings">
+              <NavLink to="/patientProfile">
                 <p>
                   <FontAwesomeIcon icon={faGear} />
                 </p>

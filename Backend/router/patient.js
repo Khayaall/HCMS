@@ -202,10 +202,10 @@ patient_routes.get("/statistics", async (req, res) => {
       [p_id]
     );
     res.status(200).send({
-      "Total doctors": total_doctors.rows[0].count,
-      "Total appointments": total_appointments.rows[0].count,
-      "Total reviews": total_reviews.rows[0].count,
-      "Total ultra images": total_ultraimages.rows[0].count,
+      Total_doctors: total_doctors.rows[0].count,
+      Total_appointments: total_appointments.rows[0].count,
+      Total_reviews: total_reviews.rows[0].count,
+      Total_ultra_images: total_ultraimages.rows[0].count,
     });
   } catch (error) {
     console.error("Error viewing statistics:", error);

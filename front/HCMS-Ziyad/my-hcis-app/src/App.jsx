@@ -21,6 +21,10 @@ import D_patientDetails from "./Pages/D_patientDetails/D_patientDetails";
 import P_Booking from "./Pages/P_Appointment/P_Booking";
 import { PatientDataProvider } from "./Components/APIs/PatientInfo";
 import { DoctorsDataProvider } from "./Components/APIs/getAllDr";
+import Patient_Profile from "./components/P_ProfilePage/Patient_Profile";
+import P_myAppointments from "./Pages/P_myAppointments/P_myAppointments";
+import { AppointmentsDataProvider } from "./Components/APIs/PAppointments";
+import P_Overview from "./Pages/P_Overview/P_Overview";
 
 const App = () => {
   const { isLoggedIn } = useAuth();
@@ -84,6 +88,9 @@ const App = () => {
                   />
                 </Routes>
                 <Routes>
+                  <Route path="/pOverview" element={<P_Overview />} />
+                </Routes>
+                <Routes>
                   <Route
                     path="/patientBooking"
                     element={
@@ -92,6 +99,26 @@ const App = () => {
                           <P_Booking />
                         </PatientDataProvider>
                       </DoctorsDataProvider>
+                    }
+                  />
+                </Routes>
+                <Routes>
+                  <Route
+                    path="/patientApp"
+                    element={
+                      <AppointmentsDataProvider>
+                        <P_myAppointments />
+                      </AppointmentsDataProvider>
+                    }
+                  />
+                </Routes>
+                <Routes>
+                  <Route
+                    path="/patientProfile"
+                    element={
+                      <PatientDataProvider>
+                        <Patient_Profile />
+                      </PatientDataProvider>
                     }
                   />
                 </Routes>

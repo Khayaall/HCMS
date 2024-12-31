@@ -9,7 +9,6 @@ import {
   faPowerOff,
 } from "@fortawesome/free-solid-svg-icons";
 import { faCircleQuestion, faUser } from "@fortawesome/free-regular-svg-icons";
-// import dr_profile from "../assets/dr_profile.jpg";
 import "./bar.css";
 import EditProfileModal from "../Components/D_ProfilePage/EditProfileModal";
 import { useAuth } from "../../AuthContext";
@@ -17,21 +16,14 @@ import { useAuth } from "../../AuthContext";
 const Navbar = () => {
   const [barToggle, setBarToggle] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false); // State to manage EditProfileModal visibility
-  const [isDarkMode, setIsDarkMode] = useState(false); // State to manage dark mode
   const navigate = useNavigate();
-  const { logout } = useAuth();
-  const [doctor, setDoctor] = useState({
+  const { logout, role } = useAuth();
+  const [profile, setProfile] = useState({
     image_url: "",
     f_name: "",
     l_name: "",
     specialty: "",
   });
-  const doctorDetails = {
-    img: doctor.image_url,
-    firstName: doctor.f_name,
-    lastName: doctor.l_name,
-    specialty: doctor.specialty,
-  };
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -42,8 +34,8 @@ const Navbar = () => {
 
   const token = localStorage.getItem("token");
   const id = localStorage.getItem("id");
-  const role = localStorage.getItem("role").toLowerCase();
-  const fetchDoctorProfile = async () => {
+
+  const fetchProfile = async () => {
     if (!token || !id || !role) {
       console.error("No token, id, or role found, please log in");
       setError("No token, id, or role found, please log in");
@@ -51,7 +43,7 @@ const Navbar = () => {
       return;
     }
     try {
-      const response = await fetch("http://localhost:5000/doctor/", {
+      const response = await fetch(`http://localhost:5000/${role}`, {
         method: "GET",
         headers: {
           authorization: `Bearer ${token}`,
@@ -61,21 +53,22 @@ const Navbar = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to fetch doctor data");
+        throw new Error(`Failed to fetch ${role} data`);
       }
 
-      const doctorData = await response.json();
-      setDoctor(doctorData);
-      console.log("Doctor data:", doctorData);
+      const profileData = await response.json();
+      setProfile(profileData);
+      console.log(`${role} data:`, profileData);
     } catch (error) {
-      console.error("Error fetching doctor data:", error);
+      console.error(`Error fetching ${role} data:`, error);
     } finally {
       setLoading(false);
     }
   };
+
   useEffect(() => {
-    fetchDoctorProfile();
-  }, []);
+    fetchProfile();
+  }, [role]);
 
   const ProfileMenu = () => {
     return (
@@ -106,7 +99,7 @@ const Navbar = () => {
     );
   };
 
-  const { f_name, l_name, specialty, image_url } = doctor;
+  const { f_name, l_name, specialty, patient_type, image_url } = profile;
 
   return (
     <div className="navbar">
@@ -119,7 +112,7 @@ const Navbar = () => {
               size="lg"
             />
           </p>
-          <input type="text" placeholder="Search Appointment, Patinet ..." />
+          <input type="text" placeholder="Search Appointment, Patient ..." />
         </div>
         <div className="nav-icons">
           <p>
@@ -143,11 +136,11 @@ const Navbar = () => {
             ) : (
               <>
                 <div className="profile-img">
-                  <img src={image_url} alt="" />
+                  <img src={image_url} alt="Profile" />
                 </div>
                 <div className="profile-txt">
                   <h5>{f_name + " " + l_name}</h5>
-                  <h6>{specialty}</h6>
+                  <h6>{role === "doctor" ? specialty : patient_type}</h6>
                 </div>
                 <p>
                   <FontAwesomeIcon
@@ -167,10 +160,10 @@ const Navbar = () => {
         <EditProfileModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          profile={doctorDetails} // Pass the profile data
+          profile={profile} // Pass the profile data
           onSave={(updatedProfile) => {
             // Handle the save action
-            setUser([updatedProfile]);
+            setProfile(updatedProfile);
           }}
         />
       )}
