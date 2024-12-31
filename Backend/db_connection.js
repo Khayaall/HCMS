@@ -1,5 +1,5 @@
-const { Pool } = require("pg");
-require("dotenv").config();
+const { Pool } = require('pg');
+require('dotenv').config();
 
 // const pool = new Pool({
 //     user: 'postgres',          // Replace with your PostgreSQL username
@@ -19,30 +19,22 @@ require("dotenv").config();
 //   });
 // Use a connection pool for better connection management
 
-// const pool = new Pool({
-//   connectionString: process.env.POSTGRES_URL,
-//   ssl: {
-//     rejectUnauthorized: false,
-//   },
-// });
 
 const pool = new Pool({
-  connectionString:
-    "postgresql://neondb_owner:tD4lsLQwMEk2@ep-bitter-bread-a58wbm8l.us-east-2.aws.neon.tech/neondb?sslmode=require",
-  ssl:
-    process.env.NODE_ENV === "production"
-      ? { rejectUnauthorized: false }
-      : false,
+  connectionString: process.env.POSTGRES_URL,
+  ssl: {
+    rejectUnauthorized: false
+  },
+  connectionTimeoutMillis: 30000 
 });
 
-pool
-  .connect()
-  .then((client) => {
-    console.log("Connected to the database");
+pool.connect()
+  .then(client => {
+    console.log('Connected to the database');
     client.release();
   })
-  .catch((err) => {
-    console.error("Database connection error:", err.stack);
+  .catch(err => {
+    console.error('Database connection error:', err.stack);
   });
 
 module.exports = pool;
