@@ -380,16 +380,37 @@ doctor_routes.post('/treatment_plan/:patient_id', async (req, res) => {
 });
 
 
-doctor_routes.put('/edit_treatment_plan/:patient_id', async (req, res) => {
-    const patient_id = req.params.patient_id;
+doctor_routes.put('/edit_treatment_plan/:record_id', async (req, res) => {
+    const record_id = req.params.record_id;
     const doctor_id = req.session.authorization.id;
-    patient_type_result = await pool.query("SELECT patient_type FROM patient WHERE patient_id = $1", [p_id]);
-    const fields = ['session_date', 'cancer_stage', 'dosage', 'age', 'blood_pressure', 'heart_rate','treatment_type'];
+    const speciality_result = await pool.query("SELECT specialty FROM doctor WHERE doctor_id = $1", [doctor_id]);
+    const speciality = speciality_result.rows[0].specialty;
+    console.log('speciality:', speciality);
+    let p_id  = 0
+    if(speciality === 'obstetrics') {
+        p_id_result = await pool.query("SELECT patient_id FROM cancer_treatment_plan WHERE id = $1", [record_id]);
+        if (p_id_result.rows.length === 0) {
+            console.log(p_id_result.rows);
+            return res.status(404).send('Patient not found');
+        }
+        p_id = p_id_result.rows[0].patient_id;
+        console.log('p_id:', p_id);
+    }
+    let fields = ['session_date', 'cancer_stage', 'dosage', 'age', 'blood_pressure', 'heart_rate','treatment_type'];
     let query = 'UPDATE cancer_treatment_plan SET ';
-    if(patient_type_result.rows[0].patient_type.toLowerCase() === 'infant') {
+    if(speciality === 'infant') {
         fields = ['vaccination_date', 'vaccine_type', 'temprature', 'weight', 'age' , 'immune_system_status', 'heart_rate' , 'vaccination_instructions'];
         query = 'UPDATE infant SET ';
+        p_id_result = await pool.query("SELECT patient_id FROM infant WHERE id = $1", [record_id]);
+        if (p_id_result.rows.length === 0) {
+            console.log(p_id_result.rows);
+            return res.status(404).send('Patient not found');
+        }
+        p_id = p_id_result.rows[0].patient_id;
+        console.log('p_id:', p_id);
     }
+    const patient_id = p_id
+    console.log('patient_id:', patient_id);
     const values = [];
     let index = 1;
 
@@ -410,6 +431,8 @@ doctor_routes.put('/edit_treatment_plan/:patient_id', async (req, res) => {
 
     try {
         const result = await pool.query(query, values);
+        console.log('query:', query);
+        console.log('values:', values);
         res.status(200).send('Treatment plan updated successfully');
     } catch (error) {
         console.error('Error updating treatment plan:', error);

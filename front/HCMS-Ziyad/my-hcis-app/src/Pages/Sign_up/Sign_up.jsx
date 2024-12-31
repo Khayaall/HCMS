@@ -211,8 +211,8 @@ const Sign_up = () => {
                 Doctor Speciality
               </option>
               <option value="obstetrics">Obstetrics</option>
-              <option value="cancer">Cancer</option>
-              <option value="pediatric">Pediatric</option>
+              <option value="obstetrics">Oncology</option>
+              <option value="infant">infant</option>
             </select>
           )}
             
