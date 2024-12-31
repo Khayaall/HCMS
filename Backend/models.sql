@@ -9,7 +9,7 @@ create table admin
     password varchar(100) not null,
     phone    varchar(15),
     dob      date,
-    gender   char,
+    gender   varchar(10),
     address  text
 );
 
@@ -27,7 +27,7 @@ create table doctor
     password       varchar(100) not null,
     dob            date,
     phone          varchar(15),
-    gender         char(10),
+    gender         varchar(10),
     experience     text,
     address        text,
     specialty      varchar(100),
@@ -54,7 +54,7 @@ create table patient
     password     varchar(100) not null,
     phone        varchar(15),
     dob          date,
-    gender       char(10),
+    gender       varchar(10),
     address      text,
     job          text,
     image_url    text
@@ -74,7 +74,7 @@ create table receptionist
     password        varchar(100) not null,
     phone           varchar(15),
     dob             date,
-    gender          char,
+    gender          varchar(10),
     address         text,
     account_status  varchar(50)  not null
 );

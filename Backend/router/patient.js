@@ -198,7 +198,7 @@ patient_routes.put('/edit-profile', async (req, res) => {
     try{
         for await (const field of fields){
             if (req.body[field]) {
-                await pool.query(`UPDATE patient SET ${field} = $1 WHERE patient_id = $2`,[req.body[field].toLowerCase(),actual_patient_id]);
+                await pool.query(`UPDATE patient SET ${field} = $1 WHERE patient_id = $2`,[req.body[field],actual_patient_id]);
                 c++;
             }
         };
