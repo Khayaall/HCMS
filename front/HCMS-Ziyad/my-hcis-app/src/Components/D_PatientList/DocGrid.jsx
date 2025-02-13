@@ -1,11 +1,14 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import "./doctorGridCard.css";
 
 const DoctorGridCard = ({ doctor }) => {
   const getStatus = (date) => {
     const appointmentDate = new Date(date);
     const today = new Date();
-    return appointmentDate.toDateString() === today.toDateString() ? "Today" : "Upcoming";
+    return appointmentDate.toDateString() === today.toDateString()
+      ? "Today"
+      : "Upcoming";
   };
 
   return (
@@ -22,12 +25,28 @@ const DoctorGridCard = ({ doctor }) => {
           </p>
         </div>
       </div>
-      <div className="doctorGridCard-profile-image" style={{ backgroundColor: "#FFD700" }}>
+      <div
+        className="doctorGridCard-profile-image"
+        style={{ backgroundColor: "#FFD700" }}
+      >
         <img src={doctor.image_url} alt={doctor.name} />
       </div>
       <div className="doctorGridCard-actions">
-        <div><p className="doctorGridCard-status">{getStatus(doctor.date)} • {doctor.account_status}</p></div>
-        <div><button className="doctorGridCard-confirm">View</button></div>
+        <div>
+          <p className="doctorGridCard-status">
+            {getStatus(doctor.date)} • {doctor.account_status}
+          </p>
+        </div>
+        <div>
+          <button className="doctorGridCard-confirm">
+            <NavLink
+              to={`/patient/D_booking/${doctor.doctor_id}`}
+              style={{ textDecoration: "none", color: "var(--main-dark)" }}
+            >
+              View
+            </NavLink>
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -34,7 +34,7 @@ const D_ProfileCard = (props) => {
   };
 
   const generateStars = (rating) => {
-    if (typeof rating !== 'number' || isNaN(rating)) {
+    if (typeof rating !== "number" || isNaN(rating)) {
       console.error("Invalid rating value:", rating);
       return null;
     }

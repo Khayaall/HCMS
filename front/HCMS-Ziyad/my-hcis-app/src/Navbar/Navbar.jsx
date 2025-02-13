@@ -42,23 +42,23 @@ const Navbar = () => {
       setLoading(false);
       return;
     }
+    const roleLower = role.toLowerCase();
     try {
-      const response = await fetch(`http://localhost:5000/${role}`, {
+      const response = await fetch(`http://localhost:5000/${roleLower}/`, {
         method: "GET",
         headers: {
           authorization: `Bearer ${token}`,
           "User-Id": id,
-          "User-Role": role,
+          "User-Role": roleLower,
         },
       });
 
       if (!response.ok) {
-        throw new Error(`Failed to fetch ${role} data`);
+        throw new Error(`Failed to fetch ${role} datazz`);
       }
 
       const profileData = await response.json();
       setProfile(profileData);
-      console.log(`${role} data:`, profileData);
     } catch (error) {
       console.error(`Error fetching ${role} data:`, error);
     } finally {
@@ -68,7 +68,29 @@ const Navbar = () => {
 
   useEffect(() => {
     fetchProfile();
+    // console.log(role);
   }, [role]);
+
+  const handleSettings = () => {
+    switch (role) {
+      case "Doctor":
+        return (
+          <NavLink to="/dProfile">
+            <FontAwesomeIcon className="icon" icon={faGear} />
+            <p>Settings</p>
+          </NavLink>
+        );
+      case "Patient":
+        return (
+          <NavLink to="/patientProfile">
+            <FontAwesomeIcon className="icon" icon={faGear} />
+            <p>Settings</p>
+          </NavLink>
+        );
+      default:
+        return null;
+    }
+  };
 
   const ProfileMenu = () => {
     return (
@@ -81,12 +103,7 @@ const Navbar = () => {
                 <p>Profile</p>
               </NavLink>
             </li>
-            <li className="list-line">
-              <NavLink to="/settings">
-                <FontAwesomeIcon className="icon" icon={faGear} />
-                <p>Settings</p>
-              </NavLink>
-            </li>
+            <li className="list-line">{handleSettings()}</li>
             <li onClick={handleLogout}>
               <NavLink to="#">
                 <FontAwesomeIcon className="icon" icon={faPowerOff} />
@@ -130,7 +147,15 @@ const Navbar = () => {
             onClick={() => setBarToggle(!barToggle)}
           >
             {loading ? (
-              <p>Loading...</p>
+              <>
+                <p>Loading...</p>
+                <FontAwesomeIcon
+                  className="icon"
+                  icon={faCaretDown}
+                  size="lg"
+                  style={{ color: "#c7c0bd" }}
+                />
+              </>
             ) : error ? (
               <p>{error}</p>
             ) : (
@@ -140,7 +165,7 @@ const Navbar = () => {
                 </div>
                 <div className="profile-txt">
                   <h5>{f_name + " " + l_name}</h5>
-                  <h6>{role === "doctor" ? specialty : patient_type}</h6>
+                  <h6>{role === "Doctor" ? specialty : patient_type}</h6>
                 </div>
                 <p>
                   <FontAwesomeIcon

@@ -25,6 +25,7 @@ import Patient_Profile from "./components/P_ProfilePage/Patient_Profile";
 import P_myAppointments from "./Pages/P_myAppointments/P_myAppointments";
 import { AppointmentsDataProvider } from "./Components/APIs/PAppointments";
 import P_Overview from "./Pages/P_Overview/P_Overview";
+import DoctorApp from "./Pages/P_doctorAppointment/DoctorApp";
 
 const App = () => {
   const { isLoggedIn } = useAuth();
@@ -100,6 +101,12 @@ const App = () => {
                         </PatientDataProvider>
                       </DoctorsDataProvider>
                     }
+                  />
+                </Routes>
+                <Routes>
+                  <Route
+                    path="/patient/D_booking/:doctorId"
+                    element={<DoctorApp />}
                   />
                 </Routes>
                 <Routes>

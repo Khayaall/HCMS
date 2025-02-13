@@ -5,7 +5,10 @@ import NavBar from "../../Components/D_ProfilePage/NavBar";
 import ReviewsSection from "../../Components/D_ProfilePage/ReviewsSection";
 import My_Profile from "../../Components/D_ProfilePage/My_Profile";
 import ChangePassword from "../../Components/D_ProfilePage/ChangePassword";
-import { ReviewsDataProvider, ReviewsDataContext } from "../../Components/APIs/RevWithPatients";
+import {
+  ReviewsDataProvider,
+  ReviewsDataContext,
+} from "../../Components/APIs/RevWithPatients";
 
 const D_ProfilePage = () => {
   const [activeTab, setActiveTab] = useState("My Profile");
@@ -30,10 +33,10 @@ const D_ProfilePage = () => {
         const doctorResponse = await fetch("http://localhost:5000/doctor", {
           method: "GET",
           headers: {
-            'authorization': `Bearer ${token}`,
-            'User-Id': id,
-            'User-Role': role
-          }
+            authorization: `Bearer ${token}`,
+            "User-Id": id,
+            "User-Role": role,
+          },
         });
 
         if (!doctorResponse.ok) {
@@ -61,28 +64,30 @@ const D_ProfilePage = () => {
   return (
     <ReviewsDataProvider>
       <div className="profile-page">
-        <div className="profile-header">
-          <h2>My Profile</h2>
-        </div>
-        <div className="profile-content">
-          <div className="profile-card">
-            {loading ? (
-              <p>Loading...</p>
-            ) : error ? (
-              <p>{error}</p>
-            ) : (
-              doctorData && (
-                <ProfileCardWithRating doctorData={doctorData} />
-              )
-            )}
-          </div>
-          <div className="profile-bar-reviews">
-            <NavBar activeTab={activeTab} setActiveTab={setActiveTab} />
-            {activeTab === "My Profile" && <My_Profile />}
-            {activeTab === "Reviews" && <ReviewsSection />}
-            {activeTab === "Change Password" && <ChangePassword />}
-          </div>
-        </div>
+        {loading ? (
+          <h1 className="loading1">Loading...</h1>
+        ) : error ? (
+          <p>{error}</p>
+        ) : (
+          <>
+            <div className="profile-header">
+              <h2>My Profile</h2>
+            </div>
+            <div className="profile-content">
+              <div className="profile-card">
+                {doctorData && (
+                  <ProfileCardWithRating doctorData={doctorData} />
+                )}
+              </div>
+              <div className="profile-bar-reviews">
+                <NavBar activeTab={activeTab} setActiveTab={setActiveTab} />
+                {activeTab === "My Profile" && <My_Profile />}
+                {activeTab === "Reviews" && <ReviewsSection />}
+                {activeTab === "Change Password" && <ChangePassword />}
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </ReviewsDataProvider>
   );

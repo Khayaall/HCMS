@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./EditProfileModal.css";
+import Compressor from "compressorjs";
 
 const EditProfileModal = ({ isOpen, onClose, profile, onSave }) => {
   const [firstName, setFirstName] = useState(profile.firstName || "");
@@ -14,53 +15,106 @@ const EditProfileModal = ({ isOpen, onClose, profile, onSave }) => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImage(e.target.result);
-      };
-      reader.readAsDataURL(file);
+      new Compressor(file, {
+        quality: 0.6, // Adjust the quality as needed
+        success(result) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            setImage(e.target.result);
+          };
+          reader.readAsDataURL(result);
+        },
+        error(err) {
+          console.error("Error compressing the image:", err);
+        },
+      });
     }
   };
 
-  const handleSave = async () => {
-    const updatedProfile = {
-      f_name: firstName,
-      l_name: lastName,
-      specialty,
-      about_me: bio || profile.bio,
-      education: `${college}, ${degree}`,
-      image,
-    };
+  const updatedProfile = {
+    f_name: firstName,
+    l_name: lastName,
+    specialty,
+    about_me: bio || profile.bio,
+    education: `${college}, ${degree}`,
+  };
+  const updatedImage = {
+    image_url: image,
+  };
+  const token = localStorage.getItem("token");
+  const id = localStorage.getItem("id");
+  const role = localStorage.getItem("role").toLowerCase();
 
-    const token = localStorage.getItem("token");
-    const id = localStorage.getItem("id");
-    const role = localStorage.getItem("role").toLowerCase();
+  const handleSave = async () => {
     if (!token || !id || !role) {
       console.error("No token, id, or role found, please log in");
       return;
     }
 
     try {
-      const response = await fetch("http://localhost:5000/doctor/edit_profile", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          'authorization': `Bearer ${token}`,
-          'User-Id': id,
-          'User-Role': role
-        },
-        body: JSON.stringify(updatedProfile),
-      });
+      const response = await fetch(
+        "http://localhost:5000/doctor/edit_profile",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${token}`,
+            "User-Id": id,
+            "User-Role": role,
+          },
+          body: JSON.stringify(updatedProfile),
+        }
+      );
 
       if (response.ok) {
         onSave(updatedProfile);
         setIsUpdated(true);
         onClose();
       } else {
-        console.error("Failed to update profile", response.status, response.statusText);
+        console.error(
+          "Failed to update profile",
+          response.status,
+          response.statusText
+        );
       }
     } catch (error) {
       console.error("An error occurred while updating the profile:", error);
+    }
+  };
+
+  const handleUploadImage = async () => {
+    if (!image) return;
+
+    const formData = new FormData();
+    formData.append("image", image);
+    try {
+      const response = await fetch(
+        "http://localhost:5000/doctor/upload_image",
+        {
+          method: "POST",
+          headers: {
+            // "Content-Type": "application/json",
+            authorization: `Bearer ${token}`,
+            "User-Id": id,
+            "User-Role": role,
+          },
+          body: formData,
+        }
+      );
+
+      if (response.ok) {
+        onSave(updatedImage);
+        setIsUpdated(true);
+        onClose();
+      } else {
+        console.error(
+          "Failed to update image",
+          response.status,
+          response.statusText
+        );
+      }
+    } catch (error) {
+      console.error("An error occurred while updating the image:", error);
     }
   };
 
@@ -190,7 +244,13 @@ const EditProfileModal = ({ isOpen, onClose, profile, onSave }) => {
           <button className="cancel-btn" onClick={onClose}>
             Cancel
           </button>
-          <button className="save-btn" onClick={handleSave}>
+          <button
+            className="save-btn"
+            onClick={async () => {
+              await handleSave();
+              await handleUploadImage();
+            }}
+          >
             Save
           </button>
         </div>

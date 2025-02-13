@@ -492,3 +492,17 @@ patient_routes.post(
     }
   }
 );
+
+patient_routes.get("/doctor/:doctorId", async (req, res) => {
+  const doctorId = req.params.doctorId;
+  try {
+    const doctor = await pool.query(
+      "SELECT * FROM doctor WHERE doctor_id = $1",
+      [doctorId]
+    );
+    return res.status(200).send(doctor.rows[0]);
+  } catch (error) {
+    console.error("Error fetching doctor:", error);
+    return res.status(500).send("An error occurred while fetching the doctor");
+  }
+});

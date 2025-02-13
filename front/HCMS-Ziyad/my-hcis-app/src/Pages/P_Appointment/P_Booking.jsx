@@ -66,9 +66,8 @@ const P_Booking = () => {
       }
 
       const data = await response.json();
-      console.log("Fetched Doctors Data:", data); // Log the fetched data
+      // console.log("Fetched Doctors Data:", data); // Log the fetched data
       setDoctorsData(data);
-      console.log("Doctors Data State:", data); // Log the state after setting it
     } catch (error) {
       console.error("Error fetching doctors:", error);
     }

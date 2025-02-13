@@ -96,9 +96,10 @@
 .profile-img img {
   width: 100%;
   border-radius: 50%;
+  aspect-ratio: 1;
 }
 .profile-img {
-  width: 15%;
+  width: 23%;
   margin-right: 7%;
   cursor: pointer;
 }

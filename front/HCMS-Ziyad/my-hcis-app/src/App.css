@@ -37,3 +37,10 @@
   padding: 0.4rem 2.8rem;
   margin-bottom: 12%;
 }
+.loading1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  color: var(--light-grey);
+}
