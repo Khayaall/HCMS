@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import "./P_Booking.css";
+import "./P_booking.css";
 import FilterDropdown from "../../Components/D_PatientList/FilterDropdown";
 import DoctorList from "../../Components/D_PatientList/DocList";
 import DoctorGrid from "../../Components/D_PatientList/DocGrid";

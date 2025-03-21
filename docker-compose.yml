@@ -1,0 +1,20 @@
+services:
+  frontend:
+    image: khayaall/front-hcms:2.0 # Replace with the name of your frontend Docker image
+    container_name: front
+    ports:
+      - "4173:4173"
+    # depends_on:
+    #   - backend
+
+  backend:
+    image: khayaall/backend-hcms:5.0 # Replace with the name of your backend Docker image
+    container_name: back
+    ports:
+      - "5000:5000" # Map port 5000 (backend) to port 5000 on the host
+    environment:
+      - NODE_ENV=production
+    #   - DATABASE_URL=postgresql://neondb_owner:tD4lsLQwMEk2@ep-bitter-bread-a58wbm8l.us-east-2.aws.neon.tech/neondb?sslmode=require
+    # volumes:
+    #   - ./backend:/app # Mount the backend directory for development (optional)
+    # restart: always

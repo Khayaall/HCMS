@@ -31,10 +31,10 @@ const Patient_Profile = () => {
         const response = await fetch("http://localhost:5000/patient/", {
           method: "GET",
           headers: {
-            'authorization': `Bearer ${token}`,
-            'User-Id': id,
-            'User-Role': role
-          }
+            authorization: `Bearer ${token}`,
+            "User-Id": id,
+            "User-Role": role,
+          },
         });
 
         console.log("Response Status:", response.status);
@@ -43,14 +43,13 @@ const Patient_Profile = () => {
         if (!response.ok) {
           const errorText = await response.text();
           console.error("Response Error Text:", errorText);
-          throw new Error('An error occurred while fetching patient profile.');
+          throw new Error("An error occurred while fetching patient profile.");
         }
 
         const data = await response.json();
         setPatientData(data);
 
         console.log("Patient Data:", data);
-
       } catch (error) {
         console.error("Error fetching data:", error);
         setError(error.message);
@@ -80,7 +79,11 @@ const Patient_Profile = () => {
 
       if (days < 0) {
         months--;
-        const daysInLastMonth = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+        const daysInLastMonth = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          0
+        ).getDate();
         days += daysInLastMonth;
       }
 
@@ -107,23 +110,24 @@ const Patient_Profile = () => {
               <p>Loading...</p>
             ) : error ? (
               <p>{error}</p>
+            ) : patientData ? (
+              <P_ProfileCard
+                img={patientData.image_url || "https://via.placeholder.com/150"}
+                firstName={patientData.f_name}
+                lastName={patientData.l_name}
+                specialty={patientData.patient_type}
+                age={calculateAge(patientData.dob, patientData.patient_type)}
+              />
             ) : (
-              patientData ? (
-                <P_ProfileCard
-                  img={patientData.image_url || "https://via.placeholder.com/150"}
-                  firstName={patientData.f_name}
-                  lastName={patientData.l_name}
-                  specialty={patientData.patient_type}
-                  age={calculateAge(patientData.dob, patientData.patient_type)}
-                />
-              ) : (
-                <p>No patient data available</p>
-              )
+              <p>No patient data available</p>
             )}
           </div>
           <div className="profile-bar-reviews">
             <Navv activeTab={activeTab} setActiveTab={setActiveTab} />
-            {activeTab === "Medical Record" && <MedicalRecord patientData={patientData} />} {/* Pass patientData as props */}
+            {activeTab === "Medical Record" && (
+              <MedicalRecord patientData={patientData} />
+            )}{" "}
+            {/* Pass patientData as props */}
             {activeTab === "Change Password" && <ChangePassword />}
           </div>
         </div>
