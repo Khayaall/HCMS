@@ -28,7 +28,7 @@ require("dotenv").config();
 
 const pool = new Pool({
   connectionString:
-    "postgresql://neondb_owner:tD4lsLQwMEk2@ep-bitter-bread-a58wbm8l.us-east-2.aws.neon.tech/neondb?sslmode=require",
+    "postgresql://neondb_owner:tD4lsLQwMEk2@ep-bitter-bread-a58wbm8l-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require",
   ssl:
     process.env.NODE_ENV === "production"
       ? { rejectUnauthorized: false }

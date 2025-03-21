@@ -51,8 +51,8 @@ export const MergedDataProvider = ({ children }) => {
         const appointments = await appointmentsResponse.json();
 
         // Print fetched data
-        console.log("Patients Data:", patients);
-        console.log("Appointments Data:", appointments);
+        // console.log("Patients Data:", patients);
+        // console.log("Appointments Data:", appointments);
 
         // Merge data
         const merged = appointments
@@ -105,7 +105,7 @@ export const MergedDataProvider = ({ children }) => {
           .filter(Boolean); // Remove nulls
 
         // Log the merged data
-        console.log("Merged Data:", merged);
+        // console.log("Merged Data:", merged);
 
         setMergedData(merged);
       } catch (error) {

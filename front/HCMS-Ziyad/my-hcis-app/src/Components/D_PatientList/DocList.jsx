@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import "./patientListCard.css";
+import { NavLink } from "react-router-dom";
 
 const DoctorListCard = ({ doctor }) => {
   const getStatus = (date) => {
     const appointmentDate = new Date(date);
     const today = new Date();
-    return appointmentDate.toDateString() === today.toDateString() ? "Today" : "Upcoming";
+    return appointmentDate.toDateString() === today.toDateString()
+      ? "Today"
+      : "Upcoming";
   };
 
   return (
@@ -21,17 +24,24 @@ const DoctorListCard = ({ doctor }) => {
           <h3 className="patientlistcard-name">{`${doctor.f_name} ${doctor.l_name}`}</h3>
           <div className="patientlistcard-info">
             <p>🩺{doctor.specialty}</p>
-            <p className="patientlistcard-time">🕒 {doctor.start_time} - {doctor.end_time} </p>
+            <p className="patientlistcard-time">
+              🕒 {doctor.start_time} - {doctor.end_time}{" "}
+            </p>
           </div>
           <p className="patientlistcard-description">
             Doctor: {doctor.specialty}
           </p>
         </div>
         <div className="patientlistcard-actions">
-          <button className="patientlistcard-confirm">View</button>
-          <p className="patientlistcard-status">
-            {doctor.account_status} 
-          </p>
+          <button className="patientlistcard-confirm">
+            <NavLink
+              to={`/patient/D_booking/${doctor.doctor_id}`}
+              style={{ textDecoration: "none", color: "var(--main-dark)" }}
+            >
+              View
+            </NavLink>
+          </button>
+          <p className="patientlistcard-status">{doctor.account_status}</p>
         </div>
       </div>
     </div>
@@ -41,14 +51,14 @@ const DoctorListCard = ({ doctor }) => {
 const DoctorList = ({ doctors }) => {
   const [showAll, setShowAll] = useState(false);
 
-  console.log("Doctors:", doctors);
+  // console.log("Doctors:", doctors);
 
   const visibleDoctors = showAll ? doctors : doctors.slice(0, 4);
 
   return (
     <>
       {visibleDoctors.map((doctor) => (
-        <DoctorListCard key={doctor.id} doctor={doctor} />
+        <DoctorListCard key={doctor.doctor_id} doctor={doctor} />
       ))}
       {doctors.length > 4 && (
         <button

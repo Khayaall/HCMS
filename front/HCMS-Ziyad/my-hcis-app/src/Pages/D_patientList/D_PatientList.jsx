@@ -11,9 +11,14 @@ const D_PatientList = () => {
   const [filter, setFilter] = useState("");
   const [filteredPatients, setFilteredPatients] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setFilteredPatients(mergedData);
+    const fetchData = async () => {
+      setFilteredPatients(mergedData);
+      setLoading(false);
+    };
+    fetchData();
   }, [mergedData]);
 
   const handleFilterChange = (newFilter) => {
@@ -37,7 +42,9 @@ const D_PatientList = () => {
         filteredData.sort((a, b) => a.job.localeCompare(b.job));
         break;
       case "patient_type":
-        filteredData.sort((a, b) => a.patient_type.localeCompare(b.patient_type));
+        filteredData.sort((a, b) =>
+          a.patient_type.localeCompare(b.patient_type)
+        );
         break;
       default:
         filteredData = mergedData;
@@ -127,41 +134,49 @@ const D_PatientList = () => {
 
   return (
     <div>
-      <h2>Patients List</h2>
-      <div className="top-row">
-        <div className="entries-container">
-          <h4>Show</h4>
-          <CustomDropdown number={number} setNumber={setNumber} />
-          <h4>entries</h4>
-        </div>
-        <div className="filter-container">
-          <FilterDropdown filter={filter} setFilter={handleFilterChange} />
-        </div>
-      </div>
-      <div>
-        <PatientTable patients={currentRows} />
-        <div className="pagination-container">
-          <div className="pagination">
-            <button
-              className="arrow"
-              onClick={handlePreviousPage}
-              disabled={currentPage === 1}
-            >
-              &lsaquo;
-            </button>
-            {renderPaginationButtons()}
-            <button
-              className="arrow"
-              onClick={handleNextPage}
-              disabled={
-                currentPage === Math.ceil(filteredPatients.length / number)
-              }
-            >
-              &rsaquo;
-            </button>
+      {loading ? (
+        <>
+          <h1 className="loading1">Loading...</h1>
+        </>
+      ) : (
+        <>
+          <h2>Patients List</h2>
+          <div className="top-row">
+            <div className="entries-container">
+              <h4>Show</h4>
+              <CustomDropdown number={number} setNumber={setNumber} />
+              <h4>entries</h4>
+            </div>
+            <div className="filter-container">
+              <FilterDropdown filter={filter} setFilter={handleFilterChange} />
+            </div>
           </div>
-        </div>
-      </div>
+          <div>
+            <PatientTable patients={currentRows} />
+            <div className="pagination-container">
+              <div className="pagination">
+                <button
+                  className="arrow"
+                  onClick={handlePreviousPage}
+                  disabled={currentPage === 1}
+                >
+                  &lsaquo;
+                </button>
+                {renderPaginationButtons()}
+                <button
+                  className="arrow"
+                  onClick={handleNextPage}
+                  disabled={
+                    currentPage === Math.ceil(filteredPatients.length / number)
+                  }
+                >
+                  &rsaquo;
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

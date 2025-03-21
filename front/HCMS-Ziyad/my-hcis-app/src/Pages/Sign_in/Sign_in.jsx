@@ -21,7 +21,7 @@ const Sign_in = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log("handleSubmit called");
-    console.log(role);
+    // console.log(role);
 
     const requestBody = {
       role,
@@ -40,7 +40,7 @@ const Sign_in = () => {
       requestBody.r_id = id;
     }
 
-    console.log(requestBody);
+    // console.log(requestBody);
 
     try {
       const response = await fetch("http://localhost:5000/login", {
@@ -61,7 +61,14 @@ const Sign_in = () => {
         // Handle successful response
         console.log("Login successful");
         login(data.role);
-        navigate("/overview");
+        switch (data.role) {
+          case "Doctor":
+            return navigate("/overview");
+          case "Patient":
+            return navigate("/pOverview");
+          default:
+            return null;
+        }
       } else {
         // Handle error response
         const errorText = await response.text();
