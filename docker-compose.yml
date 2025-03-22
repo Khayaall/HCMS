@@ -1,20 +1,36 @@
 services:
   frontend:
-    image: khayaall/front-hcms:2.0 # Replace with the name of your frontend Docker image
+    image: front-hcms # Replace with the name of your frontend Docker image
     container_name: front
+    build:
+      context: ./front/HCMS-Ziyad/my-hcis-app
+      dockerfile: Dockerfile
     ports:
       - "4173:4173"
-    # depends_on:
-    #   - backend
+    depends_on:
+      - backend
+    restart: unless-stopped
 
   backend:
     image: khayaall/backend-hcms:5.0 # Replace with the name of your backend Docker image
     container_name: back
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
     ports:
       - "5000:5000" # Map port 5000 (backend) to port 5000 on the host
     environment:
       - NODE_ENV=production
-    #   - DATABASE_URL=postgresql://neondb_owner:tD4lsLQwMEk2@ep-bitter-bread-a58wbm8l.us-east-2.aws.neon.tech/neondb?sslmode=require
+      - DATABASE_URL=postgresql://neondb_owner:tD4lsLQwMEk2@ep-bitter-bread-a58wbm8l.us-east-2.aws.neon.tech/neondb?sslmode=require
+    restart: unless-stopped
     # volumes:
     #   - ./backend:/app # Mount the backend directory for development (optional)
     # restart: always
+# for taking an image from docker hub
+# frontend:
+#     image: khayaall/front-hcms:2.0 # Replace with the name of your frontend Docker image
+#     container_name: front
+#     ports:
+#       - "4173:4173"
+# depends_on:
+#   - backend
