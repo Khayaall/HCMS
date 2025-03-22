@@ -6,13 +6,13 @@ services:
       context: ./front/HCMS-Ziyad/my-hcis-app
       dockerfile: Dockerfile
     ports:
-      - "4173:4173"
+      - "80:5173"
     depends_on:
       - backend
     restart: unless-stopped
 
   backend:
-    image: khayaall/backend-hcms:5.0 # Replace with the name of your backend Docker image
+    image: back-hcms # Replace with the name of your backend Docker image
     container_name: back
     build:
       context: ./Backend

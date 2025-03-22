@@ -15,7 +15,8 @@
   --sec-dark: #282a36;
   --dark: #181818;
   --purple: #796eff;
-  --blue: #23a9f9;
+  /* --blue: #23a9f9; */
+  --blue: red;
   --yellow: #ffaa01;
   --red: #ff5263;
   --green: #5bcd7b;

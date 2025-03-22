@@ -2,7 +2,8 @@ pipeline {
     agent any
 
     environment {
-        // DOCKER_IMAGE = "node-app"
+        DOCKER_IMAGE = "front-hcms"
+        DOCKER_IMAGE2 = "back-hcms"
         // DOCKER_CONTAINER_NAME = "node-app-container"
         GIT_REPO = "https://github.com/Khayaall/HCMS"
         // file_path = "/home/zoz/devops/trials/"
@@ -13,9 +14,9 @@ pipeline {
             steps {
                 echo "Cloning repository..."
                 sh '''
-                    cd ${file_path}
-                    rm -rf *
-                    git clone -b main ${GIT_REPO} .
+                cd ${file_path}
+                rm -rf *
+                git clone -b main ${GIT_REPO} .
                 '''
             }
         }
@@ -24,7 +25,10 @@ pipeline {
             steps {
                 echo "Building Docker image..."
                 sh '''
-                    docker-compose build --no-cache
+
+                docker rmi ${DOCKER_IMAGE} || true
+                docker rmi ${DOCKER_IMAGE2} || true
+                docker-compose build --no-cache
                 '''
             }
         }
