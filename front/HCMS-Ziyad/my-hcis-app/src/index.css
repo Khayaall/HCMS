@@ -15,8 +15,7 @@
   --sec-dark: #282a36;
   --dark: #181818;
   --purple: #796eff;
-  /* --blue: #23a9f9; */
-  --blue: red;
+  --blue: #23a9f9;
   --yellow: #ffaa01;
   --red: #ff5263;
   --green: #5bcd7b;
@@ -73,7 +72,7 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
@@ -84,4 +83,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */
