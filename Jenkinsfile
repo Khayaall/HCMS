@@ -7,14 +7,14 @@ pipeline {
         // DOCKER_CONTAINER_NAME = "node-app-container"
         GIT_REPO = "https://github.com/Khayaall/HCMS"
         // file_path = "/home/zoz/devops/trials/"
-        file_path = "/home/zoz/Ubuntu/docker/docker_tut/practice4/"
+        // file_path = "/home/zoz/Ubuntu/docker/docker_tut/practice4/"
     }
     stages {
         stage('Clone Repository') {
             steps {
                 echo "Cloning repository..."
                 sh '''
-                cd ${file_path}
+                #cd ${file_path}
                 rm -rf *
                 git clone -b main ${GIT_REPO} .
                 '''
@@ -26,6 +26,7 @@ pipeline {
                 echo "Building Docker image..."
                 sh '''
 
+                #cd ${file_path}
                 docker rmi ${DOCKER_IMAGE} || true
                 docker rmi ${DOCKER_IMAGE2} || true
                 docker-compose build --no-cache
