@@ -15,7 +15,8 @@ pipeline {
                 echo "Cloning repository..."
                 sh '''
                 #cd ${file_path}
-                rm -rf *
+                rm -rf ./*         # Removes all files
+                rm -rf .??*        # Removes hidden files like .git
                 git clone -b main ${GIT_REPO} .
                 '''
             }
