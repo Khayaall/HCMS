@@ -5,6 +5,8 @@ services:
     build:
       context: ./front/HCMS-Ziyad/my-hcis-app
       dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=${VITE_API_URL} # Pass as build argument
     ports:
       - "80:5173"
     depends_on:
