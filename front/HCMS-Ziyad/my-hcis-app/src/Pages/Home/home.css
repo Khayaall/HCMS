@@ -123,7 +123,8 @@
 .Glassmorphism-card > p {
   margin-bottom: 40%;
   font-size: 1.5rem;
-  color: var(--white);
+  /* color: var(--white); */
+  color: red;
   width: 90%;
 }
 .Glassmorphism-card > a {
