@@ -18,6 +18,7 @@ const Sign_in = () => {
   const handleRoleChange = (selectedRole) => {
     setRole(selectedRole);
   };
+  console.log(API_URL);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
