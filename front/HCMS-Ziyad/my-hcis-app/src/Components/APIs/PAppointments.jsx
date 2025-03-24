@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
+const API_URL = process.env.REACT_APP_API_URL;
 
 export const AppointmentsDataContext = createContext();
 
@@ -18,17 +19,14 @@ export const AppointmentsDataProvider = ({ children }) => {
       }
 
       // Fetch appointments
-      const response = await fetch(
-        "http://localhost:5000/patient/appointments",
-        {
-          method: "GET",
-          headers: {
-            authorization: `Bearer ${token}`,
-            "User-Id": id,
-            "User-Role": role,
-          },
-        }
-      );
+      const response = await fetch(`${API_URL}/patient/appointments`, {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${token}`,
+          "User-Id": id,
+          "User-Role": role,
+        },
+      });
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

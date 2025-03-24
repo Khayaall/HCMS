@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./signup.css"; // Assuming you have a CSS file for styling
 import Plogin from "../../assets/Plogin.jpeg";
 import { NavLink, useNavigate } from "react-router-dom";
+const API_URL = process.env.REACT_APP_API_URL;
 
 const Sign_up = () => {
   const [formData, setFormData] = useState({
@@ -33,13 +34,23 @@ const Sign_up = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("handleSubmit called");
-    const { email, password, confirmPassword, role, firstName, lastName, doctorId,patientType ,doctorSpeciality} = formData;
-  
+    const {
+      email,
+      password,
+      confirmPassword,
+      role,
+      firstName,
+      lastName,
+      doctorId,
+      patientType,
+      doctorSpeciality,
+    } = formData;
+
     if (password !== confirmPassword) {
       alert("Passwords do not match");
       return;
     }
-  
+
     const requestBody = {
       email,
       password,
@@ -47,38 +58,38 @@ const Sign_up = () => {
       f_name: firstName,
       l_name: lastName,
     };
-  
-    if (role === 'doctor') {
+
+    if (role === "doctor") {
       requestBody.d_id = doctorId;
       requestBody.speciality = doctorSpeciality;
     }
-    if (role === 'patient') {
+    if (role === "patient") {
       requestBody.patient_type = patientType;
     }
-  
+
     console.log(requestBody);
-  
+
     try {
-      const response = await fetch('http://localhost:5000/signup', {
-        method: 'POST',
+      const response = await fetch(`${API_URL}/signup`, {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(requestBody),
       });
-  
+
       if (response.ok) {
         // Handle successful response
-        console.log('Sign up successful');
+        console.log("Sign up successful");
         navigate("/login");
       } else {
         // Handle error response
         const errorText = await response.text();
-        console.error('Sign up failed:', errorText);
+        console.error("Sign up failed:", errorText);
         alert(`Sign up failed: ${errorText}`);
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
       alert(`Error: ${error.message}`);
     }
   };
@@ -161,21 +172,23 @@ const Sign_up = () => {
               <option value="doctor">Doctor</option>
               <option value="receptionist">Receptionist</option>
             </select>
-            {formData.role === 'patient' && (
-            <select
-              name="patientType"
-              value={formData.patientType}
-              onChange={handleChange}
-              required
-            >
-              <option value="" disabled>
-                Patient Type
-              </option>
-              <option value="obstetrics">Obstetrics</option>
-              <option value="pediatric">Pediatric</option>
-            </select>
-          )}
-         {(formData.patientType === 'obstetrics' || formData.patientType === 'cancer' || formData.patientType === 'pregnency') && (
+            {formData.role === "patient" && (
+              <select
+                name="patientType"
+                value={formData.patientType}
+                onChange={handleChange}
+                required
+              >
+                <option value="" disabled>
+                  Patient Type
+                </option>
+                <option value="obstetrics">Obstetrics</option>
+                <option value="pediatric">Pediatric</option>
+              </select>
+            )}
+            {(formData.patientType === "obstetrics" ||
+              formData.patientType === "cancer" ||
+              formData.patientType === "pregnency") && (
               <select
                 name="patientType"
                 value={formData.patientType}
@@ -190,32 +203,32 @@ const Sign_up = () => {
               </select>
             )}
 
-          {formData.role === 'doctor' && (
-            <input
-              type="text"
-              name="doctorId"
-              value={formData.doctorId}
-              onChange={handleChange}
-              placeholder="Doctor ID"
-              required
-            />
-          )}
-          {formData.role === 'doctor' && (
-            <select
-              name="doctorSpeciality"
-              value={formData.doctorSpeciality}
-              onChange={handleChange}
-              required
-            >
-              <option value="" disabled>
-                Doctor Speciality
-              </option>
-              <option value="obstetrics">Obstetrics</option>
-              <option value="obstetrics">Oncology</option>
-              <option value="infant">infant</option>
-            </select>
-          )}
-            
+            {formData.role === "doctor" && (
+              <input
+                type="text"
+                name="doctorId"
+                value={formData.doctorId}
+                onChange={handleChange}
+                placeholder="Doctor ID"
+                required
+              />
+            )}
+            {formData.role === "doctor" && (
+              <select
+                name="doctorSpeciality"
+                value={formData.doctorSpeciality}
+                onChange={handleChange}
+                required
+              >
+                <option value="" disabled>
+                  Doctor Speciality
+                </option>
+                <option value="obstetrics">Obstetrics</option>
+                <option value="obstetrics">Oncology</option>
+                <option value="infant">infant</option>
+              </select>
+            )}
+
             <input
               type="date"
               name="birthdate"
@@ -224,7 +237,7 @@ const Sign_up = () => {
               required
             />
           </div>
-          
+
           <input
             type="text"
             name="address"
@@ -233,7 +246,7 @@ const Sign_up = () => {
             onChange={handleChange}
             required
           />
-          
+
           <label className="terms">
             <input
               type="checkbox"
@@ -244,7 +257,11 @@ const Sign_up = () => {
             />{" "}
             By signing up I agree with <a href="#">Terms and conditions</a>
           </label>
-          <button type="submit"  onClick={handleSubmit} className="sign-up-button">
+          <button
+            type="submit"
+            onClick={handleSubmit}
+            className="sign-up-button"
+          >
             Sign Up
           </button>
           <p className="signin-link">

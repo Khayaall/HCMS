@@ -11,6 +11,7 @@ import {
 import PatientTable from "../../Components/D_PatientList/PatientTable";
 import { NavLink } from "react-router-dom";
 import { MergedDataContext } from "../../Components/APIs/AppointmentsWithPatients";
+const API_URL = process.env.REACT_APP_API_URL;
 
 const P_Overview = () => {
   const [patient, setPatient] = useState([]);
@@ -40,7 +41,7 @@ const P_Overview = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/patient/", {
+      const response = await fetch(`${API_URL}/patient/`, {
         method: "GET",
         headers: {
           authorization: `Bearer ${token}`,
@@ -62,7 +63,7 @@ const P_Overview = () => {
   };
   const fetchPatientStats = async () => {
     try {
-      const resp = await fetch("http://localhost:5000/patient/statistics", {
+      const resp = await fetch(`${API_URL}/patient/statistics`, {
         method: "GET",
         headers: {
           authorization: `Bearer ${token}`,

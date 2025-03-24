@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../D_ProfilePage/EditProfileModal.css";
+const API_URL = process.env.REACT_APP_API_URL;
 
 const EditPatientProfileModal = ({ isOpen, onClose, profile, onSave }) => {
   const [firstName, setFirstName] = useState(profile.firstName || "");
@@ -41,13 +42,13 @@ const EditPatientProfileModal = ({ isOpen, onClose, profile, onSave }) => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/patient/edit-profile", {
+      const response = await fetch(`${API_URL}/patient/edit-profile`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          'authorization': `Bearer ${token}`,
-          'User-Id': id,
-          'User-Role': role
+          authorization: `Bearer ${token}`,
+          "User-Id": id,
+          "User-Role": role,
         },
         body: JSON.stringify(updatedProfile),
       });
@@ -57,7 +58,11 @@ const EditPatientProfileModal = ({ isOpen, onClose, profile, onSave }) => {
         setIsUpdated(true);
         onClose();
       } else {
-        console.error("Failed to update profile", response.status, response.statusText);
+        console.error(
+          "Failed to update profile",
+          response.status,
+          response.statusText
+        );
       }
     } catch (error) {
       console.error("An error occurred while updating the profile:", error);

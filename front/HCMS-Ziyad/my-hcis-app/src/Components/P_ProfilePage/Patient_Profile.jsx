@@ -5,6 +5,7 @@ import Navv from "../../Components/P_ProfilePage/NAVVV"; // Corrected import
 import ChangePassword from "../../Components/D_ProfilePage/ChangePassword";
 import MedicalRecord from "../../Components/D_ProfilePage/MedicalRecord"; // Import the MedicalRecord component
 import { ReviewsDataProvider } from "../../Components/APIs/RevWithPatients";
+const API_URL = process.env.REACT_APP_API_URL;
 
 const Patient_Profile = () => {
   const [activeTab, setActiveTab] = useState("Medical Record");
@@ -28,7 +29,7 @@ const Patient_Profile = () => {
         console.log("ID:", id);
         console.log("Role:", role);
 
-        const response = await fetch("http://localhost:5000/patient/", {
+        const response = await fetch(`${API_URL}/patient/`, {
           method: "GET",
           headers: {
             authorization: `Bearer ${token}`,

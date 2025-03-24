@@ -12,6 +12,7 @@ import { faCircleQuestion, faUser } from "@fortawesome/free-regular-svg-icons";
 import "./bar.css";
 import EditProfileModal from "../Components/D_ProfilePage/EditProfileModal";
 import { useAuth } from "../../AuthContext";
+const API_URL = process.env.REACT_APP_API_URL;
 
 const Navbar = () => {
   const [barToggle, setBarToggle] = useState(false);
@@ -44,7 +45,7 @@ const Navbar = () => {
     }
     const roleLower = role.toLowerCase();
     try {
-      const response = await fetch(`http://localhost:5000/${roleLower}/`, {
+      const response = await fetch(`${API_URL}/${roleLower}/`, {
         method: "GET",
         headers: {
           authorization: `Bearer ${token}`,

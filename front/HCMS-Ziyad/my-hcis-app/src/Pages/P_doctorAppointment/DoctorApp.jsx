@@ -10,6 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+const API_URL = process.env.REACT_APP_API_URL;
 
 const DoctorApp = () => {
   const { doctorId } = useParams();
@@ -29,18 +30,15 @@ const DoctorApp = () => {
 
   const fetchDoctor = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:5000/patient/doctor/${doctorId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            authorization: `Bearer ${token}`,
-            "User-Id": id,
-            "User-Role": role,
-          },
-        }
-      );
+      const response = await fetch(`${API_URL}/patient/doctor/${doctorId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
+          "User-Id": id,
+          "User-Role": role,
+        },
+      });
 
       if (response.ok) {
         const data = await response.json();

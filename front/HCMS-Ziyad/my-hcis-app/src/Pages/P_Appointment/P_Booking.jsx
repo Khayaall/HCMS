@@ -5,6 +5,7 @@ import DoctorList from "../../Components/D_PatientList/DocList";
 import DoctorGrid from "../../Components/D_PatientList/DocGrid";
 import { DoctorsDataContext } from "../../Components/APIs/getAllDr";
 import { PatientDataContext } from "../../Components/APIs/PatientInfo";
+const API_URL = process.env.REACT_APP_API_URL;
 
 const P_Booking = () => {
   const [layout, setLayout] = useState("list"); // State to manage layout type
@@ -44,7 +45,7 @@ const P_Booking = () => {
 
       // Append selectedButton as a query parameter
       const response = await fetch(
-        `http://localhost:5000/patient/browse-selected-doctors/${type}`,
+        `${API_URL}/patient/browse-selected-doctors/${type}`,
         {
           method: "GET",
           headers: {

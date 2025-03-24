@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./EditProfileModal.css";
 import Compressor from "compressorjs";
+const API_URL = process.env.REACT_APP_API_URL;
 
 const EditProfileModal = ({ isOpen, onClose, profile, onSave }) => {
   const [firstName, setFirstName] = useState(profile.firstName || "");
@@ -52,19 +53,16 @@ const EditProfileModal = ({ isOpen, onClose, profile, onSave }) => {
     }
 
     try {
-      const response = await fetch(
-        "http://localhost:5000/doctor/edit_profile",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            authorization: `Bearer ${token}`,
-            "User-Id": id,
-            "User-Role": role,
-          },
-          body: JSON.stringify(updatedProfile),
-        }
-      );
+      const response = await fetch(`${API_URL}/doctor/edit_profile`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
+          "User-Id": id,
+          "User-Role": role,
+        },
+        body: JSON.stringify(updatedProfile),
+      });
 
       if (response.ok) {
         onSave(updatedProfile);
@@ -88,19 +86,16 @@ const EditProfileModal = ({ isOpen, onClose, profile, onSave }) => {
     const formData = new FormData();
     formData.append("image", image);
     try {
-      const response = await fetch(
-        "http://localhost:5000/doctor/upload_image",
-        {
-          method: "POST",
-          headers: {
-            // "Content-Type": "application/json",
-            authorization: `Bearer ${token}`,
-            "User-Id": id,
-            "User-Role": role,
-          },
-          body: formData,
-        }
-      );
+      const response = await fetch(`${API_URL}/doctor/upload_image`, {
+        method: "POST",
+        headers: {
+          // "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
+          "User-Id": id,
+          "User-Role": role,
+        },
+        body: formData,
+      });
 
       if (response.ok) {
         onSave(updatedImage);

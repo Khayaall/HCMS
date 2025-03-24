@@ -9,6 +9,7 @@ import {
   ReviewsDataProvider,
   ReviewsDataContext,
 } from "../../Components/APIs/RevWithPatients";
+const API_URL = process.env.REACT_APP_API_URL;
 
 const D_ProfilePage = () => {
   const [activeTab, setActiveTab] = useState("My Profile");
@@ -30,7 +31,7 @@ const D_ProfilePage = () => {
         }
 
         // Fetch doctor profile
-        const doctorResponse = await fetch("http://localhost:5000/doctor", {
+        const doctorResponse = await fetch(`${API_URL}/doctor`, {
           method: "GET",
           headers: {
             authorization: `Bearer ${token}`,

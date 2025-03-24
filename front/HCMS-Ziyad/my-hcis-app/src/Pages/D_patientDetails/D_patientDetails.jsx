@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./d_patientdetails.css";
 import PatientDetailsTable from "../../Components/PatientDetails/PatientDetailsTable";
+const API_URL = process.env.REACT_APP_API_URL;
 
 const D_patientDetails = () => {
   const { patientId } = useParams();
@@ -37,7 +38,7 @@ const D_patientDetails = () => {
   const fetchPatient = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/doctor/patient_details/${patientId}`,
+        `${API_URL}/doctor/patient_details/${patientId}`,
         {
           method: "GET",
           headers: {
@@ -62,7 +63,7 @@ const D_patientDetails = () => {
   const fetchCancer = async (newData) => {
     try {
       const resp = await fetch(
-        `http://localhost:5000/doctor/treatment_plan/${patientId}`,
+        `${API_URL}/doctor/treatment_plan/${patientId}`,
         {
           method: "POST",
           headers: {
@@ -87,7 +88,7 @@ const D_patientDetails = () => {
   const fetchCancerData = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/doctor/get_cancer_treatment_plan/${patientId}`,
+        `${API_URL}/doctor/get_cancer_treatment_plan/${patientId}`,
         {
           method: "GET",
           headers: {
@@ -113,7 +114,7 @@ const D_patientDetails = () => {
   const fetchInfantData = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/doctor/infant_treatment_plan/${patientId}`,
+        `${API_URL}/doctor/infant_treatment_plan/${patientId}`,
         {
           method: "GET",
           headers: {
@@ -144,7 +145,7 @@ const D_patientDetails = () => {
   const handleSaveClick = async (updatedData) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/doctor/edit_treatment_plan/${updatedData.id}`,
+        `${API_URL}/doctor/edit_treatment_plan/${updatedData.id}`,
         {
           method: "PUT",
           headers: {

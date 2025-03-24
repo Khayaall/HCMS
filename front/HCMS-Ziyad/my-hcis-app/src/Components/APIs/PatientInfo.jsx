@@ -1,4 +1,5 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect } from "react";
+const API_URL = process.env.REACT_APP_API_URL;
 
 export const PatientDataContext = createContext();
 
@@ -22,13 +23,13 @@ export const PatientDataProvider = ({ children }) => {
         console.log("ID:", id);
         console.log("Role:", role);
 
-        const response = await fetch("http://localhost:5000/patient/", {
+        const response = await fetch(`${API_URL}/patient/`, {
           method: "GET",
           headers: {
-            'authorization': `Bearer ${token}`,
-            'User-Id': id,
-            'User-Role': role
-          }
+            authorization: `Bearer ${token}`,
+            "User-Id": id,
+            "User-Role": role,
+          },
         });
 
         console.log("Response Status:", response.status);
@@ -37,14 +38,13 @@ export const PatientDataProvider = ({ children }) => {
         if (!response.ok) {
           const errorText = await response.text();
           console.error("Response Error Text:", errorText);
-          throw new Error('An error occurred while fetching patient profile.');
+          throw new Error("An error occurred while fetching patient profile.");
         }
 
         const data = await response.json();
         setPatientData(data);
 
         console.log("Patient Data:", data);
-
       } catch (error) {
         console.error("Error fetching data:", error);
         setError(error.message);

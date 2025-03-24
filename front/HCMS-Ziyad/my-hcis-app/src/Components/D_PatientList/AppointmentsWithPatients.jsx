@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
+const API_URL = process.env.REACT_APP_API_URL;
 
 export const MergedDataContext = createContext();
 
@@ -17,20 +18,17 @@ export const MergedDataProvider = ({ children }) => {
         }
 
         // Fetch patients and appointments
-        const patientsResponse = await fetch(
-          "http://localhost:5000/doctor/patients",
-          {
-            method: "GET",
-            headers: {
-              authorization: `Bearer ${token}`,
-              "User-Id": id,
-              "User-Role": role,
-            },
-          }
-        );
+        const patientsResponse = await fetch(`${API_URL}/doctor/patients`, {
+          method: "GET",
+          headers: {
+            authorization: `Bearer ${token}`,
+            "User-Id": id,
+            "User-Role": role,
+          },
+        });
 
         const appointmentsResponse = await fetch(
-          "http://localhost:5000/doctor/all_appointments",
+          `${API_URL}/doctor/all_appointments`,
           {
             method: "GET",
             headers: {

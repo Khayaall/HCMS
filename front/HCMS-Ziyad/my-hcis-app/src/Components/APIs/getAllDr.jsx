@@ -1,4 +1,5 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect } from "react";
+const API_URL = process.env.REACT_APP_API_URL;
 
 export const DoctorsDataContext = createContext();
 
@@ -17,13 +18,13 @@ export const DoctorsDataProvider = ({ children }) => {
         }
 
         // Fetch all doctors
-        const doctorsResponse = await fetch("http://localhost:5000/doctor/all", {
+        const doctorsResponse = await fetch(`${API_URL}/doctor/all`, {
           method: "GET",
           headers: {
-            'authorization': `Bearer ${token}`,
-            'User-Id': id,
-            'User-Role': role
-          }
+            authorization: `Bearer ${token}`,
+            "User-Id": id,
+            "User-Role": role,
+          },
         });
 
         if (!doctorsResponse.ok) {
