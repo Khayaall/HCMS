@@ -11,7 +11,7 @@ import {
 import PatientTable from "../../Components/D_PatientList/PatientTable";
 import { NavLink } from "react-router-dom";
 import { MergedDataContext } from "../../Components/APIs/AppointmentsWithPatients";
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 const D_Overview = () => {
   const [doctor, setDoctor] = useState([]);

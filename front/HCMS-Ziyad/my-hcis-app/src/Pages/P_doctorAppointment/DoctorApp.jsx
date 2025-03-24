@@ -10,7 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 const DoctorApp = () => {
   const { doctorId } = useParams();

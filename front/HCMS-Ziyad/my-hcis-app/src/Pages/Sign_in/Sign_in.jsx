@@ -4,7 +4,7 @@ import Plogin from "../../assets/Plogin.jpeg";
 import Dlogin from "../../assets/Dlogin.jpg";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../AuthContext";
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Sign_in = () => {
   const [role, setRole] = useState("Doctor"); // Default role

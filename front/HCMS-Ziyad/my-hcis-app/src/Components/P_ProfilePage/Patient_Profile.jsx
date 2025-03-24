@@ -5,7 +5,7 @@ import Navv from "../../Components/P_ProfilePage/NAVVV"; // Corrected import
 import ChangePassword from "../../Components/D_ProfilePage/ChangePassword";
 import MedicalRecord from "../../Components/D_ProfilePage/MedicalRecord"; // Import the MedicalRecord component
 import { ReviewsDataProvider } from "../../Components/APIs/RevWithPatients";
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Patient_Profile = () => {
   const [activeTab, setActiveTab] = useState("Medical Record");
