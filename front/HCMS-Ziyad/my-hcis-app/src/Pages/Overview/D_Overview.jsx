@@ -124,7 +124,7 @@ const D_Overview = () => {
             <h2>
               Welcome, Dr. {doctor.f_name} {doctor.l_name}
             </h2>
-            <p>Have a nice day at great work </p>
+            <p>Have a nice day at work </p>
           </div>
           <div className="overview-cards">
             <div className="card">
