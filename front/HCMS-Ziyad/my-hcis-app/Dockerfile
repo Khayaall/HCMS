@@ -6,6 +6,8 @@ WORKDIR /app
 
 COPY package*.json ./
 
+COPY .env .
+
 RUN npm install --force
 
 RUN npm rebuild rollup
