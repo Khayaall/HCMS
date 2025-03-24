@@ -11,7 +11,7 @@ services:
       - backend
     restart: unless-stopped
     environment:
-      - VITE_API_URL=${VITE_API_URL}
+      - VITE_API_URL=${VITE_API_URL}:5000
 
   backend:
     image: back-hcms # Replace with the name of your backend Docker image
@@ -23,7 +23,6 @@ services:
       - "5000:5000" # Map port 5000 (backend) to port 5000 on the host
     environment:
       - NODE_ENV=production
-      - DATABASE_URL=postgresql://neondb_owner:tD4lsLQwMEk2@ep-bitter-bread-a58wbm8l.us-east-2.aws.neon.tech/neondb?sslmode=require
     restart: unless-stopped
     # volumes:
     #   - ./backend:/app # Mount the backend directory for development (optional)
