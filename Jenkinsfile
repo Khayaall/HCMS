@@ -14,7 +14,6 @@ pipeline {
             steps {
                 echo "Cloning repository..."
                 sh '''
-                #cd ${file_path}
                 rm -rf ./*         # Removes all files
                 rm -rf .??*        # Removes hidden files like .git
                 git clone -b main ${GIT_REPO} .
@@ -27,7 +26,7 @@ pipeline {
                 echo "Building Docker image..."
                 sh '''
 
-                #cd ${file_path}
+                docker-compose down || true
                 docker rmi ${DOCKER_IMAGE} || true
                 docker rmi ${DOCKER_IMAGE2} || true
                 docker-compose build --no-cache
@@ -47,7 +46,6 @@ pipeline {
             steps {
                 echo "Deploying application..."
                 sh '''
-                docker-compose down || true
                 docker-compose up -d
                 '''
             }
