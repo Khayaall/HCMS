@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./d_patientdetails.css";
 import PatientDetailsTable from "../../Components/PatientDetails/PatientDetailsTable";
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = process.env.VITE_API_URL;
 
 const D_patientDetails = () => {
   const { patientId } = useParams();
