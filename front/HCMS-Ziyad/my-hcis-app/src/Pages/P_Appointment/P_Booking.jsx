@@ -5,7 +5,7 @@ import DoctorList from "../../Components/D_PatientList/DocList";
 import DoctorGrid from "../../Components/D_PatientList/DocGrid";
 import { DoctorsDataContext } from "../../Components/APIs/getAllDr";
 import { PatientDataContext } from "../../Components/APIs/PatientInfo";
-const API_URL = process.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 const P_Booking = () => {
   const [layout, setLayout] = useState("list"); // State to manage layout type

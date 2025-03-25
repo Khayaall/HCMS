@@ -12,7 +12,7 @@ import { faCircleQuestion, faUser } from "@fortawesome/free-regular-svg-icons";
 import "./bar.css";
 import EditProfileModal from "../Components/D_ProfilePage/EditProfileModal";
 import { useAuth } from "../../AuthContext";
-const API_URL = process.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Navbar = () => {
   const [barToggle, setBarToggle] = useState(false);

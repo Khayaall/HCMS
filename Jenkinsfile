@@ -21,6 +21,17 @@ pipeline {
             }
         }
 
+        stage('ENV Variables') {
+            environment {
+                API_URL = credentials('MY_ENV_IP')
+            }
+            steps{
+                sh '''
+                echo "VITE_API_URL=$API_URL" > .env
+                '''
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 echo "Building Docker image..."
