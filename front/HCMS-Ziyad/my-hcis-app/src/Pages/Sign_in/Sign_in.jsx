@@ -45,7 +45,7 @@ const Sign_in = () => {
     // console.log(requestBody);
 
     try {
-      const response = await fetch(`${API_URL}:5000/login`, {
+      const response = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

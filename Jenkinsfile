@@ -27,7 +27,7 @@ pipeline {
             // }
             steps{
                 withCredentials([file(credentialsId: 'MY_ENV_IP', variable: 'ENV_FILE')]) {
-                    sh 'cp $ENV_FILE front/HCMS-Ziyad/my-hcis-app/.env'
+                    sh 'cp $ENV_FILE front/HCMS-Ziyad/my-hcis-app/.env.production'
                 }
             }
         }
