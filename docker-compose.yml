@@ -10,8 +10,8 @@ services:
     depends_on:
       - backend
     restart: unless-stopped
-    # environment:
-    #   - VITE_API_URL=${VITE_API_URL}
+    environment:
+      - VITE_API_URL=${VITE_API_URL}
 
   backend:
     image: back-hcms # Replace with the name of your backend Docker image
