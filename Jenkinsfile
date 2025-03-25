@@ -22,13 +22,13 @@ pipeline {
         }
 
         stage('ENV Variables') {
-            environment {
-                API_URL = credentials('MY_ENV_IP')
-            }
+            // environment {
+            //     API_URL = credentials('MY_ENV_IP')
+            // }
             steps{
-                sh '''
-                echo "VITE_API_URL=$API_URL" > .env
-                '''
+                withCredentials([file(credentialsId: 'MY_ENV_IP', variable: 'ENV_FILE')]) {
+                    sh 'cp $ENV_FILE .env'
+                }
             }
         }
 
