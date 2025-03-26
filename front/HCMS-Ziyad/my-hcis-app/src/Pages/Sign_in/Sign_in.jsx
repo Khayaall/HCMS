@@ -18,7 +18,6 @@ const Sign_in = () => {
   const handleRoleChange = (selectedRole) => {
     setRole(selectedRole);
   };
-  console.log("API_URL:", import.meta.env.VITE_API_URL);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
